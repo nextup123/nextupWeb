@@ -1,0 +1,269 @@
+.digital-indicator-range-button-container {
+    display: flex;
+    /* height: 80px; */
+    width: 20%;
+    /* background-color: rgb(255, 0, 115); */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-right: 20px; */
+}
+
+
+.digital-indicator-button {
+    padding: 10px 20px;  
+    width: 90%;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #007bff, #00bfff);
+    color: white;
+    box-shadow: 0 4px 6px rgba(141, 138, 138, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    /* transform: translateX(-35px);
+    transform: translateY(50px);
+    margin-left: 50px; */
+}
+
+.digital-indicator-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.digital-indicator-popup {
+    font-size: 18px;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    width: 90%;
+    max-width: 340px;
+}
+
+.digital-indicator-popup input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+}
+
+.digital-indicator-popup input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.digital-indicator-close-btn {
+    background: linear-gradient(135deg, #ff4d4d, #ff1a1a);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 90%;
+    margin-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.digital-indicator-close-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
+}
+
+.digital-indicator-update-btn {
+    background: linear-gradient(135deg, #00cc66, #00b359);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 90%;
+    margin-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.digital-indicator-update-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 255, 0, 0.3);
+}
+
+.digital-indicator-refresh-btn {
+    background: linear-gradient(135deg, #6db319, #8bc34a);
+    color: white;
+    border: none;
+    padding: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 50%;
+    height: 40px;
+    margin-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.digital-indicator-refresh-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(109, 173, 25, 0.3);
+}
+
+#digital-indicator-current-min,
+#digital-indicator-current-max {
+    color: #00bfff;
+    font-weight: bold;
+}
+
+#digital-indicator-status-msg {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #ffcc00;
+}
+
+
+
+
+.digital-indicator-reset-btn {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 90%;
+    margin-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.digital-indicator-reset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+}
+
+
+.digital-indicator-test-btn {
+    background: linear-gradient(135deg, #6200ff, #7200f5);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 90%;
+    margin-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.digital-indicator-test-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+}
+
+.digital-indicator-test-popup {
+    font-size: 18px;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(64, 138, 132, 0.8);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    width: 90%;
+    max-width: 340px;
+}
+
+.digital-indicator-test-trigger-btn {
+    background: linear-gradient(135deg, #007bff, #00bfff);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 90%;
+    margin-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.digital-indicator-test-trigger-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.digital-indicator-goto-range-btn {
+    background: linear-gradient(135deg, #6db319, #8bc34a);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 90%;
+    margin-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.digital-indicator-goto-range-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(109, 173, 25, 0.3);
+}
+
+
+.digital-indicator-dropdown {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+}
+
+.digital-indicator-dropdown option {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+.digital-indicator-apply-btn {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 90%;
+    margin-top: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.digital-indicator-apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+}

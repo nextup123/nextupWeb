@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Monitoring Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> -->
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header>
+            <h1>Error Monitoring Dashboard</h1>
+            <div id="digital-clock"></div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Terminal Section -->
+            <section class="terminal-section">
+                <div class="header-container-h2">
+                    <h2>Terminal Logs</h2>
+                </div>
+                <div class="terminal-container">
+                    <div id="terminal-display"></div>
+                    <div class="terminal-controls">
+                        <button id="clear-terminal" class="btn">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                        <button id="pause-terminal" class="btn">
+                            <i class="fas fa-pause"></i> Pause
+                        </button>
+                        <button id="play-terminal" class="btn" disabled>
+                            <i class="fas fa-play"></i> Play
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Error Table Section -->
+            <section class="error-section">
+                <div class="header-container-h2">
+                    <h2>Error Table</h2>
+                </div>
+                <div class="table-container">
+                    <table id="error-table">
+                        <thead>
+                            <tr>
+                                <th>Joint</th>
+                                <th>Error Code</th>
+                                <th>Error Content</th>
+                                <th>Occurance Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="no-errors-row">
+                                <td colspan="5" class="no-errors-text">No Errors Available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="roslib.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

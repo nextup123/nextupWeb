@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOMING Functionality</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to bottom right, #202020, #3a3a3a);
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    .homing-container {
+      position: relative;
+      text-align: center;
+    }
+    .label-box {
+      width: 200px;
+      height: 70px;
+      background: #444;
+      color: #fff;
+      font-size: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+      transform: translateY(45px);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      z-index: 10;
+    }
+    .label-box:hover {
+      background-color: #4b2e2e;
+    }
+    .unit-button {
+      position: absolute;
+      width: 150px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 16px;
+      background: linear-gradient(145deg, #8b0000, #4b2e2e);
+      clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+      opacity: 1;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      transition: background 0.3s ease;
+    }
+    .unit-button:hover {
+      background: linear-gradient(145deg, #b22222, #5e3e3e);
+    }
+    .unit-button.unit1 { 
+      left: -170px; 
+      top: 100px;
+    }
+    .unit-button.unit2 { 
+      right: -170px; 
+      top: 100px;
+    }
+    .unit-button.loading { 
+      background: linear-gradient(145deg, #ffd700, #ff8c00); 
+    }
+    .thread {
+      position: absolute;
+      width: 2px;
+      background: #000;
+      transform-origin: center top;
+      transform: scaleY(0);
+      transition: transform 0.6s ease;
+    }
+    .thread.unit1 {
+      left: 40px;
+      top: 40px;
+      height: 100px;
+    }
+    .thread.unit2 {
+      left: 250px;
+      top: 40px;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="homing-container">
+    <div class="label-box">HOMING</div>
+    <!-- Threads -->
+    <div class="thread unit1"></div>
+    <div class="thread unit2"></div>
+    <!-- Buttons -->
+    <div class="unit-button unit1" onclick="initHoming('Unit 1')">UNIT 1</div>
+    <div class="unit-button unit2" onclick="initHoming('Unit 2')">UNIT 2</div>
+  </div>
+
+  <script>
+    const labelBox = document.querySelector('.label-box');
+    const unitButtons = document.querySelectorAll('.unit-button');
+
+    function initHoming(unit) {
+      labelBox.textContent = `${unit} homing init...`;
+      // Add loading effect to button
+      const button = document.querySelector(`.unit-button.${unit.toLowerCase().replace(' ', '')}`);
+      button.classList.add('loading');
+      // Disable buttons during loading
+      unitButtons.forEach(btn => btn.style.pointerEvents = 'none');
+      
+      // Wait for 2 seconds before resetting
+      setTimeout(() => {
+        labelBox.textContent = 'HOMING';
+        button.classList.remove('loading');
+        // Enable buttons again
+        unitButtons.forEach(btn => btn.style.pointerEvents = 'auto');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

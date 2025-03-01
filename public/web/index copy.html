@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Controller</title>
+
+    <link rel="stylesheet" href="styles/task_style.css">
+    <link rel="stylesheet" href="styles/path_view.css">
+    <link rel="stylesheet" href="styles/toggle_v2.css">
+    <link rel="stylesheet" href="styles/popup.css">
+    <link rel="stylesheet" href="styles/style.css">
+
+    <link rel="icon" href="./image/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/roslib/build/roslib.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="path-management">
+            <h2>Path Management</h2>
+            <div class="columns">
+                <div class="column left additional-column">
+
+
+                    <div class="button-item">
+                        <button class="btn btnpush" id="savePointButton"> Save Point</button>
+                    </div>
+                    <!-- popup -->
+                    <form>
+                        <div class="popup" id="popup1" style="display: none;">
+                            <h2 class="heading">Enter Robot Command</h2>
+
+                            <label for="name" class="nameheading">Name</label><br>
+                            <input type="text" id="name_point" placeholder="Enter name" class="pointname" /><br>
+                            <div class="popup-buttons">
+                                <button class="submit" id="submit">Submit</button>
+                                <button class="cancel" id="cancel">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- popup -->
+
+
+                    <div class="button-item">
+                        <button class="btn btnpush" id="plan">Plan</button>
+                    </div>
+
+                    <!-- popup -->
+                    <!-- <form> -->
+                    <div class="popupplan" id="popup2" style="display: none;">
+                        <h2 class="headingplan">Plan Spaces</h2>
+                        <div class="popupplan-buttons">
+                            <button class="submit" id="cartesian">Cartesian</button>
+                            <button class="cancel" id="joint">Joint</button>
+                        </div>
+                    </div>
+                    <!-- </form> -->
+                    <!-- popup -->
+
+                    <div class="button-item">
+                        <button class="btn btnpush" id="path"> Save Path</button>
+                    </div>
+                    <!-- popup -->
+                    <div class="popup" id="popup3" style="display: none;">
+                        <h2 class="heading">Enter Path</h2>
+
+                        <label for="name" class="nameheading">Name</label><br>
+                        <input type="text" id="name_path" placeholder="Enter name" class="pathname" list="defaultNames"
+                            required /><br>
+
+                        <datalist id="defaultNames">
+                            <option value="return_cnc"
+                                label="After coming from cnc, path after which indicator measures cap size and takes decision.">
+                            <option value="pre_place_yes" label="Path towards yes box from cnc.">
+                            <option value="pre_place_no" label="Path towards no box from cnc.">
+                            <option value="pre_place_stand_cv" label="Path towards cv stand from cnc.">
+                            <option value="cv_wait" label="Path after which robot waits for CV processing.">
+                            <option value="return_cv"
+                                label="After coming back from cv, decision of going towards yes box, no box will be taken.">
+                            <option value="return_initial_yes" label="Path from yes box to initial point.">
+                            <option value="return_initial_no" label="Path from no box to initial point.">
+                            <option value="cv_to_yes" label="Path from cv to yes box.">
+                            <option value="cv_to_no" label="Path from cv to no box.">
+                            <option value="pick_point_1" label="After this path gripper 1 will open itself.">
+                            <option value="place_point_1" label="After this path gripper 1 will close itself.">
+                            <option value="pick_point_2" label="After this path gripper 2 will open itself.">
+                            <option value="place_point_2" label="After this path gripper 2 will close itself.">
+                        </datalist>
+
+
+                        <label class="block planspace">Plan Space:</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="number" value="1" class="cartesianradio" checked />
+                                <span class="radio-input">Cartesian</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="number" value="2" class="jointradio" />
+                                <span class="radio-input">Joint</span>
+                            </label>
+                        </div>
+
+                        <label for="name" class="velocity">Velocity (0.1 - 1)</label><br>
+                        <input type="number" id="speed" min="0.1" max="1" step="0.1" placeholder="Enter Velocity"
+                            class="velocityfield" value="1" required /><br>
+                        <span class="error-message">Value must be between 0.1 and 1</span>
+
+                        <!-- <label for="name" class="acceleration">Acceleration (0.1 - 1)</label><br>
+                    <input type="number" id="acceleration" min="0.1" max="1" step="0.1" placeholder="Enter Acceleration"
+                        class="accelerationfield" value="0.5" required /><br> -->
+
+                        <label for="name" class="waittime">Wait Time</label><br>
+                        <input type="number" id="wait_time" placeholder="Enter Wait Time" class="waittimefield"
+                            value="0" required /><br>
+
+                        <div class="popup-buttons">
+                            <button class="submit" id="path_submit" disabled>Submit</button>
+                            <button class="cancel" id="cancell">Cancel</button>
+                        </div>
+                    </div>
+                    <!-- popup -->
+
+
+                    <div class="button-item">
+                        <button class="btn btnpush" id="executeLastButton">Execute Last</button>
+                    </div>
+                    <div class="button-item">
+                        <button class="btn btnpush" id="execute"> Execute</button>
+                    </div>
+                    <div class="button-item">
+                        <button class="btn btnpush" id="deleteLastPoint"> Delete last point</button>
+                    </div>
+                    <div class="button-item">
+                        <button class="btn btnpush" id="deleteLastPath"> Delete last path</button>
+                    </div>
+                    <div class="button-item">
+                        <button class="btn btnpush" id="deleteAllPoint"> Delete all point</button>
+                    </div>
+                    <div class="button-item">
+                        <button class="btn btnpush" id="deleteAllPath"> Delete all path</button>
+                    </div>
+                </div>
+
+
+                
+                <div class="point-path-container">
+                    <div class="path-container">
+                        <h2>Point Segments</h2>
+                        <hr>
+                        <div class="item-list-Point" id="itemListPoint"></div>
+                    </div>
+                    <div class="path-container">
+                        <h2>Path Segments</h2>
+                        <hr>
+                        <div class="item-list-Path" id="itemListPath"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="servo-node-controller">
+            <h2>Servo Node Controller</h2>
+            <div class="columns">
+                <div class="column left">
+                    <div class="joint-item">
+                        <label class="joint_name" for="join1">J1:</label>
+                        <button class="btna btnplus" id="j1_plus">+</button>
+                        <button class="btna btnminus" id="j1_minus">-</button>
+                        <label class="subs_value" id="j1val" for="">0.0</label>
+                    </div>
+
+                    <div class="joint-item">
+                        <label class="joint_name" for="join2">J2:</label>
+                        <button class="btna btnplus" id="j2_plus">+</button>
+                        <button class="btna btnminus" id="j2_minus">-</button>
+                        <label class="subs_value" id="j2val" for="">0.0</label>
+                    </div>
+                    <div class="joint-item">
+                        <label class="joint_name" for="join3">J3:</label>
+                        <button class="btna btnplus" id="j3_plus">+</button>
+                        <button class="btna btnminus" id="j3_minus">-</button>
+                        <label class="subs_value" id="j3val" for="">0.0</label>
+                    </div>
+                    <div class="joint-item">
+                        <label class="joint_name" for="join4">J4:</label>
+                        <button class="btna btnplus" id="j4_plus">+</button>
+                        <button class="btna btnminus" id="j4_minus">-</button>
+                        <label class="subs_value" id="j4val" for="">0.0</label>
+                    </div>
+                    <div class="joint-item">
+                        <label class="joint_name" for="join5">J5:</label>
+                        <button class="btna btnplus" id="j5_plus">+</button>
+                        <button class="btna btnminus" id="j5_minus">-</button>
+                        <label class="subs_value" id="j5val" for="">0.0</label>
+                    </div>
+                    <div class="joint-item">
+                        <label class="joint_name" for="join6">J6:</label>
+                        <button class="btna btnplus" id="j6_plus">+</button>
+                        <button class="btna btnminus" id="j6_minus">-</button>
+                        <label class="subs_value" id="j6val" for="">0.0</label>
+                    </div>
+                </div>
+
+                <div class="vertical-line"></div>
+                <div class="column right">
+                    <div class="joint-item">
+                        <label class="joint_name" for="x">X:</label>
+                        <button class="btna btnplus" id="cx_plus">+</button>
+                        <button class="btna btnminus" id="cx_minus">-</button>
+                        <label class="subs_value" id="xval" for="">0.0</label>
+                    </div>
+                    <div class="joint-item">
+                        <label class="joint_name" for="y">Y:</label>
+                        <button class="btna btnplus" id="cy_plus">+</button>
+                        <button class="btna btnminus" id="cy_minus">-</button>
+                        <label class="subs_value" id="yval" for="">0.0</label>
+                    </div>
+                    <div class="joint-item">
+                        <label class="joint_name" for="z">Z:</label>
+                        <button class="btna btnplus" id="cz_plus">+</button>
+                        <button class="btna btnminus" id="cz_minus">-</button>
+                        <label class="subs_value" id="zval" for="">0.0</label>
+                    </div>
+                    <div class="joint-item">
+                        <label class="joint_name" for="r">R:</label>
+                        <button class="btna btnplus" id="cr_plus">+</button>
+                        <button class="btna btnminus" id="cr_minus">-</button>
+                        <label class="subs_value" id="rval" for="">0.0</label>
+                    </div>
+                    <div class="joint-item">
+                        <label class="joint_name" for="p">P:</label>
+                        <button class="btna btnplus" id="cp_plus">+</button>
+                        <button class="btna btnminus" id="cp_minus">-</button>
+                        <label class="subs_value" id="pval" for="">0.0</label>
+                    </div>
+                    <div class="joint-item">
+                        <label class="joint_name" for="w">W:</label>
+                        <button class="btna btnplus" id="cw_plus">+</button>
+                        <button class="btna btnminus" id="cw_minus">-</button>
+                        <label class="subs_value" id="wval" for="">0.0</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="button_container">
+        <div class="toggle_v2">
+            <div class="left_side">
+                <h3>Gripper1:</h3>
+            </div>
+            <div class="right_side_button">
+                <div class="toggle-button-cover">
+                    <div id="button-3" class="button r">
+                        <input id="gripper" class="checkbox" type="checkbox">
+                        <div class="knobs"></div>
+                        <div class="layer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="left_side">
+                <h3>Gripper2:</h3>
+            </div>
+            <div class="right_side_button">
+                <div class="toggle-button-cover">
+                    <div id="button-3" class="button r">
+                        <input id="gripper_2" class="checkbox" type="checkbox">
+                        <div class="knobs"></div>
+                        <div class="layer"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="left_side">
+                <h3>Mode:</h3>
+            </div>
+            <div class="right_side_button">
+                <div class="toggle-button-cover">
+                    <div id="button-4" class="button r">
+                        <input id="switch_mode_1" class="checkbox" type="checkbox">
+                        <div class="knobs"></div>
+                        <div class="layer"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Success Popup (Initially hidden) -->
+            <div id="successPopup" class="success-popup">
+                <p>Point saved successfully!</p>
+            </div>
+
+
+            <div id="pathsuccessPopup" class="pathsuccess-popup">
+                <p>Path saved successfully!</p>
+            </div>
+
+
+            <div id="plansuccessPopup" class="plansuccess-popup">
+                <p>Planning successfully!</p>
+            </div>
+
+
+            <div id="planfail" class="planfail-popup">
+                <p>Planning failed!</p>
+            </div>
+
+
+            <div id="deletelastpathsuccessPopup" class="deletelastpathsuccess-popup">
+                <p>last path deleted successfully!</p>
+            </div>
+
+            <div id="pathfileemptysuccessPopup" class="pathfileemptysuccess-popup">
+                <p>Path Yaml Found Empty!!!</p>
+            </div>
+
+
+            <div id="pointfileemptysuccessPopup" class="pointfileemptysuccess-popup">
+                <p>Point Yaml Found Empty!!!</p>
+            </div>
+
+            <div id="deletelastpointsuccessPopup" class="deletelastpointsuccess-popup">
+                <p>last point deleted successfully!</p>
+            </div>
+
+            <div id="deleteallpathsuccessPopup" class="deletealltpathsuccess-popup">
+                <p>All path deleted successfully!</p>
+            </div>
+
+            <div id="deleteallpointsuccessPopup" class="deleteallpointsuccess-popup">
+                <p>All point deleted successfully!</p>
+            </div>
+
+            <div id="yamlpointscheck" class="yamlpointscheck-popup">
+                <p>Need One More Point!</p>
+            </div>
+
+            <div class="left_side">
+                <h3>Robot:</h3>
+            </div>
+            <div class="right_side_button">
+                <div class="toggle-button-cover">
+                    <div id="button-6" class="button r">
+                        <input id="play_pause" class="checkbox" type="checkbox">
+                        <div class="knobs"></div>
+                        <div class="layer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="scripts/roslib.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/popup.js"></script>
+    <script src="scripts/save_point.js"></script>
+    <script src="scripts/swal.js"></script>
+    <script src="scripts/toggle_buttons.js"></script>
+    <script src="scripts/path_view.js"></script>
+    <script src="scripts/subscriptions.js"></script>
+
+</body>
+
+</html>

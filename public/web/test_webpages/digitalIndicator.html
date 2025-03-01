@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROS2 Digital Output Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #triggerButton {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #triggerButton:hover {
+            background-color: #0056b3;
+        }
+
+        #triggerButton:active {
+            background-color: #004080;
+        }
+
+        .status-indicator {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .status-indicator span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .status-indicator.connected span {
+            background-color: #28a745;
+        }
+
+        .status-indicator.disconnected span {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Digital Output Control</h1>
+        <button id="triggerButton">Trigger Digital Output</button>
+        <div id="statusIndicator" class="status-indicator disconnected">
+            <span></span> Disconnected from ROS
+        </div>
+    </div>
+    <script src="roslib.js"></script>
+
+    <script>
+        // Connect to ROS2 via rosbridge
+        const ros = new ROSLIB.Ros({
+            url: 'ws://localhost:9090' // Replace with your rosbridge server address
+        });
+
+        const statusIndicator = document.getElementById('statusIndicator');
+
+        ros.on('connection', () => {
+            console.log('Connected to ROS2 via rosbridge');
+            statusIndicator.className = 'status-indicator connected';
+            statusIndicator.innerHTML = '<span></span> Connected to ROS';
+        });
+
+        ros.on('error', (error) => {
+            console.error('Error connecting to ROS2:', error);
+            statusIndicator.className = 'status-indicator disconnected';
+            statusIndicator.innerHTML = '<span></span> Connection Error';
+        });
+
+        ros.on('close', () => {
+            console.log('Connection to ROS2 closed');
+            statusIndicator.className = 'status-indicator disconnected';
+            statusIndicator.innerHTML = '<span></span> Disconnected from ROS';
+        });
+
+        // Define the ROS2 topic
+        const digitalOutputTopic = new ROSLIB.Topic({
+            ros: ros,
+            name: '/nextup_digital_output_controller_5/commands',
+            messageType: 'nextup_joint_interfaces/msg/NextupDigitalOutputs'
+        });
+
+        // Function to publish the ROS2 command
+        function triggerDigitalOutput() {
+            // Publish True to do1
+            const trueMsg = new ROSLIB.Message({
+                do1: [],
+                do2: [],
+                do3: [true]
+            });
+            digitalOutputTopic.publish(trueMsg);
+            console.log('Published: do1:[True]');
+
+            // Wait 300ms
+            setTimeout(() => {
+                // Publish False to do1
+                const falseMsg = new ROSLIB.Message({
+                    do1: [],
+                    do2: [],
+                    do3: [false]
+                });
+                digitalOutputTopic.publish(falseMsg);
+                console.log('Published: do1:[False]');
+            }, 300);
+        }
+
+        // Add event listener to the button
+        document.getElementById('triggerButton').addEventListener('click', triggerDigitalOutput);
+    </script>
+
+    <!-- Include the ROSLIB library -->
+</body>
+</html>

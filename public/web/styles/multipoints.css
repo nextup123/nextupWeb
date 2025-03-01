@@ -1,0 +1,124 @@
+.multipath-popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.multipath-popup-content {
+    background: rgba(18, 107, 100, 0.863);
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    /* Increased width for side-by-side layout */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+}
+
+.close-popup {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.section-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    /* Space between sections */
+}
+
+.section {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.file-dropdown {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.delete-button,
+.save-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.delete-button {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.save-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.save-button:active,
+.delete-button:active {
+    transform: scale(0.95);
+}
+
+label {
+    font-size: 18px;
+    /* Increased text size */
+}
+
+h2 {
+    font-size: 24px;
+    /* Increased text size */
+}
+
+.save-popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+.save-popup-content {
+    background: rgba(54, 104, 73, 0.952);
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close-save-popup {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#fileNameInput {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}

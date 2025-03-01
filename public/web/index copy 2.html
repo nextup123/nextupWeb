@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Controller</title>
+
+    <link rel="stylesheet" href="styles/task_style.css">
+    <link rel="stylesheet" href="styles/path_view.css">
+    <link rel="stylesheet" href="styles/toggle_v2.css">
+    <link rel="stylesheet" href="styles/popup.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/dropdown_options.css">
+    <link rel="stylesheet" href="styles/digital_indicator_range.css">
+
+    <link rel="icon" href="./image/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/roslib/build/roslib.min.js"></script>
+
+</head>
+
+<body>
+    <div class="main-container">
+
+        <div class="title-container">
+            <h1 class="robot-title">Robot Controller</h1>
+        </div>
+
+        <div class="controllers-container">
+            <div class="path-mgmt-container">
+                <div class="path-mgmt-control-button-container">
+
+
+                    <!-- button -->
+                    <div class="button-item">
+                        <button class="control-button control-button-one" id="savePointButton"> Save Point</button>
+                    </div>
+                    <!-- popup -->
+                    <form>
+                        <div class="popup" id="popup1" style="display: none;">
+                            <h2 class="heading">Enter Robot Command</h2>
+
+                            <label for="name" class="nameheading">Name</label><br>
+                            <input type="text" id="name_point" placeholder="Enter name" class="pointname" /><br>
+                            <div class="popup-buttons">
+                                <button class="submit" id="submit">Submit</button>
+                                <button class="cancel" id="cancel">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- button -->
+                    <div class="button-item">
+                        <button class="control-button control-button-two" id="plan">Plan</button>
+                    </div>
+
+                    <!-- popup -->
+                    <!-- <form> -->
+                    <div class="popupplan" id="popup2" style="display: none;">
+                        <h2 class="headingplan">Plan Spaces</h2>
+                        <div class="popupplan-buttons">
+                            <button class="submit" id="cartesian">Cartesian</button>
+                            <button class="cancel" id="joint">Joint</button>
+                        </div>
+                    </div>
+                    <!-- </form> -->
+                    <!-- popup -->
+
+                    <div class="button-item">
+                        <button class="control-button control-button-three" id="path"> Save Path</button>
+                    </div>
+                    <!-- popup -->
+                    <div class="popup" id="popup3" style="display: none;">
+                        <h2 class="heading">Enter Path</h2>
+
+                        <label for="name" class="nameheading">Name</label><br>
+                        <input type="text" class="pathname" id="name_path" placeholder="Enter name"
+                            onclick="showOptions()" onclick="hideOptions()" required />
+
+                        <!-- Options List -->
+                        <div id="optionsList" class="options-container" onmouseover="keepOptionsVisible()"
+                            onmouseout="hideOptions()">
+                            <div id="hoverText" class="hover-text"></div>
+
+                            <!-- Adding all options with hover text -->
+                            <a href="#" class="option"
+                                onmouseover="showText('After coming from CNC, path after which indicator measures cap size and takes decision.')"
+                                onclick="selectOption('return_cnc')">return_cnc</a>
+
+                            <a href="#" class="option" onmouseover="showText('Path towards yes box from CNC')"
+                                onclick="selectOption('pre_plaace_yes')">pre_plaace_yes</a>
+
+                            <a href="#" class="option" onmouseover="showText('Path towards no box from CNC.')"
+                                onclick="selectOption('pre_place_no')">pre_place_no</a>
+
+                            <a href="#" class="option" onmouseover="showText('Path towards CV stand from CNC.')"
+                                onclick="selectOption('pre_place_stand_cv')">pre_place_stand_cv</a>
+
+                            <a href="#" class="option"
+                                onmouseover="showText('Path after which robot waits for CV processing.')"
+                                onclick="selectOption('cv_wait')">cv_wait</a>
+
+                            <a href="#" class="option" onmouseover="showText('Path from yes box to initial point.')"
+                                onmouseout="hideText()"
+                                onclick="selectOption('return_initial_yes')">return_initial_yes</a>
+
+                            <a href="#" class="option" onmouseover="showText('Path from no box to initial point.')"
+                                onmouseout="hideText()"
+                                onclick="selectOption('return_initial_no')">return_initial_no</a>
+
+                            <a href="#" class="option" onmouseover="showText('Path from cv to yes box.')"
+                                onmouseout="hideText()" onclick="selectOption('cv_to_yes')">cv_to_yes</a>
+
+                            <a href="#" class="option" onmouseover="showText('Path from cv to no box.')"
+                                onmouseout="hideText()" onclick="selectOption('cv_to_no')">cv_to_no</a>
+
+                            <a href="#" class="option"
+                                onmouseover="showText('After this path gripper 1 will open itself.')"
+                                onmouseout="hideText()" onclick="selectOption('pick_point_1')">pick_point_1</a>
+
+                            <a href="#" class="option"
+                                onmouseover="showText('After this path gripper 1 will close itself.')"
+                                onmouseout="hideText()" onclick="selectOption('place_point_1')">place_point_1</a>
+
+                            <a href="#" class="option"
+                                onmouseover="showText('After this path gripper 2 will open itself.')"
+                                onmouseout="hideText()" onclick="selectOption('pick_point_2')">pick_point_2</a>
+
+                            <a href="#" class="option"
+                                onmouseover="showText('After this path gripper 2 will close itself.')"
+                                onmouseout="hideText()" onclick="selectOption('place_point_2')">place_point_2</a>
+                        </div>
+
+
+                        <label class="block planspace">Plan Space:</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="number" value="1" class="cartesianradio" checked />
+                                <span class="radio-input">Cartesian</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="number" value="2" class="jointradio" />
+                                <span class="radio-input">Joint</span>
+                            </label>
+                        </div>
+
+                        <label for="name" class="velocity">Velocity (0.1 - 1)</label><br>
+                        <input type="number" id="speed" min="0.1" max="1" step="0.1" placeholder="Enter Velocity"
+                            class="velocityfield" value="1" required /><br>
+                        <span class="error-message">Value must be between 0.1 and 1</span>
+
+                        <!-- <label for="name" class="acceleration">Acceleration (0.1 - 1)</label><br>
+                    <input type="number" id="acceleration" min="0.1" max="1" step="0.1" placeholder="Enter Acceleration"
+                        class="accelerationfield" value="0.5" required /><br> -->
+
+                        <label for="name" class="waittime">Wait Time</label><br>
+                        <input type="number" id="wait_time" placeholder="Enter Wait Time" class="waittimefield"
+                            value="0" required /><br>
+
+                        <div class="popup-buttons">
+                            <button class="submit" id="path_submit" disabled>Submit</button>
+                            <button class="cancel" id="cancell">Cancel</button>
+                        </div>
+                    </div>
+                    <!-- popup -->
+                    <div class="button-item">
+                        <button class="control-button control-button-four" id="executeLastButton">Execute Last</button>
+                    </div>
+                    <div class="button-item">
+                        <button class="control-button control-button-five" id="execute"> Execute</button>
+                    </div>
+                    <div class="button-item">
+                        <button class="control-button control-button-ten" id="repeat-button"> Repeat</button>
+                    </div>
+
+                    <!-- popup -->
+                    <form>
+                        <div class="popup" id="repeat-pop-up" style="display: none;">
+                            <h2 class="heading">Enter Robot Command</h2>
+
+                            <label for="name" class="nameheading">Name</label><br>
+                            <input type="number" id="repetitions" placeholder="Enter name" class="pointname" /><br>
+                            <div class="popup-buttons">
+                                <button class="submit" id="repeat-submit">Submit</button>
+                                <button class="cancel" id="repeat-cancel">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- popup -->
+
+                    <div class="button-item">
+                        <button class="control-button control-button-six" id="deleteLastPoint"> Delete last
+                            point</button>
+                    </div>
+                    <div class="button-item">
+                        <button class="control-button control-button-seven" id="deleteLastPath"> Delete last
+                            path</button>
+                    </div>
+                    <div class="button-item">
+                        <button class="control-button control-button-eight" id="deleteAllPoint"> Delete all
+                            point</button>
+                    </div>
+                    <div class="button-item">
+                        <button class="control-button control-button-nine" id="deleteAllPath"> Delete all path</button>
+                    </div>
+
+                </div>
+                <div class="path-point-view-container">
+                    <div class="point-view-container">
+                        <h2 class="segment-underline">Point Segments</h2>
+
+                        <div class="item-list-Point" id="itemListPoint"></div>
+
+                    </div>
+                    <div class="path-view-container">
+                        <h2 class="segment-underline">Path Segments</h2>
+                        <div class="item-list-Path" id="itemListPath"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="robot-controller-container">
+                <div class="servo-node-control-button-container">
+                    <div class="robot-joint-controller-container">
+                        <h3>ROBOT JOINT CONTROL </h3>
+                        <div class="joint-item">
+                            <label class="joint_name" for="join1">J1:</label>
+                            <button class="btna btnplus" id="j1_plus">+</button>
+                            <label class="subs_value" id="j1val" for="">0.0</label>
+                            <button class="btna btnminus" id="j1_minus">-</button>
+                        </div>
+
+                        <div class="joint-item">
+                            <label class="joint_name" for="join2">J2:</label>
+                            <button class="btna btnplus" id="j2_plus">+</button>
+                            <label class="subs_value" id="j2val" for="">0.0</label>
+                            <button class="btna btnminus" id="j2_minus">-</button>
+                        </div>
+                        <div class="joint-item">
+                            <label class="joint_name" for="join3">J3:</label>
+                            <button class="btna btnplus" id="j3_plus">+</button>
+                            <label class="subs_value" id="j3val" for="">0.0</label>
+                            <button class="btna btnminus" id="j3_minus">-</button>
+                        </div>
+                        <div class="joint-item">
+                            <label class="joint_name" for="join4">J4:</label>
+                            <button class="btna btnplus" id="j4_plus">+</button>
+                            <label class="subs_value" id="j4val" for="">0.0</label>
+                            <button class="btna btnminus" id="j4_minus">-</button>
+                        </div>
+                        <div class="joint-item">
+                            <label class="joint_name" for="join5">J5:</label>
+                            <button class="btna btnplus" id="j5_plus">+</button>
+                            <label class="subs_value" id="j5val" for="">0.0</label>
+                            <button class="btna btnminus" id="j5_minus">-</button>
+                        </div>
+                        <div class="joint-item">
+                            <label class="joint_name" for="join6">J6:</label>
+                            <button class="btna btnplus" id="j6_plus">+</button>
+                            <label class="subs_value" id="j6val" for="">0.0</label>
+                            <button class="btna btnminus" id="j6_minus">-</button>
+                        </div>
+                    </div>
+                    <div class="translation-rotation-motion-container">
+                        <h3>ROBOT CARTESIAN CONTROL </h3>
+
+                        <div class="joint-item">
+                            <label class="joint_name" for="x">X:</label>
+                            <button class="btna btnplus" id="cx_plus">+</button>
+                            <label class="subs_value" id="xval" for="">0.0</label>
+                            <button class="btna btnminus" id="cx_minus">-</button>
+                        </div>
+                        <div class="joint-item">
+                            <label class="joint_name" for="y">Y:</label>
+                            <button class="btna btnplus" id="cy_plus">+</button>
+                            <label class="subs_value" id="yval" for="">0.0</label>
+                            <button class="btna btnminus" id="cy_minus">-</button>
+                        </div>
+                        <div class="joint-item">
+                            <label class="joint_name" for="z">Z:</label>
+                            <button class="btna btnplus" id="cz_plus">+</button>
+                            <label class="subs_value" id="zval" for="">0.0</label>
+                            <button class="btna btnminus" id="cz_minus">-</button>
+                        </div>
+                        <div class="joint-item">
+                            <label class="joint_name" for="r">R:</label>
+                            <button class="btna btnplus" id="cr_plus">+</button>
+                            <label class="subs_value" id="rval" for="">0.0</label>
+                            <button class="btna btnminus" id="cr_minus">-</button>
+                        </div>
+                        <div class="joint-item">
+                            <label class="joint_name" for="p">P:</label>
+                            <button class="btna btnplus" id="cp_plus">+</button>
+                            <label class="subs_value" id="pval" for="">0.0</label>
+                            <button class="btna btnminus" id="cp_minus">-</button>
+                        </div>
+                        <div class="joint-item">
+                            <label class="joint_name" for="w">W:</label>
+                            <button class="btna btnplus" id="cw_plus">+</button>
+                            <label class="subs_value" id="wval" for="">0.0</label>
+                            <button class="btna btnminus" id="cw_minus">-</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="robot-control-button-container">
+                    <div class="toggle_v2">
+                        <!-- <div class="left_side">
+                             <h3 class="toggle-button-label">Gripper1:</h3>
+                        </div> -->
+                        <div class="right_side_button">
+                            <div class="toggle-button-cover">
+                                <h3 class="toggle-button-label">Gripper1:</h3>
+                                <div id="button-3" class="button r">
+                                    <input id="gripper" class="checkbox" type="checkbox">
+                                    <div class="knobs"></div>
+                                    <div class="layer"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="left_side">
+                             <h3 class="toggle-button-label">Gripper2:</h3>
+                        </div> -->
+                        <div class="right_side_button">
+                            <div class="toggle-button-cover">
+                                <h3 class="toggle-button-label">Gripper2:</h3>
+                                <div id="button-3" class="button r">
+                                    <input id="gripper_2" class="checkbox" type="checkbox">
+                                    <div class="knobs"></div>
+                                    <div class="layer"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- <div class="left_side">
+                             <h3 class="toggle-button-label">Mode:</h3>
+                        </div> -->
+                        <div class="right_side_button">
+                            <div class="toggle-button-cover">
+                                <h3 class="toggle-button-label">Mode:</h3>
+                                <div id="button-4" class="button r">
+                                    <input id="switch_mode_1" class="checkbox" type="checkbox">
+                                    <div class="knobs"></div>
+                                    <div class="layer"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="left_side">
+                             <h3 class="toggle-button-label">Robot:</h3>
+                        </div> -->
+                        <div class="right_side_button">
+                            <div class="toggle-button-cover">
+                                <h3 class="toggle-button-label">Robot:</h3>
+                                <div id="button-6" class="button r">
+                                    <input id="play_pause" class="checkbox" type="checkbox">
+                                    <div class="knobs"></div>
+                                    <div class="layer"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="digital-indicator-range-button-container">
+                            <button class="digital-indicator-button" onclick="openDigitalIndicatorPopup()">Digital
+                                Indicator
+                                Range</button>
+
+                            <!-- range Popup -->
+                            <div id="digital-indicator-popup" class="digital-indicator-popup">
+                                <h3>Current Range</h3>
+                                <p>Min: <span id="digital-indicator-current-min">--</span> Max: <span
+                                        id="digital-indicator-current-max">--</span></p>
+                                <button class="digital-indicator-refresh-btn"
+                                    onclick="getDigitalIndicatorCurrentRange()">Refresh🔄</button>
+                                <h3>Update Range</h3>
+                                <input type="number" id="digital-indicator-new-min" step="0.001"
+                                    placeholder="Min Value">
+                                <input type="number" id="digital-indicator-new-max" step="0.001"
+                                    placeholder="Max Value">
+                                <br><br>
+                                <button class="digital-indicator-update-btn"
+                                    onclick="updateDigitalIndicatorRange()">Update</button>
+
+                                <p id="digital-indicator-status-msg"></p>
+                                <button class="digital-indicator-reset-btn" onclick="resetDigitalIndicatorRange()">Reset
+                                    to
+                                    Default</button>
+                                <!-- New Button for Testing -->
+                                <button class="digital-indicator-test-btn"
+                                    onclick="openDigitalIndicatorTestPopup()">TEST
+                                    Digital
+                                    Indicator</button>
+
+                                <button class="digital-indicator-close-btn"
+                                    onclick="closeDigitalIndicatorPopup()">Close</button>
+                            </div>
+
+                            <!--Popup for Testing -->
+                            <div id="digital-indicator-test-popup" class="digital-indicator-test-popup">
+                                <h3>Digital Indicator Testing</h3>
+                                <button id="digitalIndicatorTriggerButton"
+                                    class="digital-indicator-test-trigger-btn">Trigger Digital
+                                    Indicator</button>
+                                <p>Current Value: <span id="digital-indicator-current-value">--</span></p>
+                                <button class="digital-indicator-close-btn"
+                                    onclick="closeDigitalIndicatorTestPopup()">Close</button>
+                                <button class="digital-indicator-goto-range-btn"
+                                    onclick="gotoDigitalIndicatorRangePopup()">Go to DI Range
+                                    Setup</button>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Success Popup (Initially hidden) -->
+            <div id="successPopup" class="success-popup">
+                <p>Point saved successfully!</p>
+            </div>
+
+
+            <div id="pathsuccessPopup" class="pathsuccess-popup">
+                <p>Path saved successfully!</p>
+            </div>
+
+
+
+            <div id="plansuccessPopup" class="plansuccess-popup">
+                <p>Planning successfully!</p>
+            </div>
+
+
+            <div id="planfail" class="planfail-popup">
+                <p>Planning failed!</p>
+            </div>
+
+
+            <div id="deletelastpathsuccessPopup" class="deletelastpathsuccess-popup">
+                <p>last path deleted successfully!</p>
+            </div>
+
+
+
+            <div id="pathfileemptysuccessPopup" class="pathfileemptysuccess-popup">
+                <p>Path Yaml Found Empty!!!</p>
+            </div>
+
+
+            <div id="pointfileemptysuccessPopup" class="pointfileemptysuccess-popup">
+                <p>Point Yaml Found Empty!!!</p>
+            </div>
+
+
+            <div id="deletelastpointsuccessPopup" class="deletelastpointsuccess-popup">
+                <p>last point deleted successfully!</p>
+            </div>
+
+            <div id="deleteallpathsuccessPopup" class="deletealltpathsuccess-popup">
+                <p>All path deleted successfully!</p>
+            </div>
+
+
+            <div id="deleteallpointsuccessPopup" class="deleteallpointsuccess-popup">
+                <p>All point deleted successfully!</p>
+            </div>
+
+
+            <div id="yamlpointscheck" class="yamlpointscheck-popup">
+                <p>Need One More Point!</p>
+            </div>
+
+
+
+            <div id="jointpoint" class="jointpoint-popup">
+                <p>Robot is at Wrong Point Position</p>
+                <p>Do you want to reverse the Path ?</p>
+
+                <div class="popupplan-buttons">
+                    <button class="submit" id="yes">Yes</button>
+                    <button class="cancel" id="no">No</button>
+                </div>
+            </div>
+
+
+            <div id="executelast" class="executelast-popup">
+                <p>Execute Last Successfully</p>
+            </div>
+
+            <!-- /*confirmation publishing html -- satyanshu*/ -->
+
+            <div id="customConfirm" class="custom-confirm">
+                <div class="custom-confirm-content">
+                    <p id="confirmMessage"></p>
+                    <button id="confirmYes">Yes</button>
+                    <button id="confirmNo">No</button>
+                </div>
+            </div>
+
+            <!-- /*confirmation publishing html -- satyanshu*/ -->
+
+
+            <script src="scripts/roslib.js"></script>
+            <script src="scripts/script.js"></script>
+            <script src="scripts/popup.js"></script>
+            <script src="scripts/save_point.js"></script>
+            <script src="scripts/swal.js"></script>
+            <script src="scripts/toggle_buttons.js"></script>
+            <!-- <script src="scripts/path_view.js"></script> -->
+            <script src="scripts/dropdown_options.js"></script>
+            <script src="scripts/subscriptions.js"></script>
+
+</body>
+
+</html>

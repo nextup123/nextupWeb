@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Buttons</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* 3 columns */
+            grid-template-rows: repeat(2, auto);
+            /* 2 rows */
+            gap: 12px;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .toggle-container:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        /* Gripper 1 */
+        .toggle-container:nth-child(2) {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        /* Gripper 2 */
+        .toggle-container:nth-child(3) {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        /* Mode */
+        .toggle-container:nth-child(4) {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        /* Robot */
+        .toggle-container:nth-child(5) {
+            grid-column: 3;
+            grid-row: 1;
+        }
+
+        /* CNC */
+        .toggle-container:nth-child(6) {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        /* CV */
+
+        .toggle-container {
+            position: relative;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Center the toggle button with the label */
+        }
+
+        .toggle-label-text {
+            min-width: 100px;
+            max-height: fit-content;
+            font-size: 15px;
+            font-weight: bold;
+            color: #dbf3ee;
+            /* margin-bottom: 4px; */
+            display: block;
+            /* background-color: #158497; */
+            background: linear-gradient(#2fb3db, #14577e);
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            padding: 2px;
+            margin: 2px;
+        }
+
+        .toggle-input {
+            display: none;
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 120px;
+            height: 44px;
+            background: linear-gradient(145deg, #7e1414, #db352f);
+            /* Gradient for "Off" state */
+            border-radius: 30px;
+            padding: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out, box-shadow 0.3s ease;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle-label:hover {
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .toggle-circle {
+            padding: 2px;
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #14577e;
+            font-weight: bold;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            position: absolute;
+            left: 5px;
+            box-shadow: 0 4px 6px #0000003a;
+        }
+
+        /* Specific style for the "Mode" toggle to accommodate longer text */
+        #toggle-mode+.toggle-label .toggle-circle {
+            width: 60px;
+            /* Adjust font size if needed */
+            border-radius: 50px;
+        }
+
+        .toggle-input:checked+.toggle-label {
+            background: linear-gradient(145deg, #2fdb46, #147e19);
+            /* Gradient for "On" state */
+        }
+
+        .toggle-input:checked+.toggle-label .toggle-circle {
+            transform: translateX(75px);
+            background-color: #fff;
+            color: #029b47;
+        }
+
+        .toggle-input-mode:checked+.toggle-label .toggle-circle {
+            transform: translateX(55px);
+            background-color: #fff;
+            color: #029b47;
+        }
+
+
+        /* animations and enhancements */
+        .toggle-label:hover .toggle-circle {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-container">
+        <!-- Gripper 1 -->
+        <div class="toggle-container">
+            <span class="toggle-label-text">Gripper 1</span>
+            <input type="checkbox" id="toggle-gripper1" class="toggle-input">
+            <label for="toggle-gripper1" class="toggle-label">
+                <span class="toggle-circle">Close</span>
+            </label>
+        </div>
+
+        <!-- Gripper 2 -->
+        <div class="toggle-container">
+            <span class="toggle-label-text">Gripper 2</span>
+            <input type="checkbox" id="toggle-gripper2" class="toggle-input">
+            <label for="toggle-gripper2" class="toggle-label">
+                <span class="toggle-circle">Close</span>
+            </label>
+        </div>
+
+        <!-- Mode -->
+        <div class="toggle-container">
+            <span class="toggle-label-text">Mode</span>
+            <input type="checkbox" id="toggle-mode" class="toggle-input toggle-input-mode">
+            <label for="toggle-mode" class="toggle-label">
+                <span class="toggle-circle">Position</span>
+            </label>
+        </div>
+
+        <!-- Robot -->
+        <div class="toggle-container">
+            <span class="toggle-label-text">Robot</span>
+            <input type="checkbox" id="toggle-robot" class="toggle-input">
+            <label for="toggle-robot" class="toggle-label">
+                <span class="toggle-circle">Pause</span>
+            </label>
+        </div>
+
+        <!-- CNC -->
+        <div class="toggle-container">
+            <span class="toggle-label-text">CNC</span>
+            <input type="checkbox" id="toggle-cnc" class="toggle-input">
+            <label for="toggle-cnc" class="toggle-label">
+                <span class="toggle-circle">Close</span>
+            </label>
+        </div>
+
+        <!-- CV -->
+        <div class="toggle-container">
+            <span class="toggle-label-text">CV</span>
+            <input type="checkbox" id="toggle-cv" class="toggle-input">
+            <label for="toggle-cv" class="toggle-label">
+                <span class="toggle-circle">Down</span>
+            </label>
+        </div>
+
+    </div>
+    <script src="roslib.js"></script>
+    <script>
+
+        const ros = new ROSLIB.Ros({
+            url: 'ws://localhost:9090' // Replace with your ROS bridge server URL
+        });
+
+        ros.on('connection', () => {
+            console.log('Connected to ROS bridge');
+        });
+
+        ros.on('error', (error) => {
+            console.error('Error connecting to ROS bridge:', error);
+        });
+
+        ros.on('close', () => {
+            console.log('Connection to ROS bridge closed');
+        });
+
+        // Subscribe to /nextup_joint_states topic
+        const cobot_joint_state = new ROSLIB.Topic({
+            ros: ros,
+            name: '/nextup_joint_states',
+            messageType: 'std_msgs/msg/Int32'
+        });
+
+        var prev_mode = 8;
+        cobot_joint_state.subscribe((message) => {
+            // const mode = message.modeofoperation[0];
+            const mode = message.data;
+
+
+            // Update the checkbox based on the value
+            const checkbox = document.getElementById('toggle-mode');
+
+            if (mode !== prev_mode) {
+                if (mode === 9) {
+                    checkbox.checked = true;
+                    console.log("Velocity control mode");
+                } else {
+                    checkbox.checked = false;
+                    console.log("Position control mode");
+                }
+                prev_mode = mode;
+            }
+        });
+
+        // Define ROS publishers
+        const publishers = {};
+
+        const toggles = [
+            { id: 'toggle-gripper1', onText: 'Open', offText: 'Close', topic: 'ui_commands', onRosPub: 'gt1', offRosPub: 'gt0', msgType: 'std_msgs/String' },
+            { id: 'toggle-gripper2', onText: 'Open', offText: 'Close', topic: 'ui_commands', onRosPub: 'gt3', offRosPub: 'gt2', msgType: 'std_msgs/String' },
+            { id: 'toggle-mode', onText: 'Velocity', offText: 'Position', topic: 'cobot_play_pause', onRosPub: true, offRosPub: false, msgType: 'std_msgs/Bool' },
+            { id: 'toggle-robot', onText: 'Play', offText: 'Pause', topic: 'ui_commands', onRosPub: 'st9', offRosPub: 'st8', msgType: 'std_msgs/String' },
+            { id: 'toggle-cnc', onText: 'Open', offText: 'Close', topic: 'cnc_do_control', onRosPub: true, offRosPub: false, msgType: 'std_msgs/Bool' },
+            { id: 'toggle-cv', onText: 'Up', offText: 'Down', topic: 'cv_do_control', onRosPub: true, offRosPub: false, msgType: 'std_msgs/Bool' }
+        ];
+
+        // Initialize publishers
+        toggles.forEach(toggle => {
+            publishers[toggle.id] = new ROSLIB.Topic({
+                ros: ros,
+                name: toggle.topic,
+                messageType: toggle.msgType
+            });
+        });
+
+        // Add event listeners for all toggles
+        toggles.forEach(toggle => {
+            document.getElementById(toggle.id).addEventListener('change', function () {
+                const toggleCircle = this.nextElementSibling.querySelector('.toggle-circle');
+                let message;
+
+                if (this.checked) {
+                    toggleCircle.textContent = toggle.onText;
+                    console.log(`${toggle.id} is now ${toggle.onText}`);
+
+                    // Create ROS message
+                    if (toggle.msgType === 'std_msgs/Bool') {
+                        message = new ROSLIB.Message({ data: toggle.onRosPub });
+                    } else if (toggle.msgType === 'std_msgs/String') {
+                        message = new ROSLIB.Message({ data: toggle.onRosPub });
+                    }
+                } else {
+                    toggleCircle.textContent = toggle.offText;
+                    console.log(`${toggle.id} is now ${toggle.offText}`);
+
+                    // Create ROS message
+                    if (toggle.msgType === 'std_msgs/Bool') {
+                        message = new ROSLIB.Message({ data: toggle.offRosPub });
+                    } else if (toggle.msgType === 'std_msgs/String') {
+                        message = new ROSLIB.Message({ data: toggle.offRosPub });
+                    }
+                }
+
+                // Publish the message
+                publishers[toggle.id].publish(message);
+                console.log(`Published to ${toggle.topic}:`, message);
+            });
+        });
+
+    </script>
+</body>
+
+</html>

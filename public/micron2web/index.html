@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COBOT CONTROLLER NEXTUP ROBOTICS</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/gpio.css">
+    <link rel="stylesheet" href="styles/usb-indicator.css">
+    <link rel="stylesheet" href="styles/gripper.css">
+    <link rel="stylesheet" href="styles/popup.css">
+</head>
+
+<body>
+    <h1 class="robot-title">ROBOT CONTROL DASHBOARD </h1>
+    <div class="container mt-5 dual-container">
+
+        <div class="left-container">
+            <div class="unit-container">
+                <div class="unit">CONTROL</div>
+            </div>
+            <div class="control-container">
+
+                <div class="loading-container">
+                    <button id="startButton" class="control-button one">
+                        START
+                        <div class="loading-bar"></div>
+                    </button>
+                </div>
+
+                <!-- Modal for displaying errors -->
+                <div id="errorModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div id="errorMessage"></div>
+                    </div>
+                </div>
+                <!-- Modal for displaying errors -->
+
+
+                <div class="loading-container">
+                    <button id="playPauseButton" class="control-button two playPause play" onclick="togglePlayPause()">
+                        PLAY
+                        <div class="loading-bar"></div>
+                    </button>
+                </div>
+
+                <div class="loading-container">
+                    <button id="exitButton" class="control-button three button2disable" onclick="publishBoolMessage('/exit_cobot_operation', true)
+                        // disableButton('0001')
+                        ">
+                        EXIT
+                        <div class="loading-bar"></div>
+                    </button>
+                </div>
+
+                <div class="loading-container">
+                    <button id="homeButton" class="control-button four button2disable"
+                        onclick="publishStringMessage('/ui_commands', 'home'), disableButton('1000')">
+                        HOME
+                        <div class="loading-bar"></div>
+                    </button>
+                </div>
+
+                <div class="loading-container">
+                    <button id="resetButton" class="control-button five reset"
+                        onclick="publishStringMessage('/ui_commands', 'reset')">
+                        RESET
+                        <div class="loading-bar"></div>
+                    </button>
+                </div>
+
+                <div class="counter-container">
+                    <div class="current-counter-container">
+                        <label>Current Operations:</label>
+                        <div class="counter" id="operation-counter">
+                            001
+                        </div>
+                    </div>
+                    <div class="total-counter-container">
+                        <label>Total Operations:</label>
+                        <div class="counter" id="total-operation-conter">
+                            000
+                        </div>
+                        <button class="control-button-reset" onclick="showResetConfirmationPopup()">Reset Total OPs
+                        </button>
+                    </div>
+                </div>
+                <div id="reset-confirmation-popup" class="reset-popup-container">
+                    <div class="reset-popup-content">
+                        <p>Are you sure you want to reset the total counts of operations?</p>
+                        <div class="reset-popup-buttons">
+                            <button class="reset-popup-button confirm" onclick="confirmReset()">Yes</button>
+                            <button class="reset-popup-button cancel" onclick="closePopup()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="right-container">
+            <div class="top-right-container">
+
+                <div class="unit-container">
+                    <div class="unit">ROBOT JOINTS STATUS</div>
+                </div>
+
+                <div class="joint-container">
+                    <div class="joint">JOINT 1</div>
+                    <div id="joint1-led-op" class="indicator indicator-false"></div>
+
+                    <div class="joint">JOINT 2</div>
+                    <div id="joint2-led-op" class="indicator indicator-false"></div>
+
+                    <div class="joint">JOINT 3</div>
+                    <div id="joint3-led-op" class="indicator indicator-false"></div>
+                </div>
+
+                <div class="joint-container">
+                    <div class="joint">JOINT 4</div>
+                    <div id="joint4-led-op" class="indicator indicator-false"></div>
+
+                    <div class="joint">JOINT 5</div>
+                    <div id="joint5-led-op" class="indicator indicator-false"></div>
+
+                    <div class="joint">JOINT 6</div>
+                    <div id="joint6-led-op" class="indicator indicator-false"></div>
+                </div>
+                <div class="joint-container robot-error-status-container">
+                    <div class="joint joint-robot-error">ROBOT STATUS</div>
+                    <div id="robot-error-status-indicator" class="indicator indicator-false"></div>
+                </div>
+            </div>
+
+            <div class="bottom-right-container">
+                <div class="unit-container">
+                    <div class="unit gpio-label">INPUT AND OUTPUT DEVICES STATUS</div>
+                </div>
+
+
+                <div class="gpio-container">
+
+                    <div class="gpio-status-pane">
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label">CAMERA CONNECTION</div>
+                            <div id="camera-indicator" class="indicator indicator-false"></div>
+                        </div>
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label">DI CONNECTION</div>
+                            <div id="digital-indicator-indicator" class="indicator indicator-false"></div>
+                        </div>
+                    </div>
+
+                    <div class="gpio-status-pane">
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label"> GRIPPER ONE</div>
+                            <div id="gripper-one-indicator" class="indicator indicator-false"></div>
+                        </div>
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label">GRIPPER TWO</div>
+                            <div id="gripper-two-indicator" class="indicator indicator-false"></div>
+                        </div>
+                    </div>
+
+                    <div class="gpio-status-pane">
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label">CAP AVAILABILTY</div>
+                            <div id="cap-availability-indicator" class="indicator indicator-false"></div>
+                        </div>
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label">CAMERA PNEUMATIC</div>
+                            <div id="pneumatic-indicator" class="indicator indicator-false"></div>
+                        </div>
+                    </div>
+
+                    <div class="gpio-status-pane-cnc">
+                        <div class="gpio-status-pane-cnc-column">
+                            <div class="gpio-border-div-cnc">
+                                <div class="gpio-status-label-cnc">CNC</div>
+                            </div>
+                            <div class="gpio-border-div-cnc-container">
+                                <div class="gpio-status-pane">
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">CHUCK STATUS</div>
+                                        <div id="cnc1-chuck-status-indicator" class="indicator indicator-false"></div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">RUNNING STATUS</div>
+                                        <div id="cnc1-running-status-indicator" class="indicator indicator-false"></div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">DOOR STATUS</div>
+                                        <div id="cnc1-door-status-indicator" class="indicator indicator-false"></div>
+                                    </div>
+                                </div>
+                                <div class="gpio-cnc-divider">
+                                </div>
+                                <div class="gpio-status-pane gpio-status-pane-two">
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">CNC STATUS</div>
+                                        <div id="cnc1-fault-status-indicator" class="indicator indicator-false"></div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">CNC AUTOMODE STATUS</div>
+                                        <div id="cnc1-automode-status-indicator" class="indicator indicator-false">
+                                        </div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">CNC CHUCK ID-OD</div>
+                                        <div id="cnc1-chuck-id_od-indicator" class="indicator indicator-false">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="gpio-cnc-divider">
+                        </div>
+                        <div class="gpio-status-pane">
+                            <div class="gpio-border-div-cnc">
+                                <div class="gpio-status-label-cnc">CNC 2</div>
+                            </div>
+                            <div class="gpio-border-div-cnc">
+                                <div class="gpio-status-label">CHUCK STATUS</div>
+                                <div id="cnc2-chuck-status-indicator" class="indicator indicator-false"></div>
+                            </div>
+                            <div class="gpio-border-div-cnc">
+                                <div class="gpio-status-label">RUNNING STATUS</div>
+                                <div id="cnc2-running-status-indicator" class="indicator indicator-false"></div>
+                            </div>
+                            <div class="gpio-border-div-cnc">
+                                <div class="gpio-status-label">DOOR STATUS</div>
+                                <div id="cnc2-door-status-indicator" class="indicator indicator-false"></div>
+                            </div>
+                        </div> -->
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div id="startrobot" class="startrobot-popup">
+        <p>Robot Started!</p>
+    </div>
+
+
+    <div id="playrobot" class="playrobot-popup">
+        <p>Robot Play!</p>
+    </div>
+
+
+    <div id="homingrobot" class="homingrobot-popup">
+        <p>Homing Done!</p>
+    </div>
+
+
+    <div id="exitrobot" class="exitrobot-popup">
+        <p>Exit!</p>
+    </div>
+
+
+    <div id="resetrobot" class="resetrobot-popup">
+        <p>RESET!</p>
+    </div>
+
+    <div id="pauserobot" class="pauserobot-popup">
+        <p>Robot Pause!</p>
+    </div>
+
+
+
+
+
+    </div>
+    <script src="scripts/roslib.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/ros_subscriptions.js"></script>
+    <script src="scripts/popup.js"></script>
+    <!-- <script>disableButton("1111")</script> -->
+
+</body>
+
+</html>

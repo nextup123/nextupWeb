@@ -1,0 +1,299 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    /* background-color: #20202c; */
+    background: linear-gradient(90deg, #20202c, #0b111b);
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+
+    -webkit-touch-callout: none; /* Disable callout on long press */
+    -webkit-user-select: none; /* Disable text selection */
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+    /* width: 95vh; */
+}
+
+.dashboard-container {
+    max-width: 2000px;
+    min-width: 1400px;
+    /* max-width: 90vh; */
+    margin: 0 auto;
+    padding: 30px;
+}
+
+header {
+    text-align: center;
+}   
+
+/* Digital Clock Styles */
+#digital-clock {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5em;
+    font-weight: 400;
+    color: #daf5f1;
+    background-color: #27293d;
+    padding: 4px 20px;
+    border-radius: 8px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.541);
+}
+
+
+header h1 {
+    text-align: center;
+    color: #d8e7eb;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #10a8d6;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+
+/* Main Content Layout */
+.main-content {
+    display: flex;
+    gap: 20px;
+}
+
+.terminal-section,
+.error-section {
+    flex: 1;
+
+}
+
+.header-container-h2 {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #10a8d6;
+}
+
+/* Terminal Section */
+.terminal-section h2,
+.error-section h2 {
+    color: #d1faf4;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.terminal-container {
+    background-color: #2c1724;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+}
+
+#terminal-display {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #110e10;
+    color: #e4fffe;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-bottom: 10px;
+}
+
+/* Timestamp Styling */
+.timestamp {
+    color: #d6b6ae;
+    border: 1px solid #e44819;
+    /* padding: 1px; */
+    border-radius: 5px;
+    /* Light gray color for the timestamp */
+    margin-right: 10px;
+    /* Space between timestamp and log message */
+    font-family: monospace;
+    /* Match terminal font */
+}
+
+.terminal-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.terminal-controls .btn {
+    background-color: #00d1b2;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.terminal-controls .btn:hover {
+    background-color: #00b89c;
+}
+
+.terminal-controls .btn:disabled {
+    background-color: #7f8c8d;
+    cursor: not-allowed;
+}
+
+/* Error Table Section */
+.table-container {
+    overflow-x: auto;
+    background-color: #27293d;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    height: 620px;
+    /* Same height as terminal */
+    overflow-y: auto;
+    /* Make it scrollable */
+}
+
+#error-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#error-table th,
+#error-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #3a3b4d;
+}
+
+#error-table th {
+    background-color: #066c8b;
+    color: #ffffff;
+    font-weight: 500;
+    /* border-radius: 5px; */
+    border: 1px double #089cff;
+}
+
+#error-table tr:hover {
+    background-color: #3a3b4d;
+
+}
+
+#error-table td {
+    color: #ffffff;
+    border: 1px dotted #026164;
+
+}
+
+/* Expandable Rows */
+.expandable-row {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.expandable-row:hover {
+    background-color: #3a3b4d;
+}
+
+.expandable-content {
+    display: none;
+    /* Hidden by default */
+    padding: 10px;
+    background-color: #2c3e50;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.expandable-content.show {
+    display: table-row;
+    /* Visible when expanded */
+}
+
+/* Nested Table Styles */
+.nested-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+.nested-table th,
+.nested-table td {
+    padding: 8px;
+    border: 1px solid #3a3b4d;
+    text-align: left;
+}
+
+.nested-table th {
+    background-color: #00cad1;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.nested-table tr:hover {
+    background-color: #3a3b4d;
+}
+
+/* Actions Column */
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actions .btn {
+    background-color: #00a0d1;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.actions .btn:hover {
+    background-color: #b43e07;
+}
+
+.no-errors-text {
+    text-align: center;
+    font-size: 1.2em;
+    color: #888;
+    padding: 20px;
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 10px;
+    /* Width of the scrollbar */
+    height: 10px;
+    /* Height of the horizontal scrollbar */
+}
+
+/* Track (the background of the scrollbar) */
+::-webkit-scrollbar-track {
+    background: #2c3e50;
+    /* Dark background for the track */
+    border-radius: 5px;
+    /* Rounded corners */
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+    background: #ad2e54;
+    /* Accent color for the handle */
+    border-radius: 5px;
+    transition: background 0.3s;
+    /* Smooth transition for hover effect */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #03498b;
+    /* Slightly darker accent color on hover */
+}
+
+/* Corner (where vertical and horizontal scrollbars meet) */
+::-webkit-scrollbar-corner {
+    background: #1c2f3a;
+    /* Match the track color */
+}

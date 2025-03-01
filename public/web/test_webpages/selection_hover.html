@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Dropdown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .tooltip {
+            visibility: hidden;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: relative;
+            z-index: 2;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -50px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .dropdown-content a:hover + .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Movie Dropdown List</h1>
+    <div class="dropdown">
+        <button>Movies</button>
+        <div class="dropdown-content">
+            <a href="#">Movie 1</a><span class="tooltip">Hello Shivam 1</span>
+            <a href="#">Movie 2</a><span class="tooltip">Hello Shivam 2</span>
+            <a href="#">Movie 3</a><span class="tooltip">Hello Shivam 3</span>
+            <a href="#">Movie 4</a><span class="tooltip">Hello Shivam 4</span>
+        </div>
+    </div>
+</body>
+</html>

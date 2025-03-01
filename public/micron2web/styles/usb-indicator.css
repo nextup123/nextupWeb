@@ -1,0 +1,117 @@
+.usb-container{
+    /* background-color: #00ffff85; */
+    display: flex;
+    width: auto;
+
+}
+.usb-container-male{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    z-index: 1;
+    transform: translateX(0);
+    transition: transform 0.5s ease-in-out;
+    /* transform: translateX(-28px);   */
+}
+.outer-side{
+    width: 40px;
+    height: 40px;
+    background-color: #ffffff;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+.usb-cable-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+}
+.usb-protector{
+    background-color: #d6d5d5;
+    height: 10px;
+    width: 20%;
+}
+.usb-cable{
+    background-color: #ffffff;
+    height: 2px;
+    width: 80%;
+}
+.usb-port-male{
+    background-color: #d6d5d5;
+    height: 34px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+
+}
+.usb-port-male-hole{
+    height: 8px;
+    width: 8px;
+    background-color: #4b4a4a;
+}
+.usb-container-female-upper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 42px;
+    width: 40px;
+    background-color: #bdb9b9;
+    z-index: 3;
+    position: relative;
+}
+.usb-container-female-lower{
+    height: 38px;
+    width: 8px;
+    background-color: #4b4a4a;
+    border: 2px solid #d6d5d5;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 2px;
+    z-index: -1;
+}
+.usb-port-female-hole{
+    height: 4px;
+    width: 4px;
+    background-color: #e4dddd;
+}
+.usb-indicator{
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: rgb(128, 41, 0);
+    border: 2px double rgb(255, 141, 47) ;
+    transition: background-color 0.3s ease, border-color 1s ease;
+}
+
+.connected .usb-indicator {
+    background-color: green;
+    border-color: greenyellow;
+}
+
+.connected .usb-container-male {
+    transform: translateX(-28px);
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #db3458;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}

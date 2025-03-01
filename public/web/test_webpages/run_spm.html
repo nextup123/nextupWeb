@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> SPM CONTROLLER</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #f1f1f1;
+            font-family: 'Roboto', sans-serif;
+        }
+        .robot-title {
+            font-size: 2rem;
+            color: #ff7f50;
+            text-align: center;
+            /* margin-bottom: 30px; */
+        }
+        .robot-title{
+            margin-top: 100px;
+        }
+        .unit-container {
+            width: 80%;
+            display: flex;
+            margin-left: 10%;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ff7f50;
+            padding-bottom: 10px;
+        }
+        .unit {
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        .vertical-divider {
+            border-left: 2px solid #ff7f50;
+            height: 100%;
+            margin: 0 15px;
+        }
+        .slider-row{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+        }
+        /* General button styling */
+        button {
+            font-size: 1.2rem;
+            padding: 15px 40px;
+            margin: 10px;
+            border: none;
+            border-radius: 80px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Space between icon and text */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2); /* 3D-like shadow */
+        }
+
+        /* Run button styling */
+        .btn-run {
+            background: linear-gradient(145deg, #08ca2f, #2c664c); /* Green gradient */
+            color: white;
+        }   
+
+        .btn-run:hover {
+            background: linear-gradient(145deg, #2aaf73, #1e8a5d); /* Darker green on hover */
+            transform: translateY(-3px); /* Lift effect */
+            box-shadow: 0 6px 12px rgba(60, 207, 145, 0.5); /* Glow effect */
+        }
+
+        /* Stop button styling */
+        .btn-stop {
+            background: linear-gradient(145deg, #e63946, #a62330); /* Red gradient */
+            color: white;
+        }
+
+        .btn-stop:hover {
+            background: linear-gradient(145deg, #a62330, #8e1d29); /* Darker red on hover */
+            transform: translateY(-3px); /* Lift effect */
+            box-shadow: 0 6px 12px rgba(230, 57, 70, 0.5); /* Glow effect */
+        }
+
+        /* Button group alignment */
+        .slider-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px; /* Add spacing between groups */
+        }
+
+        /* Button container */
+        .button-container {
+            margin: 0 15px; /* Space between buttons */
+        }
+
+        /* Icon styling */
+        i {
+            font-size: 1.5rem; /* Size of icons */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+            i {
+                font-size: 1.2rem;
+            }
+        }
+
+
+        .emergency-stop {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(130deg, #a33d2d, #701d1a);
+            border-radius: 50%;
+            box-shadow: 
+                -2px -2px 1px 3px #1b1b1b,
+                2px 2px 1px 2px #686868,
+                -12px -12px 15px #605e61,
+                12px 12px 15px #1b1b1b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.5s ease;
+        }
+
+        .emergency-stop .circle {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(130deg, #a33d2d, #701d1a);
+            border-radius: 50%;
+            box-shadow:
+                0px 0px 5px 5px #323232,
+                5px 4px 5px 1px #9b999c,
+                -5px -5px 10px 5px #1b1b1b;
+            border: 3px solid #2d2d2d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: background-color 0.7s ease;
+        }
+
+        .emergency-stop .icon {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 72px;
+            color: #f2f2f2;
+            margin-top: 5px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .emergency-stop .emergency-label {
+            position: absolute;
+            font-family: Helvetica, Arial, sans-serif;
+            left: -300px; /* Adjust position left */
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            font-size: 16px; /* Half the height of the button */
+            font-weight: bold;
+            color: rgb(255, 235, 235);
+            white-space: nowrap; /* Prevent label from wrapping */
+        }
+
+        .emergency-stop.active {
+            background: linear-gradient(130deg, #4caf50, #388e3c);
+        }
+
+        .emergency-stop.active .circle {
+            background: linear-gradient(130deg, #4caf50, #388e3c);
+        }
+
+        .emergency-stop.active .emergency-label {
+            color: rgb(223, 245, 232);
+        }
+
+    </style>
+    
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="robot-title">SPM CONTROLLER</h1>
+
+        <!-- Units and SPM Layout -->
+        <div class="unit-container">
+            <div class="unit">UNIT 1</div>
+            <!-- <div class="vertical-divider"></div> -->
+            <div class="unit">UNIT 2</div>
+        </div>
+        <div class="slider-row">
+            <div class="slider-group">
+                <div class="button-container">
+                    <button id="run-unit-1" class="btn-run" onclick="handleRun(1)">Run</button>
+                </div>
+                <div class="button-container">
+                    <button id="stop-unit-1" class="btn-stop" onclick="handleStop(1)">Stop</button>
+                </div>
+            </div>
+            <div class="slider-group">
+                <div class="button-container">
+                    <button id="run-unit-2" class="btn-run" onclick="handleRun(2)">Run</button>
+                </div>
+                <div class="button-container">
+                    <button id="stop-unit-2" class="btn-stop" onclick="handleStop(2)">Stop</button>
+                </div>
+            </div>
+        </div>
+        <div class="slider-row">
+            <div id="emergency-label" class="emergency-label">EMERGENCY STOP : RELEASED</div>            
+        </div>
+        <div class="slider-row">
+            <div class="emergency-stop" id="emergencyButton">
+                <div class="circle">
+                    <div class="icon">E</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ROSLIB.js -->
+    <script src="https://cdn.jsdelivr.net/npm/roslib@1.0.0/build/roslib.min.js"></script>
+
+    <script>
+      // Connect to ROS
+        const ros = new ROSLIB.Ros({
+            url: 'ws://localhost:9090' // Replace with your rosbridge websocket URL
+        });
+
+        ros.on('connection', () => {
+            console.log('Connected to rosbridge');
+        });
+
+        ros.on('error', (error) => {
+            console.error('Error connecting to rosbridge:', error);
+        });
+
+        ros.on('close', () => {
+            console.log('Connection to rosbridge closed.');
+        });
+
+        function publishToTopic(topicName, messageData) {
+            const topic = new ROSLIB.Topic({
+                ros: ros,
+                name: topicName,
+                messageType: 'std_msgs/String', // Update with correct message type
+            });
+
+            const message = new ROSLIB.Message({
+                data: messageData,
+            });
+
+            topic.publish(message);
+            console.log(`Published to topic ${topicName}: ${messageData}`);
+        }
+
+
+        function handleRun(unit) {
+        const runButton = document.getElementById(`run-unit-${unit}`);
+        const stopButton = document.getElementById(`stop-unit-${unit}`);
+
+        runButton.textContent = "Running";
+        runButton.classList.add("running");
+        runButton.classList.remove("stopped");
+
+        stopButton.textContent = "Stop";
+        stopButton.classList.remove("stopped");
+
+        publishToTopic("/run_spm", `start_spm_${unit}`);
+        }
+
+        function handleStop(unit) {
+        const runButton = document.getElementById(`run-unit-${unit}`);
+        const stopButton = document.getElementById(`stop-unit-${unit}`);
+
+        runButton.textContent = "Run";
+        runButton.classList.remove("running");
+
+        stopButton.textContent = "Stopped";
+        stopButton.classList.add("stopped");
+
+        publishToTopic("/run_spm", `stop_spm_${unit}`);
+        }
+        const button = document.getElementById('emergencyButton');
+        const label = document.querySelector('.emergency-label');
+
+        button.addEventListener('click', () => {
+            button.classList.toggle('active');
+
+            if (button.classList.contains('active')) {
+                label.textContent = 'EMERGENCY STOP : PRESSED'; // Change label when pressed
+            } else {
+                label.textContent = 'EMERGENCY STOP : RELEASED'; // Change label when released
+            }
+        });
+    </script>
+</body>
+</html>

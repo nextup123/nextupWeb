@@ -1,0 +1,33 @@
+.actuator-btn{
+    width: 170px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 16px;
+
+    background: linear-gradient(145deg, #8b0000, #4b2e2e);
+    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease;
+}
+
+.set-parameter-btn{
+    width: 270px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 16px;
+
+    background: linear-gradient(145deg, #8b0000, #4b2e2e);
+    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease;
+    
+}
+
