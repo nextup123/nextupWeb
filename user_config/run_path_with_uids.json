@@ -1,0 +1,3134 @@
+{
+  "@attributes": {
+    "BTCPP_format": "4",
+    "_uid": "uid_5a939dd3c6be_mm95c80p"
+  },
+  "@children": [
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "complete_run_path",
+          "name": "complete_run_path_9429",
+          "_uid": "uid_22d94d061eb3_mm95c80p"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_9554",
+                "_uid": "uid_39d8519fb778_mm95c80p"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_home_point1_4916",
+                      "_uid": "uid_3b27e7a343a9_mm95c80p"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_6081",
+                            "_uid": "uid_e2850b934e9c_mm95c80p"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_home_point1_5303",
+                                  "_uid": "uid_f2ab1eba9a04_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "home_point1",
+                                        "ID": "home_point1_2191",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_779bfc2d516a_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_home_point1_7733",
+                                        "msg_log": "home_point1 success",
+                                        "_uid": "uid_73ac97d72e88_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_home_point1_4480",
+                                  "_uid": "uid_6daff4bb0d4d_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_home_point1_9683",
+                                        "msg_log": "home_point1 failed",
+                                        "_uid": "uid_5bc19b9299f1_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_home_point1_7336",
+                                        "msg": "home_point1 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_0569d732fdbd_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_4f2836e341b1_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point1_point2_5867",
+                      "_uid": "uid_fb9174454c28_mm95c80p"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_6688",
+                            "_uid": "uid_3f83e95de5db_mm95c80p"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point1_point2_6857",
+                                  "_uid": "uid_a073c3a64644_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point1_point2",
+                                        "ID": "point1_point2_6751",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_d5a0e84f97a4_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point1_point2_8130",
+                                        "msg_log": "point1_point2 success",
+                                        "_uid": "uid_82c01916993a_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point1_point2_9246",
+                                  "_uid": "uid_44089260e2d6_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point1_point2_9680",
+                                        "msg_log": "point1_point2 failed",
+                                        "_uid": "uid_9b63f9d152ae_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point1_point2_2570",
+                                        "msg": "point1_point2 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_09996fc15d0d_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_6d2984ed028b_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point2_point3_3258",
+                      "_uid": "uid_3092182cc478_mm95c80p"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_7870",
+                            "_uid": "uid_644797b380b2_mm95c80p"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point2_point3_3588",
+                                  "_uid": "uid_98a303fe2d56_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point2_point3",
+                                        "ID": "point2_point3_8855",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_a9485c108427_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point2_point3_3120",
+                                        "msg_log": "point2_point3 success",
+                                        "_uid": "uid_bb12218f9131_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point2_point3_2947",
+                                  "_uid": "uid_0e77b6ad0d57_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point2_point3_6208",
+                                        "msg_log": "point2_point3 failed",
+                                        "_uid": "uid_efa93d30e371_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point2_point3_5242",
+                                        "msg": "point2_point3 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_3ded5f79690a_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_b7458fe568d7_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point3_point4_4614",
+                      "_uid": "uid_05cbb8c92077_mm95c80p"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_8198",
+                            "_uid": "uid_7f6740f5d14c_mm95c80p"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point3_point4_6003",
+                                  "_uid": "uid_2124e73ca44b_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point3_point4",
+                                        "ID": "point3_point4_3274",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_d5f437ac984d_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point3_point4_2012",
+                                        "msg_log": "point3_point4 success",
+                                        "_uid": "uid_29a40643ee26_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point3_point4_3165",
+                                  "_uid": "uid_4a47e48bcd02_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point3_point4_3234",
+                                        "msg_log": "point3_point4 failed",
+                                        "_uid": "uid_e24eab79d186_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point3_point4_5164",
+                                        "msg": "point3_point4 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_9d5ff9d27980_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_fdcf9f0326b6_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point4_point5_2442",
+                      "_uid": "uid_a7f06be2f996_mm95c80p"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_7066",
+                            "_uid": "uid_a0273de7501f_mm95c80p"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point4_point5_2562",
+                                  "_uid": "uid_ad784c03fb11_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point4_point5",
+                                        "ID": "point4_point5_8705",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_b1f3542a0029_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point4_point5_7167",
+                                        "msg_log": "point4_point5 success",
+                                        "_uid": "uid_4a92bf9ac18f_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point4_point5_6677",
+                                  "_uid": "uid_e21d614ea676_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point4_point5_7827",
+                                        "msg_log": "point4_point5 failed",
+                                        "_uid": "uid_f66c90c7b205_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point4_point5_3026",
+                                        "msg": "point4_point5 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_3568c2c3a152_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_2de481f42ee0_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point5_point4_4097",
+                      "_uid": "uid_3ce300f70b33_mm95c80p"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_7825",
+                            "_uid": "uid_5e5877c00f7d_mm95c80p"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point5_point4_8795",
+                                  "_uid": "uid_ef240147ab34_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point5_point4",
+                                        "ID": "point5_point4_2776",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_8e7a311a6329_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point5_point4_3787",
+                                        "msg_log": "point5_point4 success",
+                                        "_uid": "uid_67cc6c33b3a2_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point5_point4_5774",
+                                  "_uid": "uid_0a764b52c1fc_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point5_point4_3151",
+                                        "msg_log": "point5_point4 failed",
+                                        "_uid": "uid_ed39d43bc719_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point5_point4_6041",
+                                        "msg": "point5_point4 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_ec3940764939_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_80b5122296c7_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point4_point3_2930",
+                      "_uid": "uid_76b99191d42d_mm95c80p"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_8183",
+                            "_uid": "uid_d3bffe818af6_mm95c80p"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point4_point3_7922",
+                                  "_uid": "uid_7040e6639f84_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point4_point3",
+                                        "ID": "point4_point3_8172",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_9860424c8689_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point4_point3_2500",
+                                        "msg_log": "point4_point3 success",
+                                        "_uid": "uid_861d10d6e7eb_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point4_point3_9711",
+                                  "_uid": "uid_db0d7605a2e8_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point4_point3_4188",
+                                        "msg_log": "point4_point3 failed",
+                                        "_uid": "uid_677391cc16a7_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point4_point3_3223",
+                                        "msg": "point4_point3 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_20380e0b208e_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_467a7e35106c_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point3_point2_9124",
+                      "_uid": "uid_e525e5c7ab8b_mm95c80p"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_3089",
+                            "_uid": "uid_9f7fc9e6f236_mm95c80p"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point3_point2_5108",
+                                  "_uid": "uid_ae0c23548e47_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point3_point2",
+                                        "ID": "point3_point2_9527",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_cf9f063f1523_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point3_point2_4432",
+                                        "msg_log": "point3_point2 success",
+                                        "_uid": "uid_febd89e2eaf8_mm95c80p"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point3_point2_6321",
+                                  "_uid": "uid_846047794ea7_mm95c80p"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point3_point2_6188",
+                                        "msg_log": "point3_point2 failed",
+                                        "_uid": "uid_9cabd93d3078_mm95c80p"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point3_point2_1128",
+                                        "msg": "point3_point2 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_2338c325608a_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_aee1ca23039d_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point2_point1_2664",
+                      "_uid": "uid_3ceb26d6ef74_mm95c80s"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_2279",
+                            "_uid": "uid_4d911a3d98bf_mm95c80s"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point2_point1_4611",
+                                  "_uid": "uid_1e0862df71df_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point2_point1",
+                                        "ID": "point2_point1_7157",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_97182f10457e_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point2_point1_7826",
+                                        "msg_log": "point2_point1 success",
+                                        "_uid": "uid_370820e8deee_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point2_point1_5329",
+                                  "_uid": "uid_de7c03dfd86a_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point2_point1_9825",
+                                        "msg_log": "point2_point1 failed",
+                                        "_uid": "uid_7360a9f3b54b_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point2_point1_8946",
+                                        "msg": "point2_point1 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_b219f1f23281_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_0c6bcd4c5a9a_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point1_home_7227",
+                      "_uid": "uid_bf638b89f33c_mm95c80s"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_8682",
+                            "_uid": "uid_51300873d575_mm95c80s"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point1_home_3989",
+                                  "_uid": "uid_c845677bdfa4_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point1_home",
+                                        "ID": "point1_home_7225",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_bb3921387bc8_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point1_home_9688",
+                                        "msg_log": "point1_home success",
+                                        "_uid": "uid_3d1f3716ca71_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point1_home_9446",
+                                  "_uid": "uid_63908a756c68_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point1_home_4900",
+                                        "msg_log": "point1_home failed",
+                                        "_uid": "uid_6006323a37f5_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point1_home_6951",
+                                        "msg": "point1_home path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_28c16d7e1b9e_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_0ecf135fe051_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "home_point1",
+          "name": "home_point1_2164",
+          "_uid": "uid_7d92dc0919bc_mm95c80s"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_6165",
+                "_uid": "uid_21777fc44e19_mm95c80s"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_home_point1_5773",
+                      "_uid": "uid_2c32851831ba_mm95c80s"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_2117",
+                            "_uid": "uid_82cd3342b200_mm95c80s"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_home_point1_6669",
+                                  "_uid": "uid_0b362da53c2b_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "home_point1",
+                                        "ID": "home_point1_1137",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_ac462194fc0b_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_home_point1_7067",
+                                        "msg_log": "home_point1 success",
+                                        "_uid": "uid_4b6e6e9c1c4d_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_home_point1_4249",
+                                  "_uid": "uid_1b13eaa718b7_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_home_point1_8258",
+                                        "msg_log": "home_point1 failed",
+                                        "_uid": "uid_4e1f38769271_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_home_point1_2574",
+                                        "msg": "home_point1 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_02c573803991_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_a4d847ccf19f_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "point1_point2",
+          "name": "point1_point2_3389",
+          "_uid": "uid_ca5ba7a39d6f_mm95c80s"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_5168",
+                "_uid": "uid_1a233a69deef_mm95c80s"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point1_point2_7623",
+                      "_uid": "uid_50b92a388769_mm95c80s"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_9534",
+                            "_uid": "uid_e68a04ea0eaf_mm95c80s"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point1_point2_2157",
+                                  "_uid": "uid_6d4c0fcaaa8f_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point1_point2",
+                                        "ID": "point1_point2_2808",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_ea2ae1619516_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point1_point2_2283",
+                                        "msg_log": "point1_point2 success",
+                                        "_uid": "uid_153d64ed3e4a_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point1_point2_7823",
+                                  "_uid": "uid_8b623c2f5e06_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point1_point2_3033",
+                                        "msg_log": "point1_point2 failed",
+                                        "_uid": "uid_f91ecc84b616_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point1_point2_8059",
+                                        "msg": "point1_point2 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_c2b64c2d365e_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_7556ff73ac41_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "point2_point3",
+          "name": "point2_point3_4069",
+          "_uid": "uid_76f4db983d1e_mm95c80s"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_9135",
+                "_uid": "uid_017cd2020fe1_mm95c80s"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point2_point3_9077",
+                      "_uid": "uid_3fc6fb5039e0_mm95c80s"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_4536",
+                            "_uid": "uid_93e4aa64a213_mm95c80s"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point2_point3_2886",
+                                  "_uid": "uid_549420000e28_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point2_point3",
+                                        "ID": "point2_point3_5014",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_4d4ffa10627a_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point2_point3_4023",
+                                        "msg_log": "point2_point3 success",
+                                        "_uid": "uid_3c71f963f702_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point2_point3_8507",
+                                  "_uid": "uid_365c5f44789e_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point2_point3_5268",
+                                        "msg_log": "point2_point3 failed",
+                                        "_uid": "uid_f4694dde946b_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point2_point3_8775",
+                                        "msg": "point2_point3 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_f60a009c088a_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_25647884159d_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "point3_point4",
+          "name": "point3_point4_9456",
+          "_uid": "uid_67a68f6d3efe_mm95c80s"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_3511",
+                "_uid": "uid_8d33eb60c1bd_mm95c80s"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point3_point4_7947",
+                      "_uid": "uid_04c041e5dedd_mm95c80s"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_4053",
+                            "_uid": "uid_d9c64000e50d_mm95c80s"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point3_point4_8937",
+                                  "_uid": "uid_c8c0bc72e463_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point3_point4",
+                                        "ID": "point3_point4_7233",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_a2ace0a84b25_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point3_point4_7558",
+                                        "msg_log": "point3_point4 success",
+                                        "_uid": "uid_8d418c96a85f_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point3_point4_2679",
+                                  "_uid": "uid_069d7d8618a7_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point3_point4_1520",
+                                        "msg_log": "point3_point4 failed",
+                                        "_uid": "uid_a1b92986b90e_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point3_point4_2697",
+                                        "msg": "point3_point4 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_2e9e030a41e6_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_7309fdfffb99_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "point4_point5",
+          "name": "point4_point5_6339",
+          "_uid": "uid_935dd0690381_mm95c80s"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_4880",
+                "_uid": "uid_15baa94fc05c_mm95c80s"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point4_point5_6065",
+                      "_uid": "uid_9170bd067e42_mm95c80s"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_4524",
+                            "_uid": "uid_dd682fb863ab_mm95c80s"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point4_point5_3612",
+                                  "_uid": "uid_9dffc9ee8f8b_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point4_point5",
+                                        "ID": "point4_point5_5043",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_e08ad95726ec_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point4_point5_5176",
+                                        "msg_log": "point4_point5 success",
+                                        "_uid": "uid_ef4ba9d536ea_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point4_point5_9891",
+                                  "_uid": "uid_0e134dbc010e_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point4_point5_4903",
+                                        "msg_log": "point4_point5 failed",
+                                        "_uid": "uid_80c73c834b70_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point4_point5_2042",
+                                        "msg": "point4_point5 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_273fbf905d06_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_6c1b6310e6fa_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "point5_point4",
+          "name": "point5_point4_4769",
+          "_uid": "uid_1eee83af5ebb_mm95c80s"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_2128",
+                "_uid": "uid_46808b6a5d96_mm95c80s"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point5_point4_1476",
+                      "_uid": "uid_efb2277bdd57_mm95c80s"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_1568",
+                            "_uid": "uid_a9a2794f55fc_mm95c80s"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point5_point4_7520",
+                                  "_uid": "uid_2d92922c7503_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point5_point4",
+                                        "ID": "point5_point4_2198",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_31f82244f18e_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point5_point4_7904",
+                                        "msg_log": "point5_point4 success",
+                                        "_uid": "uid_3111ccf430fb_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point5_point4_3536",
+                                  "_uid": "uid_dc9a15ab184a_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point5_point4_9124",
+                                        "msg_log": "point5_point4 failed",
+                                        "_uid": "uid_c50b7a0a59ad_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point5_point4_6833",
+                                        "msg": "point5_point4 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_aac2e6f35fc0_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_1d98983416f0_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "point4_point3",
+          "name": "point4_point3_9638",
+          "_uid": "uid_eb96a080ca70_mm95c80s"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_2154",
+                "_uid": "uid_6cd58e3fa5f5_mm95c80s"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point4_point3_6842",
+                      "_uid": "uid_23fcefc6c690_mm95c80s"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_1159",
+                            "_uid": "uid_1d99e73fc94b_mm95c80s"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point4_point3_6222",
+                                  "_uid": "uid_2ecd8a12040e_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point4_point3",
+                                        "ID": "point4_point3_8711",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_5ed8690dfc1b_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point4_point3_5623",
+                                        "msg_log": "point4_point3 success",
+                                        "_uid": "uid_b60ed0353e5b_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point4_point3_6451",
+                                  "_uid": "uid_42f0f7cfe5f9_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point4_point3_7285",
+                                        "msg_log": "point4_point3 failed",
+                                        "_uid": "uid_e93f1b2f8aa9_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point4_point3_7035",
+                                        "msg": "point4_point3 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_ca7dc45a0b18_mm95c80s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_bdd66cdba888_mm95c80s"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "point3_point2",
+          "name": "point3_point2_6749",
+          "_uid": "uid_d686ee6bab2d_mm95c80s"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_3405",
+                "_uid": "uid_b014fd4f3505_mm95c80s"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point3_point2_3210",
+                      "_uid": "uid_b1571a509b1a_mm95c80s"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_1338",
+                            "_uid": "uid_9f2e0df14f68_mm95c80s"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point3_point2_3394",
+                                  "_uid": "uid_d848e941b06d_mm95c80s"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point3_point2",
+                                        "ID": "point3_point2_8826",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_756db044240d_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point3_point2_3566",
+                                        "msg_log": "point3_point2 success",
+                                        "_uid": "uid_bd5c6633cd86_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point3_point2_9635",
+                                  "_uid": "uid_30edcf3d3e00_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point3_point2_6604",
+                                        "msg_log": "point3_point2 failed",
+                                        "_uid": "uid_1494a6135920_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point3_point2_3379",
+                                        "msg": "point3_point2 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_b57ba99e1a2f_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_8b4c6b80da1d_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "point2_point1",
+          "name": "point2_point1_7290",
+          "_uid": "uid_f95e1d5b3d6c_mm95c80t"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_6797",
+                "_uid": "uid_3c25b92b0dfc_mm95c80t"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point2_point1_6566",
+                      "_uid": "uid_bccfab143475_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_5714",
+                            "_uid": "uid_222aa5d76c1e_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point2_point1_4975",
+                                  "_uid": "uid_16ad12e40d2e_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point2_point1",
+                                        "ID": "point2_point1_3680",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_7a2e4ea3279c_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point2_point1_8239",
+                                        "msg_log": "point2_point1 success",
+                                        "_uid": "uid_c70da31e7eea_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point2_point1_8522",
+                                  "_uid": "uid_d1b28ce32d19_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point2_point1_6378",
+                                        "msg_log": "point2_point1 failed",
+                                        "_uid": "uid_2aaf94356247_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point2_point1_4186",
+                                        "msg": "point2_point1 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_7c32af216059_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_b53198a0466c_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "point1_home",
+          "name": "point1_home_5040",
+          "_uid": "uid_e7ae684e53a4_mm95c80t"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_8226",
+                "_uid": "uid_84fe334c374d_mm95c80t"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point1_home_2353",
+                      "_uid": "uid_ecc68bcb726e_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_3437",
+                            "_uid": "uid_2f70276cfa88_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point1_home_5973",
+                                  "_uid": "uid_4b1310c4717c_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point1_home",
+                                        "ID": "point1_home_8672",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_852b562eadb9_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point1_home_6429",
+                                        "msg_log": "point1_home success",
+                                        "_uid": "uid_179a5890dd9b_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point1_home_4002",
+                                  "_uid": "uid_204e52655b8a_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point1_home_9650",
+                                        "msg_log": "point1_home failed",
+                                        "_uid": "uid_08077f834290_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point1_home_1194",
+                                        "msg": "point1_home path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_f1daafdfbec9_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_0338a61f4c4d_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "group_1",
+          "name": "group_1_8516",
+          "_uid": "uid_7018f7396523_mm95c80t"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "root_sequence_9841",
+                "_uid": "uid_19b32c781859_mm95c80t"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_home_point1_1815",
+                      "_uid": "uid_8fd290e8b704_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_4710",
+                            "_uid": "uid_69f0db4c9314_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_home_point1_9028",
+                                  "_uid": "uid_18517dfab7e4_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "home_point1",
+                                        "ID": "home_point1_6390",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_b4f5cfcb8e75_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_home_point1_8794",
+                                        "msg_log": "home_point1 success",
+                                        "_uid": "uid_7962a2ac7d1d_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_home_point1_9528",
+                                  "_uid": "uid_2948352c0be1_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_home_point1_7730",
+                                        "msg_log": "home_point1 failed",
+                                        "_uid": "uid_b882af7d6cd7_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_home_point1_4172",
+                                        "msg": "home_point1 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_f3a17af56599_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_e2d89a302c58_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point1_point2_3203",
+                      "_uid": "uid_90272991f42f_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_1624",
+                            "_uid": "uid_f5542e07b267_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point1_point2_7071",
+                                  "_uid": "uid_bc9d38d4a1b1_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point1_point2",
+                                        "ID": "point1_point2_1048",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_2d4e531894a7_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point1_point2_9734",
+                                        "msg_log": "point1_point2 success",
+                                        "_uid": "uid_466f65c179b1_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point1_point2_7872",
+                                  "_uid": "uid_6c9b24b2e89b_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point1_point2_5027",
+                                        "msg_log": "point1_point2 failed",
+                                        "_uid": "uid_9516c91d0c23_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point1_point2_3718",
+                                        "msg": "point1_point2 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_523e3057640f_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_2a73ec0c7440_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point2_point3_4826",
+                      "_uid": "uid_a6fb62971d42_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_5462",
+                            "_uid": "uid_d2b620a37d18_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point2_point3_4813",
+                                  "_uid": "uid_603130ab19f9_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point2_point3",
+                                        "ID": "point2_point3_4438",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_66ff4947d411_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point2_point3_9174",
+                                        "msg_log": "point2_point3 success",
+                                        "_uid": "uid_9e41667ee59c_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point2_point3_3405",
+                                  "_uid": "uid_e218db553666_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point2_point3_3182",
+                                        "msg_log": "point2_point3 failed",
+                                        "_uid": "uid_e12181dea183_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point2_point3_9600",
+                                        "msg": "point2_point3 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_dd24b27e2eaf_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_8d663fa7bfbc_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point3_point4_6397",
+                      "_uid": "uid_97be81eedc56_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_6473",
+                            "_uid": "uid_607b4430e0b1_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point3_point4_9733",
+                                  "_uid": "uid_0f7d2f05b8a1_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point3_point4",
+                                        "ID": "point3_point4_9118",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_22f4b55fa73a_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point3_point4_2286",
+                                        "msg_log": "point3_point4 success",
+                                        "_uid": "uid_57f189eeb0ed_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point3_point4_1362",
+                                  "_uid": "uid_a190356bd707_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point3_point4_1067",
+                                        "msg_log": "point3_point4 failed",
+                                        "_uid": "uid_c7eff10c9c25_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point3_point4_4604",
+                                        "msg": "point3_point4 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_ebf7f3b60635_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_bb6f084d6cca_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point4_point5_7173",
+                      "_uid": "uid_7e9f9348232e_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_5338",
+                            "_uid": "uid_3583e65ab765_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point4_point5_1077",
+                                  "_uid": "uid_243ab1da3111_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point4_point5",
+                                        "ID": "point4_point5_7055",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_0243a35f5fa2_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point4_point5_6915",
+                                        "msg_log": "point4_point5 success",
+                                        "_uid": "uid_7b5b572542cf_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point4_point5_7431",
+                                  "_uid": "uid_f48cb75548da_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point4_point5_3428",
+                                        "msg_log": "point4_point5 failed",
+                                        "_uid": "uid_557cc436a2ba_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point4_point5_5840",
+                                        "msg": "point4_point5 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_46599e6ee112_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_cc2387e38a53_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point5_point4_8099",
+                      "_uid": "uid_602fdfcfbff9_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_1612",
+                            "_uid": "uid_2f5558339c93_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point5_point4_9367",
+                                  "_uid": "uid_373fe1ac8e37_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point5_point4",
+                                        "ID": "point5_point4_1342",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_51aae39fbad0_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point5_point4_2692",
+                                        "msg_log": "point5_point4 success",
+                                        "_uid": "uid_b96b19cd23e8_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point5_point4_9852",
+                                  "_uid": "uid_7e7f573a013e_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point5_point4_5073",
+                                        "msg_log": "point5_point4 failed",
+                                        "_uid": "uid_dd3ad42cb1b0_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point5_point4_2901",
+                                        "msg": "point5_point4 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_f4237a883c97_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_c6c962716579_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point4_point3_1102",
+                      "_uid": "uid_f494f18a1909_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_2413",
+                            "_uid": "uid_3d5168905329_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point4_point3_6429",
+                                  "_uid": "uid_cb3eb6feb41c_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point4_point3",
+                                        "ID": "point4_point3_5090",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_7ef749469e6c_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point4_point3_6305",
+                                        "msg_log": "point4_point3 success",
+                                        "_uid": "uid_9fe39eb62c09_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point4_point3_6231",
+                                  "_uid": "uid_8cfb1f53ea8b_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point4_point3_4789",
+                                        "msg_log": "point4_point3 failed",
+                                        "_uid": "uid_489f8348a806_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point4_point3_4992",
+                                        "msg": "point4_point3 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_2b5a887d64a2_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_fecec6182a85_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point3_point2_4558",
+                      "_uid": "uid_10da8dd28311_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_1968",
+                            "_uid": "uid_f50bbcd1fd60_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point3_point2_5828",
+                                  "_uid": "uid_167642c84f47_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point3_point2",
+                                        "ID": "point3_point2_8304",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_38b6b9ef1300_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point3_point2_2707",
+                                        "msg_log": "point3_point2 success",
+                                        "_uid": "uid_596f3e744200_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point3_point2_2539",
+                                  "_uid": "uid_1f16384bf4cf_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point3_point2_7073",
+                                        "msg_log": "point3_point2 failed",
+                                        "_uid": "uid_bec4f6e3fc9d_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point3_point2_7061",
+                                        "msg": "point3_point2 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_b51c4695b690_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_1b2ea766e710_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point2_point1_6320",
+                      "_uid": "uid_39085fbb2aad_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_8271",
+                            "_uid": "uid_9c1489a5dd7b_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point2_point1_5740",
+                                  "_uid": "uid_c5fd1ca0a153_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point2_point1",
+                                        "ID": "point2_point1_9644",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_b069cd6568ef_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point2_point1_9816",
+                                        "msg_log": "point2_point1 success",
+                                        "_uid": "uid_41c67a2f1e0a_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point2_point1_9515",
+                                  "_uid": "uid_f0a66630a971_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point2_point1_9918",
+                                        "msg_log": "point2_point1 failed",
+                                        "_uid": "uid_d9c39ee58cd4_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point2_point1_9708",
+                                        "msg": "point2_point1 path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_6c097d702ed6_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_3edff7a1af34_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "seq_point1_home_6075",
+                      "_uid": "uid_70b56ca1583f_mm95c80t"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_5505",
+                            "_uid": "uid_aa8fccbcca72_mm95c80t"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_success_point1_home_3012",
+                                  "_uid": "uid_002ebf5b9ea5_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "RunPath",
+                                    "content": {
+                                      "@attributes": {
+                                        "path_name": "point1_home",
+                                        "ID": "point1_home_6175",
+                                        "speed_scale": "0.75",
+                                        "_uid": "uid_a6cc6af34b3e_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_success_point1_home_7283",
+                                        "msg_log": "point1_home success",
+                                        "_uid": "uid_33af825828ef_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_failure_point1_home_7981",
+                                  "_uid": "uid_2721605c2402_mm95c80t"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "MsgLoggerNode",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "msg_fail_point1_home_3269",
+                                        "msg_log": "point1_home failed",
+                                        "_uid": "uid_3e1c3b772240_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "PopupMsg",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "popup_point1_home_2106",
+                                        "msg": "point1_home path failed",
+                                        "type": "failure",
+                                        "timeout": "0",
+                                        "_uid": "uid_04a0f5023808_mm95c80t"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tagName": "AlwaysFailure",
+                                    "content": {
+                                      "@attributes": {
+                                        "_uid": "uid_985a9d81a754_mm95c80t"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

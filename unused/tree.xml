@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+    <Sequence>
+      <Start name="start_t">
+        <Fallback>
+          <Sequence name="main_seq">
+            <Fallback>
+              <Sequence>
+                <CopyFile copy_file_path="/home/nextup/planning_data/paths/paths.yaml" backup_dir="/home/nextup/planning_data/paths_backup"/>
+                <MsgLoggerNode msg_log="[paths.yaml] ✅ Copy Successful"/>
+                <PopupMsg msg="[paths.yaml] ✅ Copy Successful" type="success" timeout="10"/>
+              </Sequence>
+              <Sequence>
+                <MsgLoggerNode msg_log="[paths.yaml] ❌ Copying failed"/>
+                <PopupMsg msg="[paths.yaml] ❌ Copying failed" type="failure" timeout="0"/>
+                <AlwaysFailure/>
+              </Sequence>
+            </Fallback>
+            <Fallback>
+              <Sequence>
+                <CleanFile clean_file_path="/home/nextup/planning_data/paths/paths.yaml"/>
+                <MsgLoggerNode msg_log="[paths.yaml] ✅ Path data cleaned Successful"/>
+                <PopupMsg msg="[paths.yaml] ✅ Path data cleaned Successful" type="success" timeout="10"/>
+              </Sequence>
+              <Sequence>
+                <MsgLoggerNode msg_log="[paths.yaml] ❌ Path data cleaning failed"/>
+                <PopupMsg msg="[paths.yaml] ❌ Path data cleaning failed" type="failure" timeout="0"/>
+                <AlwaysFailure/>
+              </Sequence>
+            </Fallback>
+            <Fallback>
+              <Sequence>
+                <CopyFields points_file_path="/home/nextup/planning_data/points/points.yaml" paths_file_path="/home/nextup/planning_data/paths/paths.yaml"/>
+                <MsgLoggerNode msg_log="[paths.yaml✅ Latest point file name loaded"/>
+                <PopupMsg msg="✅ point file name loaded" type="success" timeout="10"/>
+              </Sequence>
+              <Sequence>
+                <MsgLoggerNode msg_log="[paths.yaml] ❌ point file name loading failure"/>
+                <PopupMsg msg="❌ point file name loading failed" type="failure" timeout="0"/>
+                <AlwaysFailure/>
+              </Sequence>
+            </Fallback>
+            <Sequence name="root_plan_sequence">
+              <Sequence name="plan_homing-point_main-point">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=homing-point, goal=main-point, path=homing-point_main-point"/>
+                      <PopupMsg msg="Planning Path: homing-point → main-point" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="homing-point" end_goal="main-point" plan_space="joint" path_name="homing-point_main-point"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=homing-point, goal=main-point, path=homing-point_main-point"/>
+                    <PopupMsg msg="Path Planning Successful: homing-point → main-point" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=homing-point, goal=main-point, path=homing-point_main-point"/>
+                      <PopupMsg msg="Path Planning Failed: homing-point → main-point" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_main-point_go-inside-left-station">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=main-point, goal=go-inside-left-station, path=main-point_go-inside-left-station"/>
+                      <PopupMsg msg="Planning Path: main-point → go-inside-left-station" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="main-point" end_goal="go-inside-left-station" plan_space="joint" path_name="main-point_go-inside-left-station"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=main-point, goal=go-inside-left-station, path=main-point_go-inside-left-station"/>
+                    <PopupMsg msg="Path Planning Successful: main-point → go-inside-left-station" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=main-point, goal=go-inside-left-station, path=main-point_go-inside-left-station"/>
+                      <PopupMsg msg="Path Planning Failed: main-point → go-inside-left-station" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_go-inside-left-station_pick-point-glass">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=go-inside-left-station, goal=pick-point-glass, path=go-inside-left-station_pick-point-glass"/>
+                      <PopupMsg msg="Planning Path: go-inside-left-station → pick-point-glass" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="go-inside-left-station" end_goal="pick-point-glass" plan_space="joint" path_name="go-inside-left-station_pick-point-glass"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=go-inside-left-station, goal=pick-point-glass, path=go-inside-left-station_pick-point-glass"/>
+                    <PopupMsg msg="Path Planning Successful: go-inside-left-station → pick-point-glass" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=go-inside-left-station, goal=pick-point-glass, path=go-inside-left-station_pick-point-glass"/>
+                      <PopupMsg msg="Path Planning Failed: go-inside-left-station → pick-point-glass" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_pick-point-glass_main-point">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=pick-point-glass, goal=main-point, path=pick-point-glass_main-point"/>
+                      <PopupMsg msg="Planning Path: pick-point-glass → main-point" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="pick-point-glass" end_goal="main-point" plan_space="joint" path_name="pick-point-glass_main-point"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=pick-point-glass, goal=main-point, path=pick-point-glass_main-point"/>
+                    <PopupMsg msg="Path Planning Successful: pick-point-glass → main-point" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=pick-point-glass, goal=main-point, path=pick-point-glass_main-point"/>
+                      <PopupMsg msg="Path Planning Failed: pick-point-glass → main-point" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_main-point_after-pickup">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=main-point, goal=after-pickup, path=main-point_after-pickup"/>
+                      <PopupMsg msg="Planning Path: main-point → after-pickup" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="main-point" end_goal="after-pickup" plan_space="joint" path_name="main-point_after-pickup"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=main-point, goal=after-pickup, path=main-point_after-pickup"/>
+                    <PopupMsg msg="Path Planning Successful: main-point → after-pickup" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=main-point, goal=after-pickup, path=main-point_after-pickup"/>
+                      <PopupMsg msg="Path Planning Failed: main-point → after-pickup" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_after-pickup_abover-convery">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=after-pickup, goal=abover-convery, path=after-pickup_abover-convery"/>
+                      <PopupMsg msg="Planning Path: after-pickup → abover-convery" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="after-pickup" end_goal="abover-convery" plan_space="joint" path_name="after-pickup_abover-convery"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=after-pickup, goal=abover-convery, path=after-pickup_abover-convery"/>
+                    <PopupMsg msg="Path Planning Successful: after-pickup → abover-convery" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=after-pickup, goal=abover-convery, path=after-pickup_abover-convery"/>
+                      <PopupMsg msg="Path Planning Failed: after-pickup → abover-convery" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_abover-convery_main-point">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=abover-convery, goal=main-point, path=abover-convery_main-point"/>
+                      <PopupMsg msg="Planning Path: abover-convery → main-point" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="abover-convery" end_goal="main-point" plan_space="joint" path_name="abover-convery_main-point"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=abover-convery, goal=main-point, path=abover-convery_main-point"/>
+                    <PopupMsg msg="Path Planning Successful: abover-convery → main-point" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=abover-convery, goal=main-point, path=abover-convery_main-point"/>
+                      <PopupMsg msg="Path Planning Failed: abover-convery → main-point" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_main-point_place-glass-convery">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=main-point, goal=place-glass-convery, path=main-point_place-glass-convery"/>
+                      <PopupMsg msg="Planning Path: main-point → place-glass-convery" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="main-point" end_goal="place-glass-convery" plan_space="joint" path_name="main-point_place-glass-convery"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=main-point, goal=place-glass-convery, path=main-point_place-glass-convery"/>
+                    <PopupMsg msg="Path Planning Successful: main-point → place-glass-convery" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=main-point, goal=place-glass-convery, path=main-point_place-glass-convery"/>
+                      <PopupMsg msg="Path Planning Failed: main-point → place-glass-convery" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_place-glass-convery_p8">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=place-glass-convery, goal=p8, path=place-glass-convery_p8"/>
+                      <PopupMsg msg="Planning Path: place-glass-convery → p8" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="place-glass-convery" end_goal="p8" plan_space="joint" path_name="place-glass-convery_p8"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=place-glass-convery, goal=p8, path=place-glass-convery_p8"/>
+                    <PopupMsg msg="Path Planning Successful: place-glass-convery → p8" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=place-glass-convery, goal=p8, path=place-glass-convery_p8"/>
+                      <PopupMsg msg="Path Planning Failed: place-glass-convery → p8" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_p8_main-point">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=p8, goal=main-point, path=p8_main-point"/>
+                      <PopupMsg msg="Planning Path: p8 → main-point" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="p8" end_goal="main-point" plan_space="joint" path_name="p8_main-point"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=p8, goal=main-point, path=p8_main-point"/>
+                    <PopupMsg msg="Path Planning Successful: p8 → main-point" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=p8, goal=main-point, path=p8_main-point"/>
+                      <PopupMsg msg="Path Planning Failed: p8 → main-point" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_main-point_p9">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=main-point, goal=p9, path=main-point_p9"/>
+                      <PopupMsg msg="Planning Path: main-point → p9" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="main-point" end_goal="p9" plan_space="joint" path_name="main-point_p9"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=main-point, goal=p9, path=main-point_p9"/>
+                    <PopupMsg msg="Path Planning Successful: main-point → p9" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=main-point, goal=p9, path=main-point_p9"/>
+                      <PopupMsg msg="Path Planning Failed: main-point → p9" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_p9_homing-point-2">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=p9, goal=homing-point-2, path=p9_homing-point-2"/>
+                      <PopupMsg msg="Planning Path: p9 → homing-point-2" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="p9" end_goal="homing-point-2" plan_space="joint" path_name="p9_homing-point-2"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=p9, goal=homing-point-2, path=p9_homing-point-2"/>
+                    <PopupMsg msg="Path Planning Successful: p9 → homing-point-2" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=p9, goal=homing-point-2, path=p9_homing-point-2"/>
+                      <PopupMsg msg="Path Planning Failed: p9 → homing-point-2" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+              <Sequence name="plan_homing-point-2_main-point">
+                <Fallback>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Initiating joint-space path planning: start=homing-point-2, goal=main-point, path=homing-point-2_main-point"/>
+                      <PopupMsg msg="Planning Path: homing-point-2 → main-point" type="warn" timeout="10"/>
+                    </Sequence>
+                    <PlanPath start_goal="homing-point-2" end_goal="main-point" plan_space="joint" path_name="homing-point-2_main-point"/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Successfully planned joint-space path: start=homing-point-2, goal=main-point, path=homing-point-2_main-point"/>
+                    <PopupMsg msg="Path Planning Successful: homing-point-2 → main-point" type="success" timeout="10"/>
+                    <Sleep msec="300"/>
+                  </Sequence>
+                  <Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Path planning FAILED in joint space: start=homing-point-2, goal=main-point, path=homing-point-2_main-point"/>
+                      <PopupMsg msg="Path Planning Failed: homing-point-2 → main-point" type="failure" timeout="0"/>
+                    </Sequence>
+                    <Sequence>
+                      <MsgLoggerNode msg_log="[MOTION-PLAN] Shutting down motion planning node due to planning failure."/>
+                    </Sequence>
+                    <ShutdownNode/>
+                    <MsgLoggerNode msg_log="[MOTION-PLAN] Please review the planning parameters/control flow and restart motion planning."/>
+                    <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                    <AlwaysFailure/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
+            </Sequence>
+            <Sequence name="after_plan">
+              <Sequence>
+                <MsgLoggerNode msg_log="[MOTION-PLAN] ✅ All path segments planned successfully. Executed complete motion plan."/>
+                <PopupMsg msg="✅ All Paths Planned Successfully" type="success" timeout="20"/>
+                <PublishDataOnTopic type_of_topic="std_msgs/msg/Bool" msg_on_topic="true" topic_name="/motion_planning_bt_success"/>
+                <Sleep msec="900"/>
+              </Sequence>
+              <Sequence>
+                <MsgLoggerNode msg_log="[MOTION-PLAN] 🛑 Initiating smooth shutdown of motion planning node for safe operation."/>
+                <Sleep msec="100"/>
+                <Sequence>
+                  <MsgLoggerNode msg_log="[VERIFICATION] verification of the points and paths yaml start"/>
+                </Sequence>
+                <PathVerifier name="verify_paths" tolerance="0.0001" paths_file_name="/home/nextup/planning_data/paths/paths.yaml" points_file_name="/home/nextup/planning_data/points/points.yaml"/>
+                <AutoRunPathXml input_file_path="/home/nextup/planning_data/paths/paths.yaml" points_file_path="/home/nextup/planning_data/points/points.yaml"/>
+                <ShutdownNode/>
+                <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+                <AlwaysFailure/>
+              </Sequence>
+            </Sequence>
+            <Sequence>
+              <Sleep msec="100"/>
+              <AlwaysFailure/>
+            </Sequence>
+          </Sequence>
+          <Sequence>
+            <MsgLoggerNode msg_log="Resetting the tree"/>
+            <PublishDataOnTopic type_of_topic="std_msgs/msg/String" msg_on_topic="stop" topic_name="/control_process_motion_bt"/>
+            <PublishDataOnTopic type_of_topic="std_msgs/msg/Bool" msg_on_topic="true" topic_name="/motion_reset_bt"/>
+            <Sleep msec="100"/>
+            <ResetTreeTrigger/>
+          </Sequence>
+        </Fallback>
+      </Start>
+    </Sequence>
+  </BehaviorTree>
+</root>

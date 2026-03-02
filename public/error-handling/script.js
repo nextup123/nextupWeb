@@ -1,249 +1,283 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const ros = new ROSLIB.Ros({
-        url: 'ws://localhost:9090'
-    });
+document.addEventListener('DOMContentLoaded', () => {
 
-    const errorSubscriber = new ROSLIB.Topic({
-        ros: ros,
-        name: '/error_code',
-        messageType: 'std_msgs/Int32MultiArray'
-    });
+    const terminal = document.getElementById('terminal-display');
+    const rosStatus = document.getElementById('ros-status');
+    const searchInput = document.getElementById('log-search-input');
+    const clearSearchBtn = document.getElementById('clear-search');
+
+    let isPaused = false;
+    let pausedLogs = [];
+    let allLogs = [];   // 🔴 master log store
+
+    // ---------------- ROS ----------------
+    const ros = new ROSLIB.Ros({ url: 'ws://localhost:9090' });
+
+    ros.on('connection', () => updateRosStatus(true));
+    ros.on('close', () => updateRosStatus(false));
+    ros.on('error', () => updateRosStatus(false));
+
+    function updateRosStatus(connected) {
+        rosStatus.textContent = connected ? 'ROS Connected' : 'ROS Disconnected';
+        rosStatus.className = `ros-status ${connected ? 'connected' : 'disconnected'}`;
+    }
 
     const logsListener = new ROSLIB.Topic({
-        ros: ros,
+        ros,
         name: '/logs_topic',
         messageType: 'std_msgs/String'
     });
 
-    let errorData = [];
-    let currentErrors = [];
-    let isTerminalPaused = false;
-    let pausedLogs = [];
-
-    // Fetch error data
-    fetch('/error-handling/errors/')
-        .then(response => response.json())
-        .then(data => {
-            errorData = data;
-            console.log('Loaded error data:', errorData);
-        })
-        .catch(error => {
-            console.error('Error loading error data:', error);
-        });
-
-    // Handle error messages
-    errorSubscriber.subscribe(debounce(function (message) {
-        console.log('Received error codes:', message.data);
-
-        const errorCodes = message.data;
-        const newErrors = [];
-
-        errorCodes.forEach((code, index) => {
-            if (code !== 0) {
-                const error = getErrorInfo(code);
-                newErrors.push({
-                    joint: index + 1,
-                    ...error
-                });
-            }
-        });
-
-        if (!areErrorsEqual(newErrors, currentErrors)) {
-            currentErrors = newErrors;
-            updateErrorTable(currentErrors);
-        }
-    }, 100));
-
-    // Handle terminal logs
-    logsListener.subscribe((message) => {
-        const timestamp = getCurrentTimestamp(); // Capture timestamp at arrival
-        const logEntry = {
-            time: timestamp,
-            data: message.data
+    logsListener.subscribe(msg => {
+        const entry = {
+            time: timestamp(),
+            data: msg.data
         };
 
-        if (isTerminalPaused) {
-            pausedLogs.push(logEntry); // Store logs with timestamp
-        } else {
-            displayLog(logEntry);
-        }
-    });
+        allLogs.push(entry);
 
-    // Function to display a log message
-    function displayLog(logEntry) {
-        const terminalDisplay = document.getElementById('terminal-display');
-        const logLine = document.createElement('div');
-        logLine.innerHTML = `<span class='timestamp'>${logEntry.time}</span> ${logEntry.data}`;
-        terminalDisplay.appendChild(logLine);
-        terminalDisplay.scrollTop = terminalDisplay.scrollHeight;
-    }
-
-    // Function to get current time in HH:MM:SS format
-    function getCurrentTimestamp() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        return `${hours}:${minutes}:${seconds}`;
-    }
-
-    // Clear terminal button
-    document.getElementById('clear-terminal').addEventListener('click', () => {
-        document.getElementById('terminal-display').innerHTML = '';
-    });
-
-    // Pause terminal button
-    document.getElementById('pause-terminal').addEventListener('click', () => {
-        isTerminalPaused = true;
-        document.getElementById('pause-terminal').disabled = true;
-        document.getElementById('play-terminal').disabled = false;
-    });
-
-    // Play terminal button
-    document.getElementById('play-terminal').addEventListener('click', () => {
-        isTerminalPaused = false;
-        document.getElementById('pause-terminal').disabled = false;
-        document.getElementById('play-terminal').disabled = true;
-
-        // Flush paused logs to the terminal with timestamps
-        pausedLogs.forEach(logEntry => displayLog(logEntry));
-        pausedLogs = [];
-    });
-
-    // Helper functions
-    function getErrorInfo(errorCode) {
-        return errorData.find(e => e.error === errorCode.toString()) || {
-            error_code: "Unknown",
-            error_Content: "No content available",
-            error_Cause: ["No cause available"],
-            error_Diagnosis: ["No diagnosis available"],
-            error_Solution: ["No solution available"]
-        };
-    }
-
-    let errorTimestamps = {}; // Stores timestamps for each error
-    let previousErrors = {}; // Tracks previous error states
-
-    function updateErrorTable(errors) {
-        const tableBody = document.querySelector('#error-table tbody');
-        const noErrorsRow = document.getElementById('no-errors-row');
-        tableBody.innerHTML = '';
-
-        // If there are no errors, reset previousErrors and show "No Errors Available"
-        if (errors.length === 0) {
-            previousErrors = {}; // Clear previous errors
-            errorTimestamps = {}; // Reset timestamps
-            if (noErrorsRow) noErrorsRow.style.display = 'table-row';
+        if (isPaused) {
+            pausedLogs.push(entry);
             return;
         }
 
-        if (noErrorsRow) noErrorsRow.style.display = 'none';
+        applyFilterAndRender();
+    });
 
-        const currentErrors = {}; // Track active errors
+    // ---------------- SEARCH ----------------
+    searchInput.addEventListener('input', applyFilterAndRender);
 
-        errors.forEach(error => {
-            const errorKey = `${error.joint}-${error.error_code}`;
+    clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        applyFilterAndRender();
+    });
 
-            // Reset timestamp if the error was previously gone and now reappears
-            if (!previousErrors[errorKey]) {
-                errorTimestamps[errorKey] = getCurrentTimestamp();
-            }
+    function applyFilterAndRender() {
+        terminal.innerHTML = '';
+        const keyword = searchInput.value.toLowerCase();
 
-            currentErrors[errorKey] = true; // Mark error as active
+        allLogs
+            .filter(log => log.data.toLowerCase().includes(keyword))
+            .forEach(renderLog);
 
-            const row = document.createElement('tr');
-            row.classList.add('expandable-row');
-            row.innerHTML = `
-                <td>${error.joint}</td>
-                <td>${error.error_code}</td>
-                <td>${error.error_Content}</td>
-                <td>${errorTimestamps[errorKey]}</td> 
-                <td class="actions">
-                    <button class="btn expand-btn">Expand</button>
-                </td>
-            `;
-
-            const expandableContent = document.createElement('tr');
-            expandableContent.classList.add('expandable-content');
-            expandableContent.innerHTML = `
-                <td colspan="5">
-                    <table class="nested-table">
-                        <thead>
-                            <tr>
-                                <th>Cause</th>
-                                <th>Diagnosis</th>
-                                <th>Solution</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${error.error_Cause.map((cause, index) => `
-                                <tr>
-                                    <td>${cause}</td>
-                                    <td>${error.error_Diagnosis[index] || '/'}</td>
-                                    <td>${error.error_Solution[index] || '/'}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </td>
-            `;
-
-            const expandBtn = row.querySelector('.expand-btn');
-            expandBtn.addEventListener('click', () => {
-                const isExpanded = expandableContent.classList.toggle('show');
-                expandBtn.textContent = isExpanded ? "Collapse" : "Expand";
-            });
-
-            tableBody.appendChild(row);
-            tableBody.appendChild(expandableContent);
-        });
-
-        // Remove timestamps of errors that no longer exist
-        Object.keys(errorTimestamps).forEach(key => {
-            if (!currentErrors[key]) {
-                delete errorTimestamps[key];
-            }
-        });
-
-        // Update previousErrors to match current errors
-        previousErrors = currentErrors;
-    }
-
-    // Function to get current time in HH:MM:SS format
-    function getCurrentTimestamp() {
-        const now = new Date();
-        return now.toLocaleTimeString(); // Format: HH:MM:SS
+        terminal.scrollTop = terminal.scrollHeight;
     }
 
 
+    function renderLog(log) {
+        const { cleanText, level } = parseLogLevel(log.data);
 
-    function areErrorsEqual(errors1, errors2) {
-        if (errors1.length !== errors2.length) return false;
-        const errorSet1 = new Set(errors1.map(e => `${e.error_code}-${e.joint}`));
-        const errorSet2 = new Set(errors2.map(e => `${e.error_code}-${e.joint}`));
-        return errorSet1.size === errorSet2.size && [...errorSet1].every(e => errorSet2.has(e));
+        const line = document.createElement('div');
+        line.classList.add('log-line', level);
+
+        line.innerHTML = `
+        <span class="timestamp">${log.time}</span>
+        <span class="log-message">${cleanText}</span>
+    `;
+
+        terminal.appendChild(line);
     }
 
-    function debounce(func, delay) {
-        let timeoutId;
-        return function (...args) {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => func.apply(this, args), delay);
+    function parseLogLevel(text) {
+        const match = text.match(/^\[(info|success|warn|failure)\]\s*(.*)/i);
+
+        if (!match) {
+            return {
+                cleanText: text,
+                level: 'log-default'
+            };
+        }
+
+        return {
+            cleanText: match[2],
+            level: `log-${match[1].toLowerCase()}`
         };
     }
 
-    function updateClock() {
-        const clockElement = document.getElementById('digital-clock');
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0'); // 24-hour format
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
 
-        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+    // ---------------- CONTROLS ----------------
+    document.getElementById('clear-terminal').onclick = () => {
+        terminal.innerHTML = '';
+        allLogs = [];
+    };
+
+    document.getElementById('pause-terminal').onclick = () => togglePause(true);
+    document.getElementById('play-terminal').onclick = () => togglePause(false);
+
+    function togglePause(state) {
+        isPaused = state;
+        document.getElementById('pause-terminal').disabled = state;
+        document.getElementById('play-terminal').disabled = !state;
+
+        if (!state && pausedLogs.length) {
+            pausedLogs.forEach(log => allLogs.push(log));
+            pausedLogs = [];
+            applyFilterAndRender();
+        }
+    }
+
+    // ---------------- CLOCK ----------------
+    function updateClock() {
+        document.getElementById('digital-clock').textContent =
+            new Date().toLocaleTimeString('en-US', { hour12: false });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function timestamp() {
+        return new Date().toLocaleTimeString('en-US', { hour12: false });
     }
 
 
-    setInterval(updateClock, 1000);
-    updateClock(); // Initialize immediately
+    function callTriggerService(serviceName, button) {
+        const service = new ROSLIB.Service({
+            ros,
+            name: serviceName,
+            serviceType: 'std_srvs/Trigger'
+        });
+
+        const request = new ROSLIB.ServiceRequest({});
+
+        service.callService(request, (response) => {
+            const success = response.success === true;
+
+            button.classList.add(success ? 'success' : 'failure');
+
+            setTimeout(() => {
+                button.classList.remove('success', 'failure');
+            }, 2000);
+        }, (error) => {
+            console.error('Service call failed:', error);
+
+            button.classList.add('failure');
+            setTimeout(() => {
+                button.classList.remove('failure');
+            }, 2000);
+        });
+    }
+
+    const startBtn = document.getElementById('monitorStartBtn');
+    const stopBtn = document.getElementById('monitorStopBtn');
+
+    startBtn.addEventListener('click', () => {
+        callTriggerService('/monitoring_start', startBtn);
+    });
+
+    stopBtn.addEventListener('click', () => {
+        callTriggerService('/monitoring_stop', stopBtn);
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const monitorOpenBtn = document.getElementById('monitor-open-btn');
+    const monitorCloseBtn = document.getElementById('monitor-close-btn');
+    const monitorOverlay = document.getElementById('monitor-modal-overlay');
+    const monitorRosStatus = document.getElementById('monitor-ros-status');
+
+    const monitorNodeContainer = document.getElementById('monitor-nodes');
+    const monitorControllerContainer = document.getElementById('monitor-controllers');
+
+    const monitorNodeElements = {};
+    const monitorControllerElements = {};
+
+    /* ---------------- Open / Close ---------------- */
+    monitorOpenBtn.onclick = () =>
+        monitorOverlay.classList.remove('hidden');
+
+    monitorCloseBtn.onclick = () =>
+        monitorOverlay.classList.add('hidden');
+
+    /* ---------------- Load Expected Names ---------------- */
+    fetch('/ros-monitor/names')
+        .then(res => res.json())
+        .then(data => {
+            data.nodes.forEach(name => {
+                const el = document.createElement('div');
+                el.className = 'monitor-item';
+                el.textContent = name;
+                monitorNodeContainer.appendChild(el);
+                monitorNodeElements[name] = el;
+            });
+
+            data.controllers.forEach(name => {
+                const el = document.createElement('div');
+                el.className = 'monitor-item';
+                el.textContent = name;
+                monitorControllerContainer.appendChild(el);
+                monitorControllerElements[name] = el;
+            });
+        });
+
+
+
+    ros.on('connection', () => {
+        monitorRosStatus.textContent = 'ROS: connected';
+        monitorRosStatus.style.color = '#4caf50';
+    });
+
+    ros.on('error', () => {
+        monitorRosStatus.textContent = 'ROS: connection error';
+        monitorRosStatus.style.color = '#ff4444';
+    });
+
+    ros.on('close', () => {
+        monitorRosStatus.textContent = 'ROS: disconnected';
+        monitorRosStatus.style.color = '#ff4444';
+    });
+
+    /* ---------------- Active Nodes Topic ---------------- */
+    const monitorActiveTopic = new ROSLIB.Topic({
+        ros,
+        name: '/active_nodes_report',
+        messageType: 'std_msgs/String'
+    });
+
+    monitorActiveTopic.subscribe(msg => {
+        const active = msg.data
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean);
+
+        Object.values(monitorNodeElements).forEach(e =>
+            e.classList.remove('active')
+        );
+        Object.values(monitorControllerElements).forEach(e =>
+            e.classList.remove('active')
+        );
+
+        active.forEach(name => {
+            monitorNodeElements[name]?.classList.add('active');
+            monitorControllerElements[name]?.classList.add('active');
+        });
+    });
+
+
+
+
+
+
+
+
+
+
 
 });
+
+
+
+
+
+
+
+

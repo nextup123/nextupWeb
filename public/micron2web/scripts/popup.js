@@ -61,31 +61,74 @@ document.getElementById('startButton').addEventListener('click', function (event
 
   let hasError = false;
 
-  if (cnc1_fault_error) {
-    errorMsg += '<p class="error-item">❌ <b>CNC FAULT ERROR:</b> Check CNC system</p>';
-    hasError = true;
-  }
-  if (!cnc_id_od_status) {
-    errorMsg += '<p class="error-item">❌ <b>CNC ID-OD ERROR:</b> Check CNC Chuck ID-OD</p>';
-    hasError = true;
-  }
-  if (!cnc1auto_mode_error) {
-    errorMsg += '<p class="error-item">❌ <b>CNC AUTOMODE NOT ENABLED:</b> Turn on Auto Mode</p>';
-    hasError = true;
-  }
+  // if (cnc1_fault_error) {
+  //   errorMsg += '<p class="error-item">❌ <b>CNC FAULT ERROR:</b> Check CNC system</p>';
+  //   hasError = true;
+  // }
+  // if (!cnc_id_od_status) {
+  //   errorMsg += '<p class="error-item">❌ <b>CNC ID-OD ERROR:</b> Check CNC Chuck ID-OD</p>';
+  //   hasError = true;
+  // }
+  // if (!cnc1auto_mode_error) {
+  //   errorMsg += '<p class="error-item">❌ <b>CNC AUTOMODE NOT ENABLED:</b> Turn on Auto Mode</p>';
+  //   hasError = true;
+  // }
 
-  if (robotStatus) {
-    errorMsg += '<p class="error-item">❌ <b>ROBOT IN ERROR STATE:</b> Press RESET button to fix, open Error Monitor section for more details. </p>';
-    hasError = true;
-  }
+  // if (robotStatus) {
+  //   errorMsg += '<p class="error-item">❌ <b>ROBOT IN ERROR STATE:</b> Press RESET button to fix, open Error Monitor section for more details. </p>';
+  //   hasError = true;
+  // }
 
 
   if (hasError) {
     event.preventDefault();
     showErrorModal(errorMsg);
   } else {
-    publishStringMessage('/ui_commands', 'repeat1000000');
-    togglePause();
+    publishStringMessage('/ui_commands', 'st8');
+
+
+    setTimeout(() => {
+      publishBoolMessage('/start_bt', true);
+      // togglePause();
+    }, 1000);
+  }
+});
+
+
+
+document.getElementById('runOnceButton').addEventListener('click', function (event) {
+  let errorMsg = '<h3>🚨 CRITICAL ERROR DETECTED 🚨</h3>';
+
+  let hasError = false;
+
+  // if (cnc_fault_error) {
+  //   errorMsg += '<p class="error-item">❌ <b>CNC FAULT ERROR:</b> Check CNC system</p>';
+  //   hasError = true;
+  // }
+  // if (!cnc_id_od_status) {
+  //   errorMsg += '<p class="error-item">❌ <b>CNC ID-OD ERROR:</b> Check CNC Chuck ID-OD</p>';
+  //   hasError = true;
+  // }
+  // if (!cncauto_mode_error) {
+  //   errorMsg += '<p class="error-item">❌ <b>CNC AUTOMODE NOT ENABLED:</b> Turn on Auto Mode</p>';
+  //   hasError = true;
+  // }
+
+  // if (robotStatus) {
+  //   errorMsg += '<p class="error-item">❌ <b>ROBOT IN ERROR STATE:</b> Press RESET button to fix, open Error Monitor section for more details. </p>';
+  //   hasError = true;
+  // }
+
+
+  if (hasError) {
+    event.preventDefault();
+    showErrorModal(errorMsg);
+  } else {
+    // publishStringMessage('/ui_commands', 'repeat1000000');
+    publishBoolMessage('/start_bt', true);
+    setTimeout(() => {
+      publishBoolMessage('/reset_bt', true);
+    }, 3000); // 3000 milliseconds = 3 seconds
   }
 });
 
@@ -99,29 +142,29 @@ function togglePlayPause() {
 
     let hasError = false;
 
-    if (cnc1_fault_error) {
-      errorMsg += '<p class="error-item">❌ <b>CNC FAULT ERROR:</b> Check CNC system</p>';
-      hasError = true;
-    }
-    if (!cnc_id_od_status) {
-      errorMsg += '<p class="error-item">❌ <b>CNC ID-OD ERROR:</b> Check CNC Chuck ID-OD</p>';
-      hasError = true;
-    }
-    if (!cnc1auto_mode_error) {
-      errorMsg += '<p class="error-item">❌ <b>CNC AUTOMODE NOT ENABLED:</b> Turn on Auto Mode</p>';
-      hasError = true;
-    }
-  
-    if (robotStatus) {
-      errorMsg += '<p class="error-item">❌ <b>ROBOT IN ERROR STATE:</b> Press RESET button to fix, open Error Monitor section for more details. </p>';
-      hasError = true;
-    }
-  
+    // if (cnc1_fault_error) {
+    //   errorMsg += '<p class="error-item">❌ <b>CNC FAULT ERROR:</b> Check CNC system</p>';
+    //   hasError = true;
+    // }
+    // if (!cnc_id_od_status) {
+    //   errorMsg += '<p class="error-item">❌ <b>CNC ID-OD ERROR:</b> Check CNC Chuck ID-OD</p>';
+    //   hasError = true;
+    // }
+    // if (!cnc1auto_mode_error) {
+    //   errorMsg += '<p class="error-item">❌ <b>CNC AUTOMODE NOT ENABLED:</b> Turn on Auto Mode</p>';
+    //   hasError = true;
+    // }
+
+    // if (robotStatus) {
+    //   errorMsg += '<p class="error-item">❌ <b>ROBOT IN ERROR STATE:</b> Press RESET button to fix, open Error Monitor section for more details. </p>';
+    //   hasError = true;
+    // }
+
     if (hasError) {
       event.preventDefault();
       showErrorModal(errorMsg);
     } else {
-      publishBoolMessage('/cobot_play_pause_outside', false);
+      publishBoolMessage('/pause', false);
       button.classList.remove('play');
       button.classList.add('pause');
       button.textContent = "PAUSE";
@@ -129,7 +172,7 @@ function togglePlayPause() {
     }
 
   } else {
-    publishBoolMessage('/cobot_play_pause_outside', true);
+    publishBoolMessage('/pause', true);
     button.classList.remove('pause');
     button.classList.add('play');
     button.textContent = "PLAY";

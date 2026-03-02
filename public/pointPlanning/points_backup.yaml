@@ -1,0 +1,67 @@
+points_file_name: test
+points:
+  - name: p1
+    date_time: 03oct_1040
+    sequence: 1
+    nature: tuyag tauywtg
+    joints_values:
+      joint1: 0
+      joint2: 0
+      joint3: 0
+      joint4: 0
+      joint5: 0
+      joint6: 0
+    coordinate:
+      x: 0
+      y: 0
+      z: 0
+      r: 0
+      p: 0
+      w: 0
+    history:
+      '1': >-
+        on 03oct_1040 previous [0.00000,0.00000,0.00000,0.00000,0.00000,0.00000]
+        [0.00000,0.00000,0.00000,0.00000,0.00000,0.00000] updated
+        [0.00000,0.00000,0.00000,0.00000,0.00000,0.00000]
+        [0.00000,0.00000,0.00000,0.00000,0.00000,0.00000]
+      Serial: >-
+        on 03oct_1040 previous [0.00000,0.00000,0.00000,0.00000,0.00000,0.00000]
+        [0.00000,0.00000,0.00000,0.00000,0.00000,0.00000] updated
+        [0.00000,0.00000,0.00000,0.00000,0.00000,0.00000]
+        [0.00000,0.00000,0.00000,0.00000,0.00000,0.00000]
+  - name: p2
+    date_time: 03oct_1040
+    sequence: 1
+    nature: segag
+    joints_values:
+      joint1: 0
+      joint2: 0
+      joint3: 0
+      joint4: 0
+      joint5: 0
+      joint6: 0
+    coordinate:
+      x: 0
+      y: 0
+      z: 0
+      r: 0
+      p: 0
+      w: 0
+  - name: p3
+    date_time: 03oct_1040
+    sequence: 1
+    nature: ftgaseg
+    joints_values:
+      joint1: 0
+      joint2: 0
+      joint3: 0
+      joint4: 0
+      joint5: 0
+      joint6: 0
+    coordinate:
+      x: 0
+      y: 0
+      z: 0
+      r: 0
+      p: 0
+      w: 0

@@ -1,0 +1,930 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sequence Runner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container */
+        .seq-runner-container {
+            position: fixed;
+            width: 25vw;
+            height: 70vh;
+            min-width: 280px;
+            min-height: 380px;
+            max-width: 350px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            font-size: 13px;
+            z-index: 1000;
+        }
+
+        /* Header */
+        .seq-runner-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .seq-runner-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .seq-runner-sequence-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .seq-runner-seq-name {
+            font-weight: 500;
+            font-size: 12px;
+            opacity: 0.95;
+        }
+
+        .seq-runner-seq-route {
+            font-size: 11px;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+
+        .seq-runner-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .seq-runner-badge-idle {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .seq-runner-badge-running {
+            background: #34c759;
+            border-color: #2db54d;
+        }
+
+        .seq-runner-badge-completed {
+            background: #007aff;
+            border-color: #0066cc;
+        }
+
+        .seq-runner-badge-error {
+            background: #ff3b30;
+            border-color: #e6332a;
+        }
+
+        /* Body */
+        .seq-runner-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            background: #f8f9fa;
+        }
+
+        /* Controls */
+        .seq-runner-controls {
+            display: flex;
+            gap: 8px;
+            padding: 12px;
+            background: #ffffff;
+            border-bottom: 1px solid #e9ecef;
+            justify-content: center;
+        }
+
+        .sr-btn {
+            flex: 1;
+            height: 36px;
+            border-radius: 8px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .sr-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .sr-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .sr-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .sr-start {
+            background: #34c759;
+            color: white;
+            border: 2px solid #2db54d;
+        }
+
+        .sr-stop {
+            background: #ff3b30;
+            color: white;
+            border: 2px solid #e6332a;
+        }
+
+        .sr-reset {
+            background: #007aff;
+            color: white;
+            border: 2px solid #0066cc;
+        }
+
+        /* Main content */
+        .seq-runner-main {
+            flex: 1;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow: hidden;
+        }
+
+        /* Stats */
+        .sr-stats {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .sr-stat {
+            flex: 1;
+            background: #ffffff;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .sr-stat .label {
+            font-size: 11px;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .sr-stat .value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #212529;
+        }
+
+        .sr-progress {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .sr-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #34c759, #2db54d);
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
+        /* Current step */
+        .sr-current {
+            background: #e8f4ff;
+            border: 1px solid #cce5ff;
+            border-radius: 8px;
+            padding: 10px 12px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sr-current .path {
+            font-weight: 700;
+            color: #007aff;
+            font-size: 14px;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sr-current .sub {
+            font-size: 12px;
+            color: #495057;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Steps list */
+        .sr-steps-wrap {
+            flex: 1;
+            overflow-y: auto;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            padding: 8px;
+        }
+
+        .sr-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sr-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            background: #ffffff;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .sr-step:hover {
+            border-color: #dee2e6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .sr-step .dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .sr-step .name {
+            flex: 1;
+            font-weight: 600;
+            font-size: 13px;
+            color: #212529;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sr-step .route {
+            font-size: 11px;
+            color: #6c757d;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        /* States */
+        .sr-step.completed {
+            background: #f0f9f4;
+            border-color: #d1f2e5;
+        }
+
+        .sr-step.completed .dot {
+            background: #34c759;
+            color: white;
+        }
+
+        .sr-step.current {
+            background: #fff7ed;
+            border-color: #ffd8a8;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 149, 0, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(255, 149, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 149, 0, 0); }
+        }
+
+        .sr-step.current .dot {
+            background: #ff9500;
+            color: white;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar */
+        .sr-steps-wrap::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sr-steps-wrap::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 3px;
+        }
+
+        .sr-steps-wrap::-webkit-scrollbar-thumb {
+            background: #ced4da;
+            border-radius: 3px;
+        }
+
+        .sr-steps-wrap::-webkit-scrollbar-thumb:hover {
+            background: #adb5bd;
+        }
+
+        /* Loading */
+        .sr-loading {
+            padding: 40px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .sr-loading i {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #007aff;
+            display: block;
+        }
+
+        /* Alert container */
+        #seq-runner-alert-container {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 300px;
+        }
+
+        .sr-alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .sr-alert-success {
+            background: #34c759;
+            color: white;
+            border-left: 4px solid #2db54d;
+        }
+
+        .sr-alert-error {
+            background: #ff3b30;
+            color: white;
+            border-left: 4px solid #e6332a;
+        }
+
+        .sr-alert-info {
+            background: #007aff;
+            color: white;
+            border-left: 4px solid #0066cc;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .seq-runner-container {
+                position: relative;
+                width: 100%;
+                height: 500px;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="seq-runner-container" id="seq-runner-container">
+        <!-- Header -->
+        <div class="seq-runner-header">
+            <div class="seq-runner-title">
+                <i class="fas fa-robot"></i>
+                Sequence Runner
+            </div>
+            <div class="seq-runner-sequence-info">
+                <div class="seq-runner-seq-name" id="seq-runner-seq-name">Loading...</div>
+                <div class="seq-runner-seq-route" id="seq-runner-seq-route">- → -</div>
+            </div>
+            <div id="seq-runner-badge" class="seq-runner-badge seq-runner-badge-idle">IDLE</div>
+        </div>
+
+        <!-- Controls -->
+        <div class="seq-runner-controls">
+            <button id="seq-runner-start" class="sr-btn sr-start" title="Start Sequence">
+                <i class="fas fa-play"></i> Start
+            </button>
+            <button id="seq-runner-stop" class="sr-btn sr-stop" title="Stop Sequence">
+                <i class="fas fa-stop"></i> Stop
+            </button>
+            <button id="seq-runner-refresh" class="sr-btn sr-reset" title="Reset State">
+                <i class="fas fa-sync-alt"></i> Reset
+            </button>
+        </div>
+
+        <!-- Main content -->
+        <div class="seq-runner-main">
+            <!-- Stats -->
+            <div class="sr-stats">
+                <div class="sr-stat">
+                    <div class="label">Progress</div>
+                    <div class="value" id="seq-runner-progress">0/0</div>
+                    <div class="sr-progress">
+                        <div class="sr-progress-fill" id="seq-runner-progress-fill"></div>
+                    </div>
+                </div>
+                <div class="sr-stat">
+                    <div class="label">Elapsed</div>
+                    <div class="value" id="seq-runner-elapsed">0s</div>
+                </div>
+            </div>
+
+            <!-- Current step -->
+            <div id="seq-runner-current-step" class="sr-current">
+                <div class="path" id="seq-runner-current-info">No step executing</div>
+                <div class="sub">
+                    <span id="seq-runner-current-route">- → -</span>
+                    <span id="seq-runner-current-time">-</span>
+                </div>
+            </div>
+
+            <!-- Steps list -->
+            <div class="sr-steps-wrap">
+                <div class="sr-steps" id="seq-runner-steps-grid">
+                    <div class="sr-loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        Loading steps...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert container -->
+    <div id="seq-runner-alert-container"></div>
+
+    <script>
+        const seq_runner = {
+            // State
+            sequenceData: null,
+            updateInterval: null,
+            elapsedTimer: null,
+            executionStartTime: null,
+            elapsedTime: 0,
+            completedTime: null,
+            
+            // DOM elements
+            elements: {},
+
+            // Initialize
+            init() {
+                // Cache DOM elements
+                this.elements = {
+                    seqName: document.getElementById('seq-runner-seq-name'),
+                    seqRoute: document.getElementById('seq-runner-seq-route'),
+                    startBtn: document.getElementById('seq-runner-start'),
+                    stopBtn: document.getElementById('seq-runner-stop'),
+                    refreshBtn: document.getElementById('seq-runner-refresh'),
+                    badge: document.getElementById('seq-runner-badge'),
+                    progress: document.getElementById('seq-runner-progress'),
+                    progressFill: document.getElementById('seq-runner-progress-fill'),
+                    elapsed: document.getElementById('seq-runner-elapsed'),
+                    currentStep: document.getElementById('seq-runner-current-step'),
+                    currentInfo: document.getElementById('seq-runner-current-info'),
+                    currentRoute: document.getElementById('seq-runner-current-route'),
+                    currentTime: document.getElementById('seq-runner-current-time'),
+                    stepsGrid: document.getElementById('seq-runner-steps-grid'),
+                    alertContainer: document.getElementById('seq-runner-alert-container')
+                };
+
+                // Event listeners
+                this.elements.startBtn.addEventListener('click', () => this.startSequence());
+                this.elements.stopBtn.addEventListener('click', () => this.stopSequence());
+                this.elements.refreshBtn.addEventListener('click', () => this.refreshState());
+
+                // Load sequence and start updates
+                this.loadSequence();
+                this.startStatusUpdates();
+            },
+
+            // Show alert
+            showAlert(message, type = 'info') {
+                const alert = document.createElement('div');
+                alert.className = `sr-alert sr-alert-${type}`;
+                alert.innerHTML = `
+                    <i class="fas fa-${type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                    ${message}
+                `;
+                
+                this.elements.alertContainer.appendChild(alert);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    if (alert.parentNode) {
+                        alert.remove();
+                    }
+                }, 3000);
+            },
+
+            // Load the sequence
+            async loadSequence() {
+                this.elements.stepsGrid.innerHTML = `
+                    <div class="sr-loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        Loading steps...
+                    </div>
+                `;
+
+                try {
+                    const response = await fetch('/api/sequences-creator');
+                    const result = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(result.error || 'Failed to load sequence');
+                    }
+
+                    if (result.sequences && result.sequences.length > 0) {
+                        this.sequenceData = result.sequences[0];
+                        this.updateSequenceInfo();
+                        this.updateControls(false);
+                    } else {
+                        throw new Error('No sequences available');
+                    }
+                    
+                } catch (error) {
+                    console.error('Error loading sequence:', error);
+                    this.showAlert('Failed to load sequence: ' + error.message, 'error');
+                    this.elements.stepsGrid.innerHTML = `
+                        <div class="sr-loading" style="color: #ff3b30;">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Failed to load
+                        </div>
+                    `;
+                    this.elements.seqName.textContent = 'Error';
+                }
+            },
+
+            // Update sequence information
+            updateSequenceInfo() {
+                if (!this.sequenceData) return;
+
+                const seq = this.sequenceData;
+                
+                // Update header info
+                this.elements.seqName.textContent = seq.name || 'Sequence';
+                
+                const startPoint = seq.start || '-';
+                const endPoint = seq.steps && seq.steps.length > 0 
+                    ? seq.steps[seq.steps.length - 1].to 
+                    : '-';
+                this.elements.seqRoute.textContent = `${startPoint} → ${endPoint}`;
+                
+                // Render steps
+                this.renderSteps();
+            },
+
+            // Render steps list
+            renderSteps() {
+                const steps = this.sequenceData?.steps || [];
+                
+                if (steps.length === 0) {
+                    this.elements.stepsGrid.innerHTML = `
+                        <div class="sr-loading">
+                            <i class="fas fa-inbox"></i>
+                            No steps in sequence
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                steps.forEach((step, index) => {
+                    html += `
+                        <div class="sr-step" id="seq-runner-step-${index}">
+                            <div class="dot">${step.order || index + 1}</div>
+                            <div class="name" title="${step.path}">${step.path}</div>
+                            <div class="route">${step.from} → ${step.to}</div>
+                        </div>
+                    `;
+                });
+
+                this.elements.stepsGrid.innerHTML = html;
+            },
+
+            // Start sequence execution
+            async startSequence() {
+                if (!this.sequenceData) {
+                    this.showAlert('No sequence loaded', 'error');
+                    return;
+                }
+
+                try {
+                    const sequenceData = {
+                        sequence: {
+                            id: this.sequenceData.id,
+                            start: this.sequenceData.start,
+                            current: this.sequenceData.current,
+                            steps: this.sequenceData.steps
+                        }
+                    };
+
+                    const response = await fetch('/api/sequences/execute', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(sequenceData)
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(result.error || 'Failed to start sequence');
+                    }
+
+                    // Start elapsed time counter
+                    this.startElapsedTimer();
+
+                    this.showAlert('Sequence execution started', 'success');
+                    this.updateControls(true);
+
+                } catch (error) {
+                    this.showAlert(error.message, 'error');
+                }
+            },
+
+            // Start elapsed time timer
+            startElapsedTimer() {
+                this.executionStartTime = Date.now();
+                this.elapsedTime = 0;
+                this.completedTime = null;
+
+                if (this.elapsedTimer) {
+                    clearInterval(this.elapsedTimer);
+                }
+
+                this.elapsedTimer = setInterval(() => {
+                    if (!this.completedTime) {
+                        this.elapsedTime = Math.floor((Date.now() - this.executionStartTime) / 1000);
+                        this.updateElapsedTime();
+                    }
+                }, 1000);
+            },
+
+            // Update elapsed time display
+            updateElapsedTime() {
+                this.elements.elapsed.textContent = this.completedTime 
+                    ? `${this.completedTime}s` 
+                    : `${this.elapsedTime}s`;
+            },
+
+            // Stop sequence
+            async stopSequence() {
+                try {
+                    const response = await fetch('/api/sequences/stop', {
+                        method: 'POST'
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(result.error || 'Failed to stop sequence');
+                    }
+
+                    // Stop elapsed timer
+                    if (this.elapsedTimer) {
+                        clearInterval(this.elapsedTimer);
+                        this.elapsedTimer = null;
+                    }
+
+                    this.showAlert('Sequence stopped', 'info');
+                    this.updateControls(false);
+
+                } catch (error) {
+                    this.showAlert(error.message, 'error');
+                }
+            },
+
+            // Refresh/reset state
+            async refreshState() {
+                try {
+                    const response = await fetch('/api/sequences/refresh', {
+                        method: 'POST'
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(result.error || 'Failed to reset state');
+                    }
+
+                    // Reset elapsed time
+                    if (this.elapsedTimer) {
+                        clearInterval(this.elapsedTimer);
+                        this.elapsedTimer = null;
+                    }
+                    this.elapsedTime = 0;
+                    this.completedTime = null;
+                    this.updateElapsedTime();
+
+                    // Reload sequence
+                    await this.loadSequence();
+
+                    this.showAlert('State reset', 'success');
+                    this.updateControls(false);
+
+                } catch (error) {
+                    this.showAlert(error.message, 'error');
+                }
+            },
+
+            // Update control buttons
+            updateControls(isActive) {
+                if (isActive) {
+                    this.elements.startBtn.disabled = true;
+                    this.elements.stopBtn.disabled = false;
+                } else {
+                    this.elements.startBtn.disabled = !this.sequenceData;
+                    this.elements.stopBtn.disabled = true;
+                }
+            },
+
+            // Start status updates
+            startStatusUpdates() {
+                if (this.updateInterval) {
+                    clearInterval(this.updateInterval);
+                }
+
+                this.updateInterval = setInterval(() => this.updateStatus(), 1000);
+                this.updateStatus();
+            },
+
+            // Update status from server
+            async updateStatus() {
+                try {
+                    const response = await fetch('/api/sequences/status');
+                    const status = await response.json();
+
+                    if (!response.ok) return;
+
+                    // Update badge
+                    const badge = this.elements.badge;
+                    if (status.active) {
+                        badge.className = 'seq-runner-badge seq-runner-badge-running';
+                        badge.textContent = 'RUNNING';
+                    } else if (status.completed) {
+                        badge.className = 'seq-runner-badge seq-runner-badge-completed';
+                        badge.textContent = 'COMPLETED';
+                        
+                        // Stop elapsed timer on completion
+                        if (!this.completedTime) {
+                            this.completedTime = this.elapsedTime;
+                            if (this.elapsedTimer) {
+                                clearInterval(this.elapsedTimer);
+                                this.elapsedTimer = null;
+                            }
+                            this.updateElapsedTime();
+                        }
+                    } else if (status.error) {
+                        badge.className = 'seq-runner-badge seq-runner-badge-error';
+                        badge.textContent = 'ERROR';
+                        
+                        // Stop elapsed timer on error
+                        if (this.elapsedTimer) {
+                            clearInterval(this.elapsedTimer);
+                            this.elapsedTimer = null;
+                        }
+                    } else {
+                        badge.className = 'seq-runner-badge seq-runner-badge-idle';
+                        badge.textContent = 'IDLE';
+                    }
+
+                    // Update progress
+                    this.elements.progress.textContent = 
+                        `${status.stepsCompleted || 0}/${status.stepsTotal || 0}`;
+                    
+                    if (status.progress) {
+                        const percent = status.progress.percentage || 0;
+                        this.elements.progressFill.style.width = `${percent}%`;
+                    }
+
+                    // Update current step
+                    if (status.currentStepInfo) {
+                        this.elements.currentStep.style.display = 'block';
+                        const step = status.currentStepInfo;
+                        const runningTime = step.running_time || 0;
+                        
+                        this.elements.currentInfo.textContent = step.path || 'Step';
+                        this.elements.currentRoute.textContent = `${step.from} → ${step.to}`;
+                        this.elements.currentTime.textContent = step.has_started 
+                            ? `Running: ${runningTime.toFixed(1)}s` 
+                            : 'Ready';
+                    } else {
+                        this.elements.currentStep.style.display = 'none';
+                    }
+
+                    // Update steps progress visualization
+                    this.updateStepsProgress(status);
+
+                    // Update controls
+                    this.updateControls(status.active);
+
+                } catch (error) {
+                    console.error('Failed to update status:', error);
+                }
+            },
+
+            // Update steps progress visualization
+            updateStepsProgress(status) {
+                const steps = status.currentSequence?.steps || this.sequenceData?.steps || [];
+                
+                steps.forEach((step, index) => {
+                    const stepElement = document.getElementById(`seq-runner-step-${index}`);
+                    if (!stepElement) return;
+
+                    // Reset classes
+                    stepElement.className = 'sr-step';
+
+                    if (index < (status.stepsCompleted || 0)) {
+                        stepElement.classList.add('completed');
+                    } else if (index === status.currentStepIndex) {
+                        stepElement.classList.add('current');
+                        
+                        // Smooth scroll to current step
+                        stepElement.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                        });
+                    }
+                });
+            }
+        };
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            seq_runner.init();
+        });
+    </script>
+</body>
+</html>
+

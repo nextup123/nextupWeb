@@ -1,0 +1,2162 @@
+{
+  "@attributes": {
+    "BTCPP_format": "4",
+    "_uid": "uid_d8e8667332f6_mm95c80h"
+  },
+  "@children": [
+    {
+      "tagName": "include",
+      "content": {
+        "@attributes": {
+          "path": "do_di_tree.xml",
+          "_uid": "uid_867973d09603_mm95c80h"
+        }
+      }
+    },
+    {
+      "tagName": "include",
+      "content": {
+        "@attributes": {
+          "path": "run_path.xml",
+          "_uid": "uid_156f86031fef_mm95c80h"
+        }
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "main_tree",
+          "_uid": "uid_279c6b5fe9ab_mm95c80h"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "jhckjdf",
+                "name": "main_tree_sequennce(dont_delete_it)",
+                "_uid": "uid_695334ccd5bc_mm95c80h"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1769576913374_npp4h19",
+                      "name": "Sequence_103833",
+                      "_uid": "uid_1e4d61899897_mm95c80h"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "planExecute",
+                            "_uid": "uid_97dd9bfefa5b_mm95c80h"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "test1",
+          "_uid": "uid_8f6afadcd802_mm95c80h"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1769232230358_vh0s680",
+                "name": "RootSequence",
+                "_uid": "uid_ab1c9fb3e3c8_mm95c80h"
+              },
+              "@children": [
+                {
+                  "tagName": "TwistMover",
+                  "content": {
+                    "@attributes": {
+                      "ID": "twistmover_1769232239849_o1jbwt6",
+                      "name": "TwistMover_105359",
+                      "sensor_mode": "false",
+                      "frame": "external_link",
+                      "max_twist_vel": "0.1",
+                      "linear_x": "0.1",
+                      "linear_y": "0.0",
+                      "linear_z": "0.0",
+                      "angular_x": "0.0",
+                      "angular_y": "0.0",
+                      "angular_z": "0.0",
+                      "acc_sec": "2",
+                      "deacc_sec": "2",
+                      "duration_sec": "5.0",
+                      "_uid": "uid_c4a9d38f7f60_mm95c80h"
+                    }
+                  }
+                },
+                {
+                  "tagName": "Sleep",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sleep_1769232302255_miv7ijo",
+                      "name": "Sleep_10552",
+                      "msec": "50",
+                      "_uid": "uid_bee94d3f9e43_mm95c80h"
+                    }
+                  }
+                },
+                {
+                  "tagName": "TwistMover",
+                  "content": {
+                    "@attributes": {
+                      "ID": "twistmover_1769247478387_kjcdikj",
+                      "name": "TwistMover_15758",
+                      "sensor_mode": "false",
+                      "frame": "external_link",
+                      "max_twist_vel": "0.2",
+                      "linear_x": "-0.1",
+                      "linear_y": "0.0",
+                      "linear_z": "0.0",
+                      "angular_x": "0.0",
+                      "angular_y": "0.0",
+                      "angular_z": "0.0",
+                      "acc_sec": "2.0",
+                      "deacc_sec": "2.0",
+                      "duration_sec": "5.0",
+                      "_uid": "uid_caa04a8a0c82_mm95c80h"
+                    }
+                  }
+                },
+                {
+                  "tagName": "Sleep",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sleep_1769247512194_cspjbrb",
+                      "name": "Sleep_15832",
+                      "msec": "50",
+                      "_uid": "uid_cdfed3b4f7ef_mm95c80h"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "external",
+          "_uid": "uid_c0590726404f_mm95c80h"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1769249681250_goxcqgm",
+                "name": "RootSequence",
+                "_uid": "uid_6d3c309beb60_mm95c80h"
+              },
+              "@children": [
+                {
+                  "tagName": "SetExternalOrientation",
+                  "content": {
+                    "@attributes": {
+                      "ID": "setexternalorientation_1769249854322_q87kwqh",
+                      "name": "SetExternalOrientation_154734",
+                      "yaw": "2",
+                      "_uid": "uid_4598e83ad913_mm95c80h"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "path",
+          "_uid": "uid_a992e294dd37_mm95c80h"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1769260674524_u2p4z6h",
+                "name": "RootSequence",
+                "_uid": "uid_67caea5ef766_mm95c80h"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1769408261077_n79xqu2",
+                      "name": "Sequence_114741",
+                      "_uid": "uid_0109058835c8_mm95c80h"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "root_sequence_3145",
+                            "_uid": "uid_61fef7289d22_mm95c80h"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_home_p1_5670",
+                                  "_uid": "uid_8308a1f877be_mm95c80h"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "Fallback",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "fallback_1859",
+                                        "_uid": "uid_4c0e83b18b2c_mm95c80h"
+                                      },
+                                      "@children": [
+                                        {
+                                          "tagName": "Sequence",
+                                          "content": {
+                                            "@attributes": {
+                                              "ID": "seq_success_home_p1_8489",
+                                              "_uid": "uid_461bdb2d9c01_mm95c80h"
+                                            },
+                                            "@children": [
+                                              {
+                                                "tagName": "RunPath",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "path_name": "home_p1",
+                                                    "ID": "home_p1_9976",
+                                                    "speed_scale": "1.0",
+                                                    "_uid": "uid_31c48013e4cf_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "MsgLoggerNode",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "msg_success_home_p1_6198",
+                                                    "msg_log": "home_p1 success",
+                                                    "_uid": "uid_286262c96ca0_mm95c80h"
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          "tagName": "Sequence",
+                                          "content": {
+                                            "@attributes": {
+                                              "ID": "seq_failure_home_p1_6311",
+                                              "_uid": "uid_cf01c5c17990_mm95c80h"
+                                            },
+                                            "@children": [
+                                              {
+                                                "tagName": "MsgLoggerNode",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "msg_fail_home_p1_7092",
+                                                    "msg_log": "home_p1 failed",
+                                                    "_uid": "uid_4d53a990d55d_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "PopupMsg",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "popup_home_p1_5871",
+                                                    "msg": "home_p1 path failed",
+                                                    "type": "failure",
+                                                    "timeout": "0",
+                                                    "_uid": "uid_473fdfcb955b_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "AlwaysFailure",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "_uid": "uid_02f2e0ad7e57_mm95c80h"
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_p1_p2_5002",
+                                  "_uid": "uid_dcaefa1b33ad_mm95c80h"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "Fallback",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "fallback_7320",
+                                        "_uid": "uid_9df1d76b8149_mm95c80h"
+                                      },
+                                      "@children": [
+                                        {
+                                          "tagName": "Sequence",
+                                          "content": {
+                                            "@attributes": {
+                                              "ID": "seq_success_p1_p2_2893",
+                                              "_uid": "uid_f5e2f8422648_mm95c80h"
+                                            },
+                                            "@children": [
+                                              {
+                                                "tagName": "RunPath",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "path_name": "p1_p2",
+                                                    "ID": "p1_p2_8602",
+                                                    "speed_scale": "1.0",
+                                                    "_uid": "uid_7fb6b277a1d2_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "MsgLoggerNode",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "msg_success_p1_p2_5464",
+                                                    "msg_log": "p1_p2 success",
+                                                    "_uid": "uid_fca40909d591_mm95c80h"
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          "tagName": "Sequence",
+                                          "content": {
+                                            "@attributes": {
+                                              "ID": "seq_failure_p1_p2_1465",
+                                              "_uid": "uid_41f8accf0a6a_mm95c80h"
+                                            },
+                                            "@children": [
+                                              {
+                                                "tagName": "MsgLoggerNode",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "msg_fail_p1_p2_8717",
+                                                    "msg_log": "p1_p2 failed",
+                                                    "_uid": "uid_4ff0a4c0062b_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "PopupMsg",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "popup_p1_p2_7442",
+                                                    "msg": "p1_p2 path failed",
+                                                    "type": "failure",
+                                                    "timeout": "0",
+                                                    "_uid": "uid_badbcc1c1f57_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "AlwaysFailure",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "_uid": "uid_df5b19f428fd_mm95c80h"
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_p2_p1_6763",
+                                  "_uid": "uid_42c76a720701_mm95c80h"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "Fallback",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "fallback_7908",
+                                        "_uid": "uid_5391bf794ca7_mm95c80h"
+                                      },
+                                      "@children": [
+                                        {
+                                          "tagName": "Sequence",
+                                          "content": {
+                                            "@attributes": {
+                                              "ID": "seq_success_p2_p1_2238",
+                                              "_uid": "uid_ad181f4bde0b_mm95c80h"
+                                            },
+                                            "@children": [
+                                              {
+                                                "tagName": "RunPath",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "path_name": "p2_p1",
+                                                    "ID": "p2_p1_2700",
+                                                    "speed_scale": "1.0",
+                                                    "_uid": "uid_bbd64925a3d2_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "MsgLoggerNode",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "msg_success_p2_p1_9945",
+                                                    "msg_log": "p2_p1 success",
+                                                    "_uid": "uid_b2a0f23b1748_mm95c80h"
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          "tagName": "Sequence",
+                                          "content": {
+                                            "@attributes": {
+                                              "ID": "seq_failure_p2_p1_8151",
+                                              "_uid": "uid_802a6d140028_mm95c80h"
+                                            },
+                                            "@children": [
+                                              {
+                                                "tagName": "MsgLoggerNode",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "msg_fail_p2_p1_6592",
+                                                    "msg_log": "p2_p1 failed",
+                                                    "_uid": "uid_18f9aea8056a_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "PopupMsg",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "popup_p2_p1_3564",
+                                                    "msg": "p2_p1 path failed",
+                                                    "type": "failure",
+                                                    "timeout": "0",
+                                                    "_uid": "uid_26b027963cc1_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "AlwaysFailure",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "_uid": "uid_02c993d0bc76_mm95c80h"
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_p1_home_9550",
+                                  "_uid": "uid_d15a2fe56eef_mm95c80h"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "Fallback",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "fallback_2836",
+                                        "_uid": "uid_6d699a84105e_mm95c80h"
+                                      },
+                                      "@children": [
+                                        {
+                                          "tagName": "Sequence",
+                                          "content": {
+                                            "@attributes": {
+                                              "ID": "seq_success_p1_home_4567",
+                                              "_uid": "uid_9990dcf7a9e8_mm95c80h"
+                                            },
+                                            "@children": [
+                                              {
+                                                "tagName": "RunPath",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "path_name": "p1_home",
+                                                    "ID": "p1_home_5994",
+                                                    "speed_scale": "1.0",
+                                                    "_uid": "uid_820924e3385d_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "MsgLoggerNode",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "msg_success_p1_home_3841",
+                                                    "msg_log": "p1_home success",
+                                                    "_uid": "uid_42abd378fbda_mm95c80h"
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          "tagName": "Sequence",
+                                          "content": {
+                                            "@attributes": {
+                                              "ID": "seq_failure_p1_home_7592",
+                                              "_uid": "uid_036a4f945a88_mm95c80h"
+                                            },
+                                            "@children": [
+                                              {
+                                                "tagName": "MsgLoggerNode",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "msg_fail_p1_home_1194",
+                                                    "msg_log": "p1_home failed",
+                                                    "_uid": "uid_99b1d1116317_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "PopupMsg",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "ID": "popup_p1_home_8652",
+                                                    "msg": "p1_home path failed",
+                                                    "type": "failure",
+                                                    "timeout": "0",
+                                                    "_uid": "uid_ed99ef72980d_mm95c80h"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "tagName": "AlwaysFailure",
+                                                "content": {
+                                                  "@attributes": {
+                                                    "_uid": "uid_24021a9c1f94_mm95c80h"
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "mode_and_jog_testing",
+          "_uid": "uid_a7144ac48b59_mm95c80h"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1769412380681_5irwdxb",
+                "name": "RootSequence",
+                "_uid": "uid_b64c6128831f_mm95c80h"
+              },
+              "@children": [
+                {
+                  "tagName": "Sleep",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sleep_1769413560852_w044b8m",
+                      "name": "Sleep_13160",
+                      "msec": "100",
+                      "_uid": "uid_a7bffcf81cff_mm95c80i"
+                    }
+                  }
+                },
+                {
+                  "tagName": "PublishDataOnTopic",
+                  "content": {
+                    "@attributes": {
+                      "ID": "publishdataontopic_1769413572545_ooznh8q",
+                      "name": "PublishDataOnTopic_131612",
+                      "type_of_topic": "std_msgs/msg/String",
+                      "msg_on_topic": "9",
+                      "topic_name": "/change_mode",
+                      "_uid": "uid_17bdaab8663b_mm95c80i"
+                    }
+                  }
+                },
+                {
+                  "tagName": "Sleep",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sleep_1769413643959_4deegvo",
+                      "name": "Sleep_131723",
+                      "msec": "500",
+                      "_uid": "uid_1bbd413d4766_mm95c80i"
+                    }
+                  }
+                },
+                {
+                  "tagName": "TwistMover",
+                  "content": {
+                    "@attributes": {
+                      "ID": "twistmover_1769413765721_b3polrc",
+                      "name": "TwistMover_131925",
+                      "sensor_mode": "false",
+                      "frame": "end",
+                      "max_twist_vel": "0.3",
+                      "linear_x": "0.0",
+                      "linear_y": "0.3",
+                      "linear_z": "0.0",
+                      "angular_x": "0.0",
+                      "angular_y": "0.0",
+                      "angular_z": "0.0",
+                      "acc_sec": "0.5",
+                      "deacc_sec": "0.5",
+                      "duration_sec": "2",
+                      "_uid": "uid_f26889651376_mm95c80i"
+                    }
+                  }
+                },
+                {
+                  "tagName": "Sleep",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sleep_1769413820114_55p3yxi",
+                      "name": "Sleep_132020",
+                      "msec": "10",
+                      "_uid": "uid_24d0123fcf6d_mm95c80i"
+                    }
+                  }
+                },
+                {
+                  "tagName": "TwistMover",
+                  "content": {
+                    "@attributes": {
+                      "ID": "twistmover_1769413837068_n6qqlo5",
+                      "name": "TwistMover_132037",
+                      "sensor_mode": "false",
+                      "frame": "end",
+                      "max_twist_vel": "0.3",
+                      "linear_x": "0.0",
+                      "linear_y": "0.0",
+                      "linear_z": "0.3",
+                      "angular_x": "0.0",
+                      "angular_y": "0.0",
+                      "angular_z": "0.0",
+                      "acc_sec": "0.5",
+                      "deacc_sec": "0.5",
+                      "duration_sec": "2",
+                      "_uid": "uid_d86448e9e810_mm95c80i"
+                    }
+                  }
+                },
+                {
+                  "tagName": "Sleep",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sleep_1769413881569_x3qsmz3",
+                      "name": "Sleep_132121",
+                      "msec": "10",
+                      "_uid": "uid_e503b75726b5_mm95c80i"
+                    }
+                  }
+                },
+                {
+                  "tagName": "PublishDataOnTopic",
+                  "content": {
+                    "@attributes": {
+                      "ID": "publishdataontopic_1769413895804_6uvsdw3",
+                      "name": "PublishDataOnTopic_132135",
+                      "type_of_topic": "std_msgs/msg/String",
+                      "msg_on_topic": "8",
+                      "topic_name": "/change_mode",
+                      "_uid": "uid_80b96170768b_mm95c80i"
+                    }
+                  }
+                },
+                {
+                  "tagName": "Sleep",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sleep_1769413956026_qwqu0xs",
+                      "name": "Sleep_132236",
+                      "msec": "500",
+                      "_uid": "uid_d18c24b5397e_mm95c80i"
+                    }
+                  }
+                },
+                {
+                  "tagName": "PlanAndExecute",
+                  "content": {
+                    "@attributes": {
+                      "ID": "planandexecute_1769413974602_gaf5e5q",
+                      "name": "PlanAndExecute_132254",
+                      "cart": "false",
+                      "pose_goal": "startPoint",
+                      "speed_factor": "0.5",
+                      "_uid": "uid_5c3db1051047_mm95c80i"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "plan_test",
+          "_uid": "uid_cc9a2ee41b0a_mm95c80i"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1769416122746_nwmizgk",
+                "name": "RootSequence",
+                "_uid": "uid_62eda9823738_mm95c80i"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1769416139635_h1deqo5",
+                      "name": "Sequence_135859",
+                      "_uid": "uid_03e47d5d4aec_mm95c80i"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "PlanAndExecute",
+                        "content": {
+                          "@attributes": {
+                            "ID": "planandexecute_1769416461834_okp67v9",
+                            "name": "PlanAndExecute_14421",
+                            "cart": "false",
+                            "pose_goal": "p1",
+                            "speed_factor": "0.5",
+                            "_uid": "uid_9661ba9cac41_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "Sleep",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sleep_1769416480842_baonr1b",
+                            "name": "Sleep_14440",
+                            "msec": "1000",
+                            "_uid": "uid_c691cfa3132c_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "PlanAndExecute",
+                        "content": {
+                          "@attributes": {
+                            "ID": "planandexecute_1769416502765_ywa7jhj",
+                            "name": "PlanAndExecute_1452",
+                            "cart": "false",
+                            "pose_goal": "p2",
+                            "speed_factor": "0.5",
+                            "_uid": "uid_4028e2f596e7_mm95c80i"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "article_testing",
+          "_uid": "uid_405dcf86b849_mm95c80i"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1769501737719_14x1mru",
+                "name": "RootSequence",
+                "_uid": "uid_b0c9b62f11cf_mm95c80i"
+              },
+              "@children": [
+                {
+                  "tagName": "PlanAndExecute",
+                  "content": {
+                    "@attributes": {
+                      "ID": "planandexecute_1769501753127_uttpesj",
+                      "name": "PlanAndExecute_134553",
+                      "cart": "false",
+                      "pose_goal": "p1",
+                      "speed_factor": "0.5",
+                      "_uid": "uid_01363c561f56_mm95c80i"
+                    }
+                  }
+                },
+                {
+                  "tagName": "SetTranslation",
+                  "content": {
+                    "@attributes": {
+                      "ID": "settranslation_1769501922529_vqzym6f",
+                      "name": "SetTranslation_134842",
+                      "x": "yes",
+                      "z": "no",
+                      "_uid": "uid_564a718a8384_mm95c80i"
+                    }
+                  }
+                },
+                {
+                  "tagName": "PlanAndExecute",
+                  "content": {
+                    "@attributes": {
+                      "ID": "planandexecute_1769501945357_rwub1t0",
+                      "name": "PlanAndExecute_13495",
+                      "cart": "false",
+                      "pose_goal": "p1",
+                      "speed_factor": "0.5",
+                      "_uid": "uid_cf260251e771_mm95c80i"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "shivam_tree",
+          "_uid": "uid_0fbdfcb485a8_mm95c80i"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1769576732256_a8ehujq",
+                "name": "RootSequence",
+                "_uid": "uid_45835bbc7b6e_mm95c80i"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1769576740164_ju9xcdb",
+                      "name": "Sequence_103540",
+                      "_uid": "uid_cf160d76568a_mm95c80i"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "homing_p1",
+                            "desired_speed": "0.2",
+                            "_uid": "uid_967f49efc26b_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p1_p2",
+                            "desired_speed": "0.2",
+                            "_uid": "uid_914cc000e63a_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p2_p3",
+                            "desired_speed": "0.2",
+                            "_uid": "uid_e1f1b84ab7e9_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p3_p4",
+                            "desired_speed": "0.2",
+                            "_uid": "uid_7f5d18633ca7_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p4_p3",
+                            "desired_speed": "0.2",
+                            "_uid": "uid_a26402207cef_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p3_p2",
+                            "desired_speed": "0.2",
+                            "_uid": "uid_116867ac1b60_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p2_p1",
+                            "desired_speed": "0.2",
+                            "_uid": "uid_135453b3b777_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p1_homing",
+                            "desired_speed": "0.2",
+                            "_uid": "uid_1371a8376b6a_mm95c80i"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "article_translation",
+          "_uid": "uid_727dce9cb628_mm95c80i"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1769596929125_lkwtlby",
+                "name": "RootSequence",
+                "_uid": "uid_8abe4c8cf847_mm95c80i"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1769596932984_yqaj35g",
+                      "name": "Sequence_161212",
+                      "_uid": "uid_e2dcf4820fc0_mm95c80i"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_1769846109090_u8fmh8s",
+                            "name": "Fallback_13259",
+                            "_uid": "uid_37d9f563d321_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_1769846109091_8t019qr",
+                                  "name": "Sequence1",
+                                  "_uid": "uid_74ed6460d2bc_mm95c80i"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "IsAtPose",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "isatpose_1769846156218_wgtx0jz",
+                                        "name": "IsAtPose_132556",
+                                        "target_name": "p5",
+                                        "_uid": "uid_afd9fbe9a200_mm95c80i"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_1769846109091_b7fmfwu",
+                                  "name": "Sequence2",
+                                  "_uid": "uid_55bdf83d141d_mm95c80i"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "PlanAndExecute",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "planandexecute_1769846172979_v0r0fez",
+                                        "name": "PlanAndExecute_132612",
+                                        "cart": "false",
+                                        "pose_goal": "p5",
+                                        "speed_factor": "2.0",
+                                        "_uid": "uid_53f5459f6eb9_mm95c80i"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "tagName": "PublishDataOnTopic",
+                        "content": {
+                          "@attributes": {
+                            "ID": "publishdataontopic_1769684832606_k2wwhbf",
+                            "name": "PublishDataOnTopic_163712",
+                            "type_of_topic": "std_msgs/msg/String",
+                            "msg_on_topic": "cartesian_absolute",
+                            "topic_name": "/set_translation/mode",
+                            "_uid": "uid_2becc9775715_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "RunTranslation",
+                        "content": {
+                          "@attributes": {
+                            "ID": "runtranslation_1769678510565_e0tmedv",
+                            "name": "RunTranslation_145150",
+                            "command": "-use_y,use_x",
+                            "speed": "1.0",
+                            "_uid": "uid_0922fbfce344_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "PublishDataOnTopic",
+                        "content": {
+                          "@attributes": {
+                            "ID": "publishdataontopic_1769846015027_ibswpex",
+                            "name": "PublishDataOnTopic_132335",
+                            "type_of_topic": "std_msgs/msg/String",
+                            "msg_on_topic": "rpy_absolute",
+                            "topic_name": "/set_orientation/command",
+                            "_uid": "uid_0e604200b88b_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "RunOrientation",
+                        "content": {
+                          "@attributes": {
+                            "ID": "runorientation_1769845922882_suy5w6x",
+                            "name": "RunOrientation_13222",
+                            "command": "r,-31",
+                            "speed": "1.0",
+                            "_uid": "uid_3300af8df0b1_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "PublishDataOnTopic",
+                        "content": {
+                          "@attributes": {
+                            "ID": "publishdataontopic_1769846336580_efm8hur",
+                            "name": "PublishDataOnTopic_132856",
+                            "type_of_topic": "std_msgs/msg/String",
+                            "msg_on_topic": "cartesian_relative",
+                            "topic_name": "/set_translation/mode",
+                            "_uid": "uid_8e4a88c880f8_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "RunTranslation",
+                        "content": {
+                          "@attributes": {
+                            "ID": "runtranslation_1769846069123_tw7nj7d",
+                            "name": "RunTranslation_132429",
+                            "command": "-use_z",
+                            "speed": "1.0",
+                            "_uid": "uid_a1043e117ca7_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "PlanAndExecute",
+                        "content": {
+                          "@attributes": {
+                            "ID": "planandexecute_1769846212722_64brhaw",
+                            "name": "PlanAndExecute_132652",
+                            "cart": "false",
+                            "pose_goal": "p5",
+                            "speed_factor": "0.5",
+                            "_uid": "uid_144e04b110e0_mm95c80i"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "plan",
+          "_uid": "uid_b663acb10cd7_mm95c80i"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1770186418377_n9dpvzk",
+                "name": "RootSequence",
+                "_uid": "uid_00031147fa72_mm95c80i"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1770186423162_ee0poub",
+                      "name": "Sequence_1273",
+                      "_uid": "uid_e0cf908e92ca_mm95c80i"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Fallback",
+                        "content": {
+                          "@attributes": {
+                            "ID": "fallback_1770186429183_c5mgybg",
+                            "name": "Fallback_1279",
+                            "_uid": "uid_9dda39803bf2_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_1770186429183_br47yn7",
+                                  "name": "Sequence1",
+                                  "_uid": "uid_1c51e13fa96f_mm95c80i"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "IsAtPose",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "isatpose_1770186440440_94naikt",
+                                        "name": "IsAtPose_12720",
+                                        "target_name": "p5",
+                                        "_uid": "uid_8c1d562e98ad_mm95c80i"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "seq_1770186429183_mcnqbbe",
+                                  "name": "Sequence2",
+                                  "_uid": "uid_cabce51d2308_mm95c80i"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "PlanAndExecute",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "planandexecute_1770186453878_t0f7v65",
+                                        "name": "PlanAndExecute_12733",
+                                        "cart": "false",
+                                        "pose_goal": "p1",
+                                        "speed_factor": "0.5",
+                                        "_uid": "uid_0a531bfe896a_mm95c80i"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sequence_1770186464749_1uuxxji",
+                            "name": "Sequence_12744",
+                            "_uid": "uid_3a34a73a7d71_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "PlanAndExecute",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "planandexecute_1770186470823_45eoexg",
+                                  "name": "PlanAndExecute_12750",
+                                  "cart": "false",
+                                  "pose_goal": "p2",
+                                  "speed_factor": "0.5",
+                                  "_uid": "uid_9bd801e21a11_mm95c80i"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sequence_1770186490834_nr5ivi3",
+                            "name": "Sequence_12810",
+                            "_uid": "uid_787fb2bec098_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "PlanAndExecute",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "planandexecute_1770186498523_s3o346g",
+                                  "name": "PlanAndExecute_12818",
+                                  "cart": "false",
+                                  "pose_goal": "p3",
+                                  "speed_factor": "0.5",
+                                  "_uid": "uid_13c88be3d5b6_mm95c80i"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sequence_1770186572148_d7f6v8p",
+                            "name": "Sequence_12932",
+                            "_uid": "uid_24c280987cfb_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "PlanAndExecute",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "planandexecute_1770186575447_6so5g8c",
+                                  "name": "PlanAndExecute_12935",
+                                  "cart": "false",
+                                  "pose_goal": "p4",
+                                  "speed_factor": "0.5",
+                                  "_uid": "uid_41c11cca1dbf_mm95c80i"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sequence_1770193842556_msn30og",
+                            "name": "Sequence_33042",
+                            "_uid": "uid_b25258ae1f7d_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "PlanAndExecute",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "planandexecute_1770193855208_2ro4er4",
+                                  "name": "PlanAndExecute_33055",
+                                  "cart": "false",
+                                  "pose_goal": "p1",
+                                  "speed_factor": "0.5",
+                                  "_uid": "uid_5ea8e1720f0a_mm95c80i"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "nitin",
+          "_uid": "uid_b7cfad420684_mm95c80i"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1770206112171_3ptpuso",
+                "name": "RootSequence",
+                "_uid": "uid_4355ce13748f_mm95c80i"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1770206139674_1q7h27z",
+                      "name": "Sequence_65539",
+                      "_uid": "uid_528726845aa0_mm95c80i"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sequence_1770206234523_vodl6dt",
+                            "name": "Sequence_65714",
+                            "_uid": "uid_afc42692b8de_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "PlanAndExecute",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "planandexecute_1770206243611_54t0ha6",
+                                  "name": "PlanAndExecute_65723",
+                                  "cart": "false",
+                                  "pose_goal": "p1",
+                                  "speed_factor": "0.1",
+                                  "_uid": "uid_62e3fa28a6f2_mm95c80i"
+                                }
+                              }
+                            },
+                            {
+                              "tagName": "PlanAndExecute",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "planandexecute_1770206295532_hc11wty",
+                                  "name": "PlanAndExecute_65815",
+                                  "cart": "false",
+                                  "pose_goal": "p3",
+                                  "speed_factor": "0.1",
+                                  "_uid": "uid_41626291ccf4_mm95c80i"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "gopu",
+          "_uid": "uid_fb7f98a133b0_mm95c80i"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1770287922748_w5ximl8",
+                "name": "RootSequence",
+                "_uid": "uid_03ed18511c07_mm95c80i"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1770287935471_9z169u1",
+                      "name": "Sequence_53855",
+                      "_uid": "uid_ac1805dac4dd_mm95c80i"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "PlanAndExecute",
+                        "content": {
+                          "@attributes": {
+                            "ID": "planandexecute_1770291354608_d574iyq",
+                            "name": "PlanAndExecute_63554",
+                            "cart": "false",
+                            "pose_goal": "home",
+                            "speed_factor": "0.1",
+                            "_uid": "uid_6d12e66db676_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "home_p1",
+                            "desired_speed": "0.75",
+                            "_uid": "uid_79a696a6a78e_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "Sleep",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sleep_1770287983885_64lxfv0",
+                            "name": "Sleep_53943",
+                            "msec": "1000",
+                            "_uid": "uid_ddac50fdd734_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p1_p2",
+                            "desired_speed": "0.10",
+                            "_uid": "uid_b95e99f82f65_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "Sleep",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sleep_1770288029140_e5r4eso",
+                            "name": "Sleep_54029",
+                            "msec": "1000",
+                            "_uid": "uid_fa9e6afe92bb_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p2_p1",
+                            "desired_speed": "0.10",
+                            "_uid": "uid_bdfe88ed7e8f_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "Sleep",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sleep_1770288060000_3yuxqba",
+                            "name": "Sleep_54059",
+                            "msec": "1000",
+                            "_uid": "uid_b7b8f4dbd096_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p1_home",
+                            "desired_speed": "0.10",
+                            "_uid": "uid_a5693780b38e_mm95c80i"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "Sagar@tree",
+          "_uid": "uid_64443f9a5803_mm95c80i"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1770358467625_tn2i00p",
+                "name": "RootSequence",
+                "_uid": "uid_a560c20b6467_mm95c80i"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1770358500836_e1ctjpe",
+                      "name": "Sequence_1150",
+                      "_uid": "uid_25d7e7e09aef_mm95c80i"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sequence_1770358611401_x8y5u6c",
+                            "name": "Sequence_11651",
+                            "_uid": "uid_f0fa9d8e7289_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "sequence_1770358668431_telh1tb",
+                                  "name": "Sequence_11748",
+                                  "_uid": "uid_f971becf55d8_mm95c80i"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "Sleep",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "sleep_1770358726937_47sakjx",
+                                        "name": "Sleep_11846",
+                                        "msec": "",
+                                        "_uid": "uid_c9e8016c0ab6_mm95c80i"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "sequence_1770358671779_z21d6m0",
+                                  "name": "Sequence_11751",
+                                  "_uid": "uid_117ddd67e883_mm95c80i"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "Sleep",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "sleep_1770358734336_q04hx8y",
+                                        "name": "Sleep_11854",
+                                        "msec": "",
+                                        "_uid": "uid_cb59edad0b8b_mm95c80i"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "sequence_1770358674600_9ybcndo",
+                                  "name": "Sequence_11754",
+                                  "_uid": "uid_46ca518b8e66_mm95c80i"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "Sleep",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "sleep_1770358740001_8bydbxm",
+                                        "name": "Sleep_11859",
+                                        "msec": "",
+                                        "_uid": "uid_809aac094103_mm95c80i"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "sequence_1770358677435_tvhrkpq",
+                                  "name": "Sequence_11757",
+                                  "_uid": "uid_d3eb81c910a6_mm95c80i"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "Sleep",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "sleep_1770358744633_qlhg4yv",
+                                        "name": "Sleep_1194",
+                                        "msec": "",
+                                        "_uid": "uid_eb249930d90c_mm95c80i"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "tagName": "Sequence",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "sequence_1770358679974_dstrz0g",
+                                  "name": "Sequence_11759",
+                                  "_uid": "uid_227dd2302161_mm95c80i"
+                                },
+                                "@children": [
+                                  {
+                                    "tagName": "Sleep",
+                                    "content": {
+                                      "@attributes": {
+                                        "ID": "sleep_1770358750368_9zndhbe",
+                                        "name": "Sleep_11910",
+                                        "msec": "",
+                                        "_uid": "uid_702f5ce69f19_mm95c80i"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "Sagar@tree 2",
+          "_uid": "uid_d4c89315ce9a_mm95c80i"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1770358963327_sjccg0o",
+                "name": "RootSequence",
+                "_uid": "uid_ea4243f12871_mm95c80i"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1770358989384_azo58nh",
+                      "name": "Sequence_1239",
+                      "_uid": "uid_8c479b34715c_mm95c80i"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sequence_1770358995775_nu16uq4",
+                            "name": "Sequence_12315",
+                            "_uid": "uid_00d1b8976895_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sleep",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "sleep_1770359018266_2ukasj1",
+                                  "name": "Sleep_12338",
+                                  "msec": "",
+                                  "_uid": "uid_d7770d1e7245_mm95c80i"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sequence_1770359000900_xfmpnya",
+                            "name": "Sequence_12320",
+                            "_uid": "uid_cd4f2bf9748d_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sleep",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "sleep_1770359022634_ojjdgz3",
+                                  "name": "Sleep_12342",
+                                  "msec": "",
+                                  "_uid": "uid_1f3ffed95897_mm95c80i"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sequence_1770359003854_5vmdl0p",
+                            "name": "Sequence_12323",
+                            "_uid": "uid_cee76ee79c97_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sleep",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "sleep_1770359026449_q1os7t1",
+                                  "name": "Sleep_12346",
+                                  "msec": "",
+                                  "_uid": "uid_abcdd51c8134_mm95c80i"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sequence_1770359008408_6nqct2x",
+                            "name": "Sequence_12328",
+                            "_uid": "uid_ec008f9d54d7_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sleep",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "sleep_1770359034905_o9wvfkz",
+                                  "name": "Sleep_12354",
+                                  "msec": "",
+                                  "_uid": "uid_1ed2c3ae7de9_mm95c80i"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "tagName": "Sequence",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sequence_1770359011046_7k2l947",
+                            "name": "Sequence_12331",
+                            "_uid": "uid_7637ef61b2a2_mm95c80i"
+                          },
+                          "@children": [
+                            {
+                              "tagName": "Sleep",
+                              "content": {
+                                "@attributes": {
+                                  "ID": "sleep_1770359040881_oovcbuc",
+                                  "name": "Sleep_1240",
+                                  "msec": "",
+                                  "_uid": "uid_b6d5dca73e13_mm95c80i"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "Vansh",
+          "_uid": "uid_ffcfc8c7c0f1_mm95c80i"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1770462017499_hu8384n",
+                "name": "RootSequence",
+                "_uid": "uid_37e1319d0afb_mm95c80i"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1770462032243_kszkel7",
+                      "name": "Sequence_6032",
+                      "_uid": "uid_672601ff6550_mm95c80i"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "PlanAndExecute",
+                        "content": {
+                          "@attributes": {
+                            "ID": "planandexecute_1770462308147_qd6po6m",
+                            "name": "PlanAndExecute_658",
+                            "cart": "false",
+                            "pose_goal": "Home",
+                            "speed_factor": "0.5",
+                            "_uid": "uid_17f113509bba_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "Home_p1",
+                            "desired_speed": "0.2",
+                            "_uid": "uid_970adb148140_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "Sleep",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sleep_1770462172820_5a5drgt",
+                            "name": "Sleep_6252",
+                            "msec": "1000",
+                            "_uid": "uid_f7f9d484f4cf_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p1_p2",
+                            "desired_speed": "0.20",
+                            "_uid": "uid_b5a08620ddbd_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "Sleep",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sleep_1770462200298_s3crftg",
+                            "name": "Sleep_6320",
+                            "msec": "1000",
+                            "_uid": "uid_1b989cf882b2_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p2_p3",
+                            "desired_speed": "0.2",
+                            "_uid": "uid_4f6d61e8512b_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "Sleep",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sleep_1770462828507_ac07pk4",
+                            "name": "Sleep_61348",
+                            "msec": "1000",
+                            "_uid": "uid_63cfca1e98a1_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p3_p2",
+                            "desired_speed": "0.20",
+                            "_uid": "uid_296347abdaf6_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "Sleep",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sleep_1770462847539_ex1plg5",
+                            "name": "Sleep_6147",
+                            "msec": "1000",
+                            "_uid": "uid_68cb78d60749_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p2_p1",
+                            "desired_speed": "0.20",
+                            "_uid": "uid_d112560cecef_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "Sleep",
+                        "content": {
+                          "@attributes": {
+                            "ID": "sleep_1770462868546_1t596e1",
+                            "name": "Sleep_61428",
+                            "msec": "1000",
+                            "_uid": "uid_017946e4b1d3_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "SubTreePlus",
+                        "content": {
+                          "@attributes": {
+                            "ID": "p1_Home",
+                            "desired_speed": "0.20",
+                            "_uid": "uid_3e65fe4cf38d_mm95c80i"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tagName": "BehaviorTree",
+      "content": {
+        "@attributes": {
+          "ID": "planExecute",
+          "_uid": "uid_90395d89815d_mm95c80i"
+        },
+        "@children": [
+          {
+            "tagName": "Sequence",
+            "content": {
+              "@attributes": {
+                "ID": "seq_1771239745226_1aifygf",
+                "name": "RootSequence",
+                "_uid": "uid_470c48ee5087_mm95c80i"
+              },
+              "@children": [
+                {
+                  "tagName": "Sequence",
+                  "content": {
+                    "@attributes": {
+                      "ID": "sequence_1771239748609_7tqcqw0",
+                      "name": "Sequence_163228",
+                      "_uid": "uid_2ec140af3c59_mm95c80i"
+                    },
+                    "@children": [
+                      {
+                        "tagName": "PlanAndExecute",
+                        "content": {
+                          "@attributes": {
+                            "ID": "planandexecute_1771239756259_s4nflwe",
+                            "name": "PlanAndExecute_163236",
+                            "cart": "false",
+                            "pose_goal": "startTop",
+                            "speed_factor": "0.5",
+                            "_uid": "uid_66690a55c4fd_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "PlanAndExecute",
+                        "content": {
+                          "@attributes": {
+                            "ID": "planandexecute_1771239768330_iq0vcy5",
+                            "name": "PlanAndExecute_163248",
+                            "cart": "false",
+                            "pose_goal": "shoeStartFixed",
+                            "speed_factor": "0.5",
+                            "_uid": "uid_c5dd80d1abd3_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "PublishDataOnTopic",
+                        "content": {
+                          "@attributes": {
+                            "ID": "publishdataontopic_1771239819280_zp3iewm",
+                            "name": "PublishDataOnTopic_163339",
+                            "type_of_topic": "std_msgs/msg/Bool",
+                            "msg_on_topic": "true",
+                            "topic_name": "next_article",
+                            "_uid": "uid_e5f2998259bb_mm95c80i"
+                          }
+                        }
+                      },
+                      {
+                        "tagName": "PlanAndExecute",
+                        "content": {
+                          "@attributes": {
+                            "ID": "planandexecute_1771239807078_xcez6sl",
+                            "name": "PlanAndExecute_163327",
+                            "cart": "false",
+                            "pose_goal": "shoeEndDynamic",
+                            "speed_factor": "0.5",
+                            "_uid": "uid_ed0ca17aa2c0_mm95c80i"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

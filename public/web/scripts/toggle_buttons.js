@@ -139,9 +139,9 @@ pneumaticCVTopic = new ROSLIB.Topic({
     messageType: 'nextup_joint_interfaces/NextupDigitalOutputs'
 })
 
-document.getElementById("toggle-cnc").addEventListener('change', function () {
-    sendPulse(gateCNCTopic, 1);
-});
+// document.getElementById("toggle-cnc").addEventListener('change', function () {
+//     sendPulse(gateCNCTopic, 1);
+// });
 
 
 
@@ -152,9 +152,9 @@ const toggles = [
     { id: 'toggle-gripper1', onText: 'Open', offText: 'Close', topic: 'ui_commands', onRosPub: 'gt0', offRosPub: 'gt1', msgType: 'std_msgs/String' },
     { id: 'toggle-gripper2', onText: 'Open', offText: 'Close', topic: 'ui_commands', onRosPub: 'gt2', offRosPub: 'gt3', msgType: 'std_msgs/String' },
     { id: 'toggle-robot', onText: 'Play', offText: 'Pause', topic: 'cobot_play_pause', onRosPub: false, offRosPub: true, msgType: 'std_msgs/Bool' },
-    { id: 'toggle-mode', onText: 'Velocity', offText: 'Position', topic: 'ui_commands', onRosPub: 'st9', offRosPub: 'st8', msgType: 'std_msgs/String' },
+    { id: 'toggle-mode', onText: 'Jog', offText: 'Auto', topic: 'ui_commands', onRosPub: 'st9', offRosPub: 'st8', msgType: 'std_msgs/String' },
     // { id: 'toggle-cnc', onText: 'Close', offText: 'Open'},
-    { id: 'toggle-cv', onText: 'Down', offText: 'Up', topic: '/nextup_digital_output_controller_5/commands', idx: 1, onRosPub: true, offRosPub: false, msgType: 'nextup_joint_interfaces/NextupDigitalOutputs' }
+    // { id: 'toggle-cv', onText: 'Down', offText: 'Up', topic: '/nextup_digital_output_controller_5/commands', idx: 1, onRosPub: true, offRosPub: false, msgType: 'nextup_joint_interfaces/NextupDigitalOutputs' }
 ];
 
 // Initialize publishers
@@ -210,178 +210,3 @@ toggles.forEach(toggle => {
         console.log(`Published to ${toggle.topic}:`, message);
     });
 });
-
-
-
-//Digital Indicator Range button and pop up - Satyanshu Bhardwaj
-function openDigitalIndicatorPopup() {
-    getDigitalIndicatorCurrentRange();
-    document.getElementById("digital-indicator-popup").style.display = "block";
-}
-
-function closeDigitalIndicatorPopup() {
-    document.getElementById("digital-indicator-popup").style.display = "none";
-}
-
-function getDigitalIndicatorCurrentRange() {
-    var getService = new ROSLIB.Service({
-        ros: ros,
-        name: "/get_range",
-        serviceType: "nextup_joint_interfaces/srv/GetRange"
-    });
-
-    var request = new ROSLIB.ServiceRequest({});
-    getService.callService(request, function (response) {
-        document.getElementById("digital-indicator-current-min").innerText = response.min.toFixed(3);
-        document.getElementById("digital-indicator-current-max").innerText = response.max.toFixed(3);
-
-    });
-}
-
-function updateDigitalIndicatorRange() {
-    var minVal = parseFloat(document.getElementById("digital-indicator-new-min").value);
-    var maxVal = parseFloat(document.getElementById("digital-indicator-new-max").value);
-
-    if (isNaN(minVal) || isNaN(maxVal)) {
-        document.getElementById("digital-indicator-status-msg").innerText = "❌ Please enter valid numbers!";
-
-        return;
-    }
-
-    if (minVal >= maxVal) {
-        document.getElementById("digital-indicator-status-msg").innerText = "❌ Min value must be less than Max value!";
-
-        return;
-    }
-
-    var updateService = new ROSLIB.Service({
-        ros: ros,
-        name: "/update_range",
-        serviceType: "nextup_joint_interfaces/srv/UpdateRange"
-    });
-
-    var request = new ROSLIB.ServiceRequest({ min: minVal, max: maxVal });
-
-    updateService.callService(request, function (response) {
-        if (response.success) {
-            document.getElementById("digital-indicator-status-msg").innerText = "✅ Update Successful!";
-            getDigitalIndicatorCurrentRange();
-        } else {
-            document.getElementById("digital-indicator-status-msg").innerText = "❌ Update Failed!";
-        }
-
-    });
-}
-
-function resetDigitalIndicatorRange() {
-    var resetService = new ROSLIB.Service({
-        ros: ros,
-        name: "/update_range",
-        serviceType: "nextup_joint_interfaces/srv/UpdateRange"
-    });
-
-    var request = new ROSLIB.ServiceRequest({ min: 0, max: 100 });
-
-    resetService.callService(request, function (response) {
-        if (response.success) {
-            document.getElementById("digital-indicator-status-msg").innerText = "✅ Reset Successful!";
-            getDigitalIndicatorCurrentRange();
-        } else {
-            document.getElementById("digital-indicator-status-msg").innerText = "❌ Reset Failed!";
-        }
-    });
-}
-
-// Function to open the testing popup
-function openDigitalIndicatorTestPopup() {
-    document.getElementById("digital-indicator-test-popup").style.display = "block";
-    subscribeToDigitalIndicatorData();
-}
-
-// Function to close the testing popup
-function closeDigitalIndicatorTestPopup() {
-    document.getElementById("digital-indicator-test-popup").style.display = "none";
-}
-
-// Function to go back to the range setup popup
-function gotoDigitalIndicatorRangePopup() {
-    closeDigitalIndicatorTestPopup();
-    openDigitalIndicatorPopup();
-}
-
-// ROS Topic for digital output
-const digitalOutputTopic = new ROSLIB.Topic({
-    ros: ros,
-    name: '/nextup_digital_output_controller_5/commands',
-    messageType: 'nextup_joint_interfaces/msg/NextupDigitalOutputs'
-});
-
-// Function to trigger digital output
-function triggerDigitalIndicatorOutput() {
-    // Publish True to do1
-    const trueMsg = new ROSLIB.Message({
-        do1: [],
-        do2: [],
-        do3: [true]
-    });
-    digitalOutputTopic.publish(trueMsg);
-    console.log('Published: do1:[True]');
-
-    // Wait 300ms
-    setTimeout(() => {
-        // Publish False to do1
-        const falseMsg = new ROSLIB.Message({
-            do1: [],
-            do2: [],
-            do3: [false]
-        });
-        digitalOutputTopic.publish(falseMsg);
-        console.log('Published: do1:[False]');
-    }, 300);
-}
-
-// Add event listener to the trigger button
-document.getElementById('digitalIndicatorTriggerButton').addEventListener('click', triggerDigitalIndicatorOutput);
-
-// ROS Topic for digital indicator data
-const digitalIndicatorDataTopic = new ROSLIB.Topic({
-    ros: ros,
-    name: '/digital_indicator_data',
-    messageType: 'std_msgs/msg/Float64'
-});
-
-// Function to subscribe to digital indicator data
-function subscribeToDigitalIndicatorData() {
-    digitalIndicatorDataTopic.subscribe(function (message) {
-        document.getElementById("digital-indicator-current-value").innerText = message.data.toFixed(3);
-    });
-}
-
-       // Define the predefined ranges
-       const predefinedRanges = [
-        { min: 0, max: 10 },
-        { min: 10, max: 20 },
-        { min: 20, max: 30 },
-        { min: 30, max: 40 },
-        { min: 40, max: 50 },
-        { min: 50, max: 60 }
-    ];
-
-    // Function to apply the selected predefined range
-    function applyPredefinedRange() {
-        const dropdown = document.getElementById("predefined-ranges-dropdown");
-        const selectedIndex = dropdown.value;
-
-        if (selectedIndex === "" || selectedIndex === null) {
-            document.getElementById("digital-indicator-status-msg").innerText = "❌ Please select a predefined range!";
-            return;
-        }
-
-        const selectedRange = predefinedRanges[selectedIndex];
-        document.getElementById("digital-indicator-new-min").value = selectedRange.min;
-        document.getElementById("digital-indicator-new-max").value = selectedRange.max;
-
-        // Automatically update the range
-        updateDigitalIndicatorRange();
-    }
-

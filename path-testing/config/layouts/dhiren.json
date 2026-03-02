@@ -1,0 +1,44 @@
+{
+  "name": "dhiren",
+  "description": "Saved on 11/12/2025, 17:29:38",
+  "timestamp": "2025-12-11T11:59:38.351Z",
+  "layout": {
+    "home": {
+      "x": 300,
+      "y": 200
+    },
+    "point2": {
+      "x": 602.569580078125,
+      "y": 746.0363292694092
+    },
+    "point3": {
+      "x": 900,
+      "y": 200
+    },
+    "point4": {
+      "x": 300,
+      "y": 400
+    },
+    "point5": {
+      "x": 600,
+      "y": 400
+    },
+    "point6": {
+      "x": 900,
+      "y": 400
+    },
+    "point9": {
+      "x": 300,
+      "y": 600
+    }
+  },
+  "viewState": {
+    "scale": 1,
+    "pan": {
+      "x": -2,
+      "y": -2
+    },
+    "showGrid": false,
+    "snapToGrid": false
+  }
+}

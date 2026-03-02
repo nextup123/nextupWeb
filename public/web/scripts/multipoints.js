@@ -1,9 +1,11 @@
 // Get references to the elements
 const editMultipathsButton = document.getElementById('editMultipaths');
 const multipathPopup = document.getElementById('multipathPopup');
-const closePopup = document.querySelector('.close-popup');
+const closeMultiPointsPopup = document.querySelector('.close-popup');
 const pointFileDropdown = document.getElementById('pointFileDropdown');
+const selectPointFileButton = document.getElementById('selectPointFileButton');
 const pathFileDropdown = document.getElementById('pathFileDropdown');
+const selectPathFileButton = document.getElementById('selectPathFileButton');
 const deletePointFileButton = document.getElementById('deletePointFile');
 const deletePathFileButton = document.getElementById('deletePathFile');
 const savePointFileButton = document.getElementById('savePointFile');
@@ -25,7 +27,8 @@ editMultipathsButton.addEventListener('click', () => {
     });
 
     pointFileListener.subscribe((message) => {
-        const files = message.data.split(' ');
+        let files = message.data.split(' ').map(file => file.replace('.yaml', ''));
+
         updateDropdown(pointFileDropdown, files);
     });
 
@@ -37,7 +40,7 @@ editMultipathsButton.addEventListener('click', () => {
     });
 
     pathFileListener.subscribe((message) => {
-        const files = message.data.split(' ');
+        let files = message.data.split(' ').map(file => file.replace('.yaml', ''));
         updateDropdown(pathFileDropdown, files);
     });
 });
@@ -56,7 +59,7 @@ editMultipathsButton.addEventListener('click', () => {
 // }
 
 // Function to hide the popup and unsubscribe from topics
-closePopup.addEventListener('click', () => {
+closeMultiPointsPopup.addEventListener('click', () => {
     multipathPopup.style.display = 'none';
 
     // Unsubscribe from topics
@@ -71,6 +74,7 @@ closePopup.addEventListener('click', () => {
 // Function to update dropdown options
 function updateDropdown(dropdown, files) {
     const selectedValue = dropdown.value; // Store current selection
+
 
     dropdown.innerHTML = ''; // Clear existing options
 
@@ -90,14 +94,23 @@ function updateDropdown(dropdown, files) {
 // Function to publish the selected dropdown value
 function publishSelectedDropdownValue(dropdown, topic) {
     const selectedValue = dropdown.value;
+
+    // var slicedSelectedOption;
+    // if (selectedValue.endsWith(".yaml")) {
+    //     slicedSelectedOption = selectedValue.slice(0, -5);
+    // }
+
     if (selectedValue) {
         publishRosString(topic, selectedValue);
     }
 }
 
 // Attach event listeners for dropdown selection changes
-pointFileDropdown.addEventListener('change', () => publishSelectedDropdownValue(pointFileDropdown, '/point_file_name'));
-pathFileDropdown.addEventListener('change', () => publishSelectedDropdownValue(pathFileDropdown, '/path_file_name'));
+// pointFileDropdown.addEventListener('change', () => publishSelectedDropdownValue(pointFileDropdown, '/point_file_name'));
+// pathFileDropdown.addEventListener('change', () => publishSelectedDropdownValue(pathFileDropdown, '/path_file_name'));
+
+selectPointFileButton.addEventListener('click', () => publishSelectedDropdownValue(pointFileDropdown, '/point_file_name'));
+selectPathFileButton.addEventListener('click', () => publishSelectedDropdownValue(pathFileDropdown, '/path_file_name'));
 
 
 // Attach event listeners to Save buttons
@@ -154,8 +167,13 @@ document.getElementById('deletePathFile').addEventListener('click', () => delete
 
 function deleteSelectedOption(dropdown, topic) {
     const selectedOption = dropdown.value;
+
     if (!selectedOption) return;
 
+    // var slicedSelectedOption;
+    // if (selectedOption.endsWith(".yaml")) {
+    //     slicedSelectedOption = selectedOption.slice(0, -5);
+    // }
     publishRosString(topic, selectedOption);
 
     // console.log(`Deleted ${selectedOption} from ${topic}`);
@@ -165,7 +183,7 @@ function deleteSelectedOption(dropdown, topic) {
     // updateDropdown(dropdown, newFiles);
 }
 
-document.getElementById('updatePaths').addEventListener('click', () => publishBoolMessage('/update_path', true));
+document.getElementById('updatePaths').addEventListener('click', () => publishBoolMessage('/update_plan', true));
 
 
 
@@ -177,6 +195,11 @@ const prevPointDropdown = document.getElementById('prevPointDropdown');
 const newPointDropdown = document.getElementById('newPointDropdown');
 const selectedFileLabel = document.getElementById('selectedFileLabel');
 const savePointChangesButton = document.getElementById('savePointChanges');
+
+
+
+
+
 
 // Function to show Edit Point Popup
 editPointButton.addEventListener('click', () => {
@@ -191,26 +214,26 @@ closeEditPopup.addEventListener('click', () => {
     editPointPopup.style.display = 'none';
 });
 
-// Subscribe to /current_point_names topic to get dropdown values
+// Subscribe to /point_names topic to get dropdown values
 const pointNamesListener = new ROSLIB.Topic({
     ros: ros,
-    name: '/current_point_names',
+    name: '/point_names',
     messageType: 'std_msgs/String'
 });
 
 pointNamesListener.subscribe((message) => {
     const pointNames = message.data.split(' ');
     updateDropdown(prevPointDropdown, pointNames);
-    updateDropdown(newPointDropdown, pointNames);
+    // updateDropdown(newPointDropdown, pointNames);
 });
 
 // Function to publish edit point data
 savePointChangesButton.addEventListener('click', () => {
     const previousName = prevPointDropdown.value;
-    const newName = newPointDropdown.value;
+    // const newName = newPointDropdown.value;
     const selectedFile = pointFileDropdown.value;
 
-    if (!previousName || !newName || !selectedFile) {
+    if (!previousName || !selectedFile) {
         showAlert("Please select all required fields.", 'error');
         return;
     }
@@ -221,7 +244,42 @@ savePointChangesButton.addEventListener('click', () => {
     //     selected_file: selectedFile
     // });
 
-    const editPointData = `previous_name: ${previousName}, new_name: ${newName}, selected_file: ${selectedFile}`;
+    const editPointData = `previous_name: ${previousName}, new_name: ${previousName}, selected_file: ${selectedFile}`;
 
     publishRosString('/edit_point', editPointData);
+});
+
+
+
+
+// Subscribe to /select_point_file_name topic
+const selectedPointFileListener = new ROSLIB.Topic({
+    ros: ros,
+    name: '/select_point_file_name',
+    messageType: 'std_msgs/String'
+});
+
+selectedPointFileListener.subscribe((message) => {
+    const filePointLabel = document.getElementById('selectedPointFileLabel');
+    if (filePointLabel) {
+        filePointLabel.textContent = message.data || "No file selected";
+    } else {
+        console.warn("Element with ID 'selectedPointFileLabel' not found.");
+    }
+});
+
+// Subscribe to /select_path_file_name topic
+const selectedPathFileListener = new ROSLIB.Topic({
+    ros: ros,
+    name: '/select_path_file_name',
+    messageType: 'std_msgs/String'
+});
+
+selectedPathFileListener.subscribe((message) => {
+    const filePathLabel = document.getElementById('selectedPathFileLabel');
+    if (filePathLabel) {
+        filePathLabel.textContent = message.data || "No file selected";
+    } else {
+        console.warn("Element with ID 'selectedPathFileLabel' not found.");
+    }
 });

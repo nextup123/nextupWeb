@@ -1,4 +1,4 @@
-.gpio-container {
+ /* .gpio-container {
     display: flex;
     justify-content: space-around;
     flex-direction: column;
@@ -11,18 +11,10 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    /* margin: 10px; */
-    /* border-top: 1px solid var(--under-line); */
-    /* border-bottom: 1px solid var(--under-line); */
+   
 }
 
-/* .gpio-status-pane-two {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
 
-} */
 
 
 .gpio-status-label {
@@ -36,14 +28,10 @@
 .gpio-status-pane-cnc-column{
     display: flex;
     justify-content: space-around;
-    /* background-color: aquamarine; */
     align-items: center;
     flex-direction: row;
 }
 
-/* .gpio-border-div-cnc-container{
-    
-} */
 
 .gpio-border-div {
     display: flex;
@@ -72,8 +60,7 @@
     border-radius: 20px;
     justify-content: space-around;
     align-items: center;
-    /* border-right: 1px solid var(--under-line);
-    border-left: 1px solid var(--under-line); */
+   
 }
 
 .gpio-status-pane-cnc {
@@ -82,15 +69,8 @@
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
-    /* gap: 10px; */
     border-radius: 20px;
-    /* padding: 5px; */
     border: 1px solid var(--under-line);
-    /* background-color: beige; */
-    /* border-bottom: 1px solid var(--under-line); */
-    /* background-color: aquamarine; */
-
-
 }
 
 
@@ -129,4 +109,106 @@
     width: 100%;
     border-bottom: 1px solid var(--under-line);
     
+} */
+
+.gpio-container {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    gap: 8px; /* Increased from 6px */
+    padding: 8px; /* Increased from 6px */
+}
+
+.gpio-status-pane {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* Increased from 6px */
+}
+
+.gpio-status-label {
+    text-align: center;
+    font-size: 1.2rem; /* Increased from 1rem */
+    color: #a0a0a0;
+    padding: 8px; /* Increased from 6px */
+}
+
+.gpio-status-pane-cnc-column {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
+.gpio-border-div {
+    display: flex;
+    width: auto;
+    height: 60px; /* Increased from 50px */
+    min-width: 280px; /* Increased from 260px */
+    border-radius: 20px;
+    justify-content: space-around;
+    align-items: center;
+    border-right: 1px solid var(--under-line);
+    border-left: 1px solid var(--under-line);
+}
+
+.gpio-status-label-cnc {
+    font-size: 1.5rem; /* Increased from 1.3rem */
+    border: 1px solid var(--under-line);
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.gpio-border-div-cnc {
+    display: flex;
+    width: auto;
+    height: 70px; /* Increased from 60px */
+    min-width: 180px; /* Increased from 160px */
+    border-radius: 20px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.gpio-status-pane-cnc {
+    margin-top: 8px; /* Increased from 6px */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    border: 1px solid var(--under-line);
+}
+
+.gpio-gripper {
+    height: auto;
+    min-height: 100px; /* Increased from 80px */
+    display: flex;
+    width: auto;
+    min-width: 300px; /* Increased from 280px */
+    border-radius: 30px;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid var(--under-line);
+    padding: 10px; /* Increased from 8px */
+}
+
+.gpio-digital-indicator {
+    display: flex;
+    height: 100px; /* Increased from 80px */
+    width: auto;
+    min-width: 300px; /* Increased from 280px */
+    border-radius: 30px;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid var(--under-line);
+}
+
+.gpio-label {
+    padding: 10px; /* Increased from 8px */
+}
+
+.gpio-cnc-divider {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid var(--under-line);
 }

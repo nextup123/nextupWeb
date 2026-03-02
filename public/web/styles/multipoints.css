@@ -14,9 +14,11 @@
 
 .multipath-popup-content {
     background: rgba(18, 107, 100, 0.863);
-    padding: 20px;
+    /* font-size: 44px; */
+    font-weight: bolder;
+    padding: 40px;
     border-radius: 10px;
-    width: 600px;
+    width: 840px;
     /* Increased width for side-by-side layout */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(2px);
@@ -24,8 +26,14 @@
 
 .close-popup {
     float: right;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
+    background-color: #ff854d;
+    color: rgb(17, 1, 1);
+    width: fit-content;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 3px 6px;
 }
 
 .section-container {
@@ -38,18 +46,40 @@
 .section {
     flex: 1;
     margin-bottom: 20px;
+    font-weight: 34px;
+    font-weight: bolder;
 }
 
 .file-dropdown {
+    font-size: 20px;
     width: 100%;
-    padding: 10px;
+    padding: 6px;
     margin-top: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #3a3f47;
+    font-size: 22px;
+    background-color: #232931;
+    color: #ffffff;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 2px rgba(0, 212, 255, 0.4);
+}
+
+.file-dropdown:focus, .file-dropdown:hover {
+    border-color: #00d4ff;
+    box-shadow: 0 0 4px rgba(0, 212, 255, 0.7);
+}
+
+.file-dropdown option {
+    background-color: #3f424e;
+    color: #00d4ff;
+    font-size: 20px;
+    padding: 6px;
 }
 
 .delete-button,
+.close-buton,
 .save-button {
     width: 100%;
     padding: 10px;
@@ -57,14 +87,18 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .delete-button {
     background-color: #ff4d4d;
     color: white;
 }
-
+.close-buton{
+    background-color: #f35a1d;
+    color: white;
+}
 .save-button {
     background-color: #4CAF50;
     color: white;
@@ -81,7 +115,7 @@ label {
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 25px;
     /* Increased text size */
 }
 
@@ -103,21 +137,26 @@ h2 {
     background: rgba(54, 104, 73, 0.952);
     padding: 20px;
     border-radius: 10px;
-    width: 350px;
+    width: 400px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.close-save-popup {
+/* .close-save-popup {
     float: right;
-    font-size: 24px;
+    font-size: 16px;
     cursor: pointer;
-}
+    background-color: #cf5016;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 3px 6px;
+} */
 
 #fileNameInput {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 10px 0px 10px 0px;
+    /* margin: 10px 0; */
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 16px;

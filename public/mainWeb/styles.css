@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: white;
+    overflow: hidden;
+    display: flex;
+}
+
+/* ===== macOS Sidebar Base ===== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 180px;
+    height: 100vh;
+    background: linear-gradient(180deg, #1f1f22, #18181b);
+    display: flex;
+    flex-direction: column;
+    padding: 12px 8px;
+    box-shadow: 3px 0 12px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+}
+
+/* Button Container */
+.nav-button-page-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* ===== Sidebar Buttons ===== */
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 6px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    color: #d0d0d0;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* Icon */
+.nav-button i {
+    width: 22px;
+    font-size: 16px;
+    text-align: center;
+    color: #9ca3af;
+}
+
+/* Hover */
+.nav-button:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Active Page */
+.nav-button.active {
+    background: linear-gradient(135deg, #2553eb, #3b92f6);
+    color: #ffffff;
+    box-shadow: 0 6px 14px rgba(59, 130, 246, 0.4);
+}
+
+.nav-button.active i {
+    color: #ffffff;
+}
+
+/* ===== Iframe Layout ===== */
+.iframe-container {
+    margin-left: 175px;
+    width: calc(100% - 175px);
+    height: 100vh;
+    position: relative;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    position: absolute;
+    inset: 0;
+    display: none;
+}
+
+iframe.active {
+    display: block;
+}
+
+
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #e6e6e6f3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    font-family: Arial, sans-serif;
+    transition: opacity 0.5s ease-in-out;
+    /* Smooth fade-out */
+    z-index: 999;
+}
+
+/* Progress Bar Container */
+.progress-bar {
+    width: 80%;
+    height: 20px;
+    background: rgba(80, 79, 79, 0.959);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+/* Actual Progress Fill */
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #48f1e9, #0774b3);
+    transition: width 0.3s ease-in-out;
+}
+
+/* Loading Text */
+.loading-text {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+/* Buttons for Testing */
+.controls {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    background: #1a2c41;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #0055cc;
+}
+
+/* Hidden class for smooth fade-out */
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}

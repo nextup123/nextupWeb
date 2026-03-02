@@ -11,23 +11,37 @@
     <link rel="stylesheet" href="styles/popup.css">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/dropdown_options.css">
-    <link rel="stylesheet" href="styles/digital_indicator_range.css">
     <link rel="stylesheet" href="styles/multipoints.css">
-    <link rel="stylesheet" href="../media/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet" href="styles/toastify_popups.css">
+    <link rel="stylesheet" href="styles/point_segments_safety.css">
+    <link rel="stylesheet" href="styles/path_testing.css">
+    <link rel="stylesheet" href="../media/fontawesome-free/css/all.min.css">
     <link rel="icon" href="./image/favicon.ico" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="intro/intro.min.css">
+    <link rel="stylesheet" href="styles/intro.css"> -->
 </head>
 
 <body>
     <div class="main-container">
         <div id="customAlert" class="custom-alert"></div>
 
-        <div class="title-container">
+        <div class="title-container ">
             <h1 class="robot-title">Robot Controller</h1>
+            <div class="safety-control">
+                <label class="safety-toggle">
+                    <input type="checkbox" id="safetyToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="safety-toggle-label">SAFE MODE: ON</span>
+            </div>
+            <!-- <button id="start-tour" onclick="startTutorial()">
+                <i class="fas fa-robot icon"></i> Start Guided Tour
+            </button> -->
         </div>
 
-        <div class="controllers-container">
-            <div class="path-mgmt-container">
-                <div class="path-mgmt-control-button-container">
+        <div class="controllers-container ">
+            <div class="path-mgmt-container ">
+                <div class="path-mgmt-control-button-container container-to-lock">
 
                     <!-- button -->
                     <div class="button-item">
@@ -57,10 +71,11 @@
                     <!-- popup -->
                     <!-- <form> -->
                     <div class="popupplan" id="popup2" style="display: none;">
+                        <span class="close-btn" onclick="closePopup()">x</span>
                         <h2 class="headingplan">Plan Spaces</h2>
                         <div class="popupplan-buttons">
-                            <button class="submit" id="cartesian">Cartesian</button>
-                            <button class="cancel" id="joint">Joint</button>
+                            <button class="submit" id="cartesian" style="font-size: 1.2em;">Cartesian</button>
+                            <button class="cancel" id="joint" style="font-size: 1.2em;">Joint</button>
                         </div>
                     </div>
                     <!-- </form> -->
@@ -136,19 +151,23 @@
                         <label class="block planspace">Plan Space:</label>
                         <div class="flex gap-4">
                             <label class="flex items-center">
-                                <input type="radio" name="number" value="1" class="cartesianradio" checked />
+                                <!-- <input type="radio" name="number" value="1" class="cartesianradio" checked /> -->
+                                <div class="radio-container " id="cartesianradio" data-value="1"></div>
                                 <span class="radio-input">Cartesian</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="radio" name="number" value="2" class="jointradio" />
+                                <!-- <input type="radio" name="number" value="2" class="jointradio" /> -->
+                                <div class="radio-container " id="jointradio" data-value="2"></div>
                                 <span class="radio-input">Joint</span>
                             </label>
                         </div>
 
-                        <label for="name" class="velocity">Velocity (0.1 - 1)</label><br>
-                        <input type="number" id="speed" min="0.1" max="1" step="0.1" placeholder="Enter Velocity"
-                            class="velocityfield" value="1" required /><br>
-                        <span class="error-message">Value must be between 0.1 and 1</span>
+
+                        <label for="name" class="velocity">Velocity (0.1 - 1.5)</label><br>
+                        <input type="number" id="speed" min="0.1" max="1.5" step="0.1" placeholder="Enter Velocity"
+                            class="velocityfield" value="1" oninput="handleVelocityInput(this)"
+                            onblur="resetIfEmpty(this)" required /><br>
+                        <span class="error-message">Value must be between 0.1 and 1.5</span>
 
                         <!-- <label for="name" class="acceleration">Acceleration (0.1 - 1)</label><br>
                     <input type="number" id="acceleration" min="0.1" max="1" step="0.1" placeholder="Enter Acceleration"
@@ -156,7 +175,8 @@
 
                         <label for="name" class="waittime">Wait Time</label><br>
                         <input type="number" id="wait_time" placeholder="Enter Wait Time" class="waittimefield"
-                            value="0" required /><br>
+                            value="0" oninput="handleWaitTime(this)" onblur="resetIfEmpty(this)" required />
+                        <br>
 
                         <div class="popup-buttons">
                             <button class="submit" id="path_submit" disabled>Submit</button>
@@ -175,22 +195,24 @@
                     </div>
                     <div class="button-item">
                         <button class="control-button control-button-seven" id="editMultipaths">
-                            Edit Multi-Path-Point <i class="fa-solid fa-edit"></i></button>
+                            Select Multi-Path-Point <i class="fa-solid fa-edit"></i></button>
                     </div>
 
                     <!-- Popup Structure -->
-                    <!-- Main Popup (First One) -->
                     <div id="multipathPopup" class="multipath-popup-container">
                         <div class="multipath-popup-content">
-                            <span class="close-popup">&times;</span>
-                            <h2>Edit Multi-Path-Point</h2>
+                            <span class="close-popup">close &times;</span>
+                            <h2>Select Multi-Path-Point</h2>
 
                             <!-- Container for side-by-side sections -->
                             <div class="section-container">
+
                                 <!-- Point File Section -->
                                 <div class="section">
                                     <label for="pointFileDropdown">Select Point File</label>
                                     <select id="pointFileDropdown" class="file-dropdown"></select>
+                                    <button id="selectPointFileButton" class="save-button">Select</button>
+
                                     <button id="deletePointFile" class="delete-button">Delete Point File <i
                                             class="fa-solid fa-trash-can"></i></button>
                                 </div>
@@ -199,6 +221,8 @@
                                 <div class="section">
                                     <label for="pathFileDropdown">Select Path File</label>
                                     <select id="pathFileDropdown" class="file-dropdown"></select>
+                                    <button id="selectPathFileButton" class="save-button">Select</button>
+
                                     <button id="deletePathFile" class="delete-button">Delete Path File <i
                                             class="fa-solid fa-trash-can"></i></button>
                                 </div>
@@ -209,10 +233,11 @@
                     <!-- Save Popup (Moved Outside for Independent Display) -->
                     <div id="savePopup" class="save-popup-container">
                         <div class="save-popup-content">
-                            <span class="close-save-popup">&times;</span>
+                            <!-- <span class="close-save-popup">close&times;</span> -->
                             <h2>Enter File Name</h2>
                             <input type="text" id="fileNameInput" placeholder="Enter file name">
                             <button id="confirmSaveButton" class="save-button">Save</button>
+                            <button class="close-buton close-save-popup">Close</button>
                         </div>
                     </div>
 
@@ -239,22 +264,36 @@
                     </div> -->
 
                 </div>
-                <div class="parent-path-point-view-container">
-                    <div class="path-point-view-container">
+                <div class="parent-path-point-view-container ">
+                    <div class="path-point-view-container container-to-lock">
 
                         <div class="point-view-container">
                             <div class="point-heading-container">
                                 <h2 class="segment-underline">Point Segments</h2>
+                                <button id="safetyLockButton" class="robotic-lock-button locked">
+                                    <svg class="lock-icon" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" />
+                                    </svg>
+                                </button>
                             </div>
-                            <div class="point-body-container">
+                            <div class="point-body-container" id="securedContainer">
                                 <div class="item-list-Point" id="itemListPoint"></div>
                             </div>
+
+                            <div class="selected-file-label-container">
+                                <p><strong>Selected Point File:</strong> <span id="selectedPointFileLabel">None</span>
+                                </p>
+                            </div>
+
                             <div class="point-button-container">
                                 <div class="path-delete-button-container">
-                                    <button class="point-button" id="deleteLastPoint">
-                                        <i class="fa-solid fa-trash-can"></i> LAST</button>
-                                    <button class="point-button" id="deleteAllPoint">
-                                        <i class="fa-solid fa-trash-can"></i> ALL</button>
+                                    <button class="point-button path-button-delete" id="deleteLastPoint">
+                                        <!-- <i class="fa-solid fa-trash-can"></i> -->
+                                        Del Last</button>
+                                    <button class="point-button path-button-delete" id="deleteAllPoint">
+                                        <!-- <i class="fa-solid fa-trash-can"></i>  -->
+                                        Del All</button>
                                 </div>
 
                                 <!-- Edit Point Button -->
@@ -271,11 +310,11 @@
                                         <h2>Edit Point</h2>
 
                                         <!-- Dropdowns for selecting previous and new name -->
-                                        <label for="prevPointDropdown">Previous Name:</label>
+                                        <label for="prevPointDropdown">Points Name:</label>
                                         <select id="prevPointDropdown" class="file-dropdown"></select>
 
-                                        <label for="newPointDropdown">New Name:</label>
-                                        <select id="newPointDropdown" class="file-dropdown"></select>
+                                        <!-- <label for="newPointDropdown">New Name:</label>
+                                        <select id="newPointDropdown" class="file-dropdown"></select> -->
 
                                         <!-- Show selected file -->
                                         <p><strong>Selected File:</strong> <span id="selectedFileLabel">None</span></p>
@@ -300,13 +339,19 @@
                             <div class="path-body-container">
                                 <div class="item-list-Path" id="itemListPath"></div>
                             </div>
+                            <div class="selected-file-label-container">
+                                <p><strong>Selected Path File:</strong> <span id="selectedPathFileLabel">None</span>
+                                </p>
+                            </div>
 
                             <div class="path-button-container">
                                 <div class="path-delete-button-container">
-                                    <button class="path-button " id="deleteLastPath">
-                                        <i class="fa-solid fa-trash-can"></i> LAST</button>
-                                    <button class="path-button" id="deleteAllPath">
-                                        <i class="fa-solid fa-trash-can"></i> ALL</button>
+                                    <button class="path-button path-button-delete" id="deleteLastPath">
+                                        <!-- <i class="fa-solid fa-trash-can"></i> -->
+                                        Del Last</button>
+                                    <button class="path-button path-button-delete" id="deleteAllPath">
+                                        <!-- <i class="fa-solid fa-trash-can"></i> -->
+                                        Del All</button>
                                 </div>
                                 <div class="path-delete-button-container">
 
@@ -320,14 +365,17 @@
 
                     <div class="execution-path-container">
                         <div class="button-item">
-                            <button class="control-button control-button-four" id="executeLastButton">Execute
+                            <button class="control-button control-button-four container-to-lock"
+                                id="executeLastButton">Execute
                                 Last</button>
                         </div>
                         <div class="button-item">
-                            <button class="control-button control-button-five" id="execute"> Execute</button>
+                            <button class="control-button control-button-five container-to-lock" id="execute"> Execute</button>
                         </div>
                         <div class="button-item">
-                            <button class="control-button control-button-ten" id="repeat-button"> Repeat</button>
+                            <!-- <button class="control-button control-button-ten" id="repeat-button"> Repeat</button> -->
+                            <button id="path_testing_btn" class="control-button control-button-ten">Path Testing</button>
+
                         </div>
 
                         <!-- popup -->
@@ -392,7 +440,7 @@
                     </div>
                     <div class="translation-rotation-motion-container">
                         <h3>ROBOT CARTESIAN CONTROL </h3>
-
+                        <button id="startServoButton" onclick="callStartServo()">Jog Srv</button>
                         <div class="joint-item">
                             <label class="joint_name" for="x">X:</label>
                             <button class="btna btnplus" id="cx_plus">+</button>
@@ -457,7 +505,7 @@
                                 <span class="toggle-label-text">Mode</span>
                                 <input type="checkbox" id="toggle-mode" class="toggle-input toggle-input-mode">
                                 <label for="toggle-mode" class="toggle-label">
-                                    <span class="toggle-circle">Position</span>
+                                    <span class="toggle-circle">Auto</span>
                                 </label>
                             </div>
 
@@ -470,174 +518,169 @@
                                 </label>
                             </div>
 
-                            <!-- CNC -->
-                            <div class="toggle-container">
-                                <span class="toggle-label-text">CNC Door</span>
-                                <input type="checkbox" id="toggle-cnc" class="toggle-input">
-                                <label for="toggle-cnc" class="toggle-label">
-                                    <span id="toggle-circle-cnc-door" class="toggle-circle">Open</span>
-                                </label>
-                            </div>
-
-                            <!-- CV -->
-                            <div class="toggle-container">
-                                <span class="toggle-label-text">Camera</span>
-                                <input type="checkbox" id="toggle-cv" class="toggle-input">
-                                <label for="toggle-cv" class="toggle-label">
-                                    <span class="toggle-circle">Up</span>
-                                </label>
-                            </div>
-
-                        </div>
-
-                        <div class="digital-indicator-range-button-container">
-                            <button class="digital-indicator-button" onclick="openDigitalIndicatorPopup()">
-                                Digital Indicator Range</button>
-
-                            <!-- range Popup -->
-                            <div id="digital-indicator-popup" class="digital-indicator-popup">
-                                <h3>Current Range</h3>
-                                <p>Min: <span id="digital-indicator-current-min">--</span> Max: <span
-                                        id="digital-indicator-current-max">--</span></p>
-                                <button class="digital-indicator-refresh-btn"
-                                    onclick="getDigitalIndicatorCurrentRange()">Refresh🔄</button>
-                                <h3>Update Range</h3>
-                                <input type="number" id="digital-indicator-new-min" step="0.001"
-                                    placeholder="Min Value">
-                                <input type="number" id="digital-indicator-new-max" step="0.001"
-                                    placeholder="Max Value">
-                                <br><br>
-                                <button class="digital-indicator-update-btn"
-                                    onclick="updateDigitalIndicatorRange()">Update</button>
-
-                                <!-- Predefined Ranges Section -->
-                                <h3>Predefined Ranges</h3>
-                                <select id="predefined-ranges-dropdown" class="digital-indicator-dropdown">
-                                    <option value="" disabled selected>Select a predefined range</option>
-                                    <option value="0">Range 1: 0 - 10</option>
-                                    <option value="1">Range 2: 10 - 20</option>
-                                    <option value="2">Range 3: 20 - 30</option>
-                                    <option value="3">Range 4: 30 - 40</option>
-                                    <option value="4">Range 5: 40 - 50</option>
-                                    <option value="5">Range 6: 50 - 60</option>
-                                </select>
-                                <button class="digital-indicator-apply-btn" onclick="applyPredefinedRange()">Apply
-                                    Selected Range</button>
-
-                                <p id="digital-indicator-status-msg"></p>
-                                <button class="digital-indicator-reset-btn" onclick="resetDigitalIndicatorRange()">Reset
-                                    to
-                                    Default</button>
-                                <!-- New Button for Testing -->
-                                <button class="digital-indicator-test-btn"
-                                    onclick="openDigitalIndicatorTestPopup()">TEST
-                                    Digital
-                                    Indicator</button>
-
-                                <button class="digital-indicator-close-btn"
-                                    onclick="closeDigitalIndicatorPopup()">Close</button>
-                            </div>
-
-                            <!--Popup for Testing -->
-                            <div id="digital-indicator-test-popup" class="digital-indicator-test-popup">
-                                <h3>Digital Indicator Testing</h3>
-                                <button id="digitalIndicatorTriggerButton"
-                                    class="digital-indicator-test-trigger-btn">Trigger Digital
-                                    Indicator</button>
-                                <p>Current Value: <span id="digital-indicator-current-value">--</span></p>
-                                <button class="digital-indicator-close-btn"
-                                    onclick="closeDigitalIndicatorTestPopup()">Close</button>
-                                <button class="digital-indicator-goto-range-btn"
-                                    onclick="gotoDigitalIndicatorRangePopup()">Go to DI Range
-                                    Setup</button>
-                            </div>
-
-
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
-            <!-- Success Popup (Initially hidden) -->
-            <div id="successPopup" class="success-popup">
-                <p>Point saved successfully!</p>
+        <!-- Success Popup (Initially hidden) -->
+        <div id="successPopup" class="success-popup">
+            <p>Point saved successfully!</p>
+        </div>
+
+        <div id="pathsuccessPopup" class="pathsuccess-popup">
+            <p>Path saved successfully!</p>
+        </div>
+
+        <div id="plansuccessPopup" class="plansuccess-popup">
+            <p>Planning successfully!</p>
+        </div>
+
+        <div id="planfail" class="planfail-popup">
+            <p>Planning failed!</p>
+        </div>
+
+        <div id="deletelastpathsuccessPopup" class="deletelastpathsuccess-popup">
+            <p>last path deleted successfully!</p>
+        </div>
+
+        <div id="pathfileemptysuccessPopup" class="pathfileemptysuccess-popup">
+            <p>Path Yaml Found Empty!!!</p>
+        </div>
+
+        <div id="pointfileemptysuccessPopup" class="pointfileemptysuccess-popup">
+            <p>Point Yaml Found Empty!!!</p>
+        </div>
+
+        <div id="deletelastpointsuccessPopup" class="deletelastpointsuccess-popup">
+            <p>last point deleted successfully!</p>
+        </div>
+
+        <div id="deleteallpathsuccessPopup" class="deletealltpathsuccess-popup">
+            <p>All path deleted successfully!</p>
+        </div>
+
+        <div id="deleteallpointsuccessPopup" class="deleteallpointsuccess-popup">
+            <p>All point deleted successfully!</p>
+        </div>
+
+        <div id="yamlpointscheck" class="yamlpointscheck-popup">
+            <p>Need One More Point!</p>
+        </div>
+
+        <div id="jointpoint" class="jointpoint-popup">
+            <p>Robot is at Wrong Point Position</p>
+            <p>Do you want to reverse the Path ?</p>
+
+            <div class="popupplan-buttons">
+                <button class="submit" id="yes">Yes</button>
+                <button class="cancel" id="no">No</button>
             </div>
+        </div>
 
-            <div id="pathsuccessPopup" class="pathsuccess-popup">
-                <p>Path saved successfully!</p>
+        <div id="executelast" class="executelast-popup">
+            <p>Execute Last Successfully</p>
+        </div>
+
+        <!-- /*confirmation publishing html -- satyanshu*/ -->
+
+        <div id="customConfirm" class="custom-confirm">
+            <div class="custom-confirm-content">
+                <p id="confirmMessage"></p>
+                <button id="confirmYes">Yes</button>
+                <button id="confirmNo">No</button>
             </div>
+        </div>
 
-            <div id="plansuccessPopup" class="plansuccess-popup">
-                <p>Planning successfully!</p>
-            </div>
 
-            <div id="planfail" class="planfail-popup">
-                <p>Planning failed!</p>
-            </div>
+        <!-- toastify_popups -->
+        <div class="toast-container" id="toastContainer"></div>
 
-            <div id="deletelastpathsuccessPopup" class="deletelastpathsuccess-popup">
-                <p>last path deleted successfully!</p>
-            </div>
+        <!-- multi-path popups -->
+        <div class="popup_multiplan" id="popup_multiplan" style="display: none;">
+            <!-- <img id="popup_multiplan-icon" src="" alt="icon">  -->
+            <div class="multi-popup-heading" id="popup_multiplan-message"></div>
+        </div>
 
-            <div id="pathfileemptysuccessPopup" class="pathfileemptysuccess-popup">
-                <p>Path Yaml Found Empty!!!</p>
-            </div>
-
-            <div id="pointfileemptysuccessPopup" class="pointfileemptysuccess-popup">
-                <p>Point Yaml Found Empty!!!</p>
-            </div>
-
-            <div id="deletelastpointsuccessPopup" class="deletelastpointsuccess-popup">
-                <p>last point deleted successfully!</p>
-            </div>
-
-            <div id="deleteallpathsuccessPopup" class="deletealltpathsuccess-popup">
-                <p>All path deleted successfully!</p>
-            </div>
-
-            <div id="deleteallpointsuccessPopup" class="deleteallpointsuccess-popup">
-                <p>All point deleted successfully!</p>
-            </div>
-
-            <div id="yamlpointscheck" class="yamlpointscheck-popup">
-                <p>Need One More Point!</p>
-            </div>
-
-            <div id="jointpoint" class="jointpoint-popup">
-                <p>Robot is at Wrong Point Position</p>
-                <p>Do you want to reverse the Path ?</p>
-
-                <div class="popupplan-buttons">
-                    <button class="submit" id="yes">Yes</button>
-                    <button class="cancel" id="no">No</button>
+        <div id="authModal" class="robotic-auth-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>SYSTEM AUTHORIZATION</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="status-light red"></div>
+                    <p>Access to control point movement requires authentication</p>
+                    <input type="password" id="authPassword" placeholder="Enter security code" class="robotic-input" />
+                    <div class="button-group">
+                        <button id="confirmAuth" class="robotic-button primary">AUTHENTICATE</button>
+                        <button id="cancelAuth" class="robotic-button secondary">ABORT</button>
+                    </div>
+                    <div id="authError" class="point-error-message"></div>
                 </div>
             </div>
+        </div>
 
-            <div id="executelast" class="executelast-popup">
-                <p>Execute Last Successfully</p>
-            </div>
 
-            <!-- /*confirmation publishing html -- satyanshu*/ -->
+        <!-- <button id="path_testing_btn" class="path_testing_main-button">Path Testing</button> -->
 
-            <div id="customConfirm" class="custom-confirm">
-                <div class="custom-confirm-content">
-                    <p id="confirmMessage"></p>
-                    <button id="confirmYes">Yes</button>
-                    <button id="confirmNo">No</button>
+        <div id="path_testing_modal" class="path_testing_modal">
+            <div class="path_testing_modal-content">
+                <span class="path_testing_close">&times;</span>
+                <h2>Path Testing Control Panel</h2>
+
+                <div class="path_testing_velocity-control">
+                    <label for="path_testing_velocityInput">Velocity Scale:</label>
+                    <input type="number" id="path_testing_velocityInput" min="0.1" max="1.0" step="0.1" value="0.2">
+                    <span class="path_testing_path-count" id="path_testing_pathCount">Total paths: 0</span>
+                </div>
+
+                <div class="path_testing_paths-scroll-container">
+                    <div class="path_testing_path-container" id="path_testing_pathList">
+                        <!-- Path items will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <div class="path_testing_control-panel">
+                    <div>
+                        <span id="path_testing_statusIndicator"
+                            class="path_testing_status-indicator path_testing_status-idle"></span>
+                        <span id="path_testing_statusText">Idle</span>
+                    </div>
+
+                    <div>
+                        <button id="path_testing_restartBtn"
+                            class="path_testing_control-button path_testing_restart-btn">Restart Sequence</button>
+                        <button id="path_testing_runNextBtn"
+                            class="path_testing_control-button path_testing_run-next-btn">Run Next Path</button>
+                        <span class="path_testing_next-path-label">Next: <span
+                                id="path_testing_nextPathName">-</span></span>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- /*confirmation publishing html -- satyanshu*/ -->
-            <script src="scripts/roslib.js"></script>
-            <script src="scripts/script.js"></script>
-            <script src="scripts/popup.js"></script>
-            <script src="scripts/save_point.js"></script>
-            <script src="scripts/multipoints.js"></script>
-            <script src="scripts/toggle_buttons.js"></script>
-            <script src="scripts/dropdown_options.js"></script>
-            <script src="scripts/subscriptions.js"></script>
+        <div id="path_testing_alertPopup" class="path_testing_alert-popup">
+            <div id="path_testing_alertMessage"></div>
+            <button id="path_testing_alertOkBtn">OK</button>
+        </div>
 
+        <!-- /*confirmation publishing html -- satyanshu*/ -->
+        <script src="scripts/roslib.js"></script>
+        <script src="scripts/script.js"></script>
+        <script src="scripts/popup.js"></script>
+        <script src="scripts/save_point.js"></script>
+        <script src="scripts/multipoints.js"></script>
+        <script src="scripts/toggle_buttons.js"></script>
+        <script src="scripts/dropdown_options.js"></script>
+        <script src="scripts/subscriptions.js"></script>
+        <script src="scripts/point_segments_safety.js"></script>
+        <script src="scripts/toastify_popups.js"></script>
+        <script src="scripts/path_testing.js"></script>
+        <!-- <script src="intro/intro.min.js"></script>
+        <script src="scripts/intro.js"></script> -->
 </body>
 
 </html>

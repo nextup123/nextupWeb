@@ -1,5 +1,0 @@
-parameters:
-  param1: "Temperature Sensor"
-  value1: 27.5
-  param2: "Humidity Sensor"
-  value2: 65.0

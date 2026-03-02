@@ -3,18 +3,26 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"node server.js\" \"node main_tree_server.js\"",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
+    "chokidar": "^4.0.3",
     "express": "^4.21.2",
     "fs-extra": "^11.3.0",
-    "path": "^0.12.7",
+    "js-yaml": "^4.1.0",
+    "rclnodejs": "^1.8.0",
     "socket.io": "^4.8.1",
-    "yaml": "^2.7.0",
-    "yaml-js": "^0.3.1"
-  }
+    "xml2js": "^0.6.2",
+    "xmldom": "^0.6.0",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "description": ""
 }

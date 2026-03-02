@@ -5,7 +5,10 @@ console.log("errorJsonRoutes.js");
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/error-handling/errors/errors.json"));
+    const errorJsonPath = path.join(__dirname, "../user_config/errors/errors.json");
+    console.log(errorJsonPath);
+    
+    res.sendFile(errorJsonPath);
 });
 
 

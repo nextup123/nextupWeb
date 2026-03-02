@@ -1,8 +1,3 @@
-// var ros = new ROSLIB.Ros({
-//     url: 'ws://localhost:9090'  // Make sure your WebSocket server is running on the right port
-// });
-
-// Establish a connection to the ROS 2 WebSocket server
 const ros = new ROSLIB.Ros({
     url: 'ws://localhost:9090' // Replace with your ROS bridge WebSocket URL if different
 });
@@ -34,12 +29,7 @@ var cobotPlayPause = new ROSLIB.Topic({
     messageType: 'std_msgs/Bool'
 });
 
-// Subscribe to /nextup_joint_states topic
-// const cobot_joint_state = new ROSLIB.Topic({
-//     ros: ros,
-//     name: '/nextup_joint_states',
-//     messageType: 'nextup_joint_interfaces/msg/NextupJointState'
-// });
+
 
 var intervalId;
 let isPressed = false;
@@ -59,25 +49,6 @@ function ros2PublishCobotState(data) {
     cobotPlayPause.publish(message);
     console.log("Cobot Stop: " + data);
 }
-
-// var prev_mode = 8;
-// cobot_joint_state.subscribe((message) => {
-//     const mode = message.modeofoperation[0];
-
-//     // Update the checkbox based on the value
-//     const checkbox = document.getElementById('switch_mode_1');
-
-//     if(mode !== prev_mode){
-//         if (mode === 9) {
-//             checkbox.checked = true;
-//             console.log("Velocity control mode");
-//         } else {
-//             checkbox.checked = false;
-//             console.log("Position control mode");
-//         }
-//         prev_mode = mode;
-//     }
-// });
 
 
 ['j1', 'j2', 'j3', 'j4', 'j5', 'j6', 'cx', 'cy', 'cz', 'cr', 'cp', 'cw'].forEach(joint => {
@@ -127,7 +98,7 @@ function ros2PublishCobotState(data) {
     });
 });
 
-function showAlert(message, type = "success") {
+function showAlert(message, type) {
     const alertBox = document.getElementById("customAlert");
     alertBox.textContent = message;
     alertBox.className = `custom-alert ${type} show`;
@@ -170,3 +141,27 @@ function publishBoolMessage(topicName, boolValue) {
 }
 
 
+//can be used later --but remove at the last day of deployment!!
+// Create service client
+const startServoClient = new ROSLIB.Service({
+    ros: ros,
+    name: '/servo_node/start_servo',
+    serviceType: 'std_srvs/srv/Trigger'
+});
+
+function callStartServo() {
+    const button = document.getElementById('startServoButton');
+    const request = new ROSLIB.ServiceRequest({});
+
+    startServoClient.callService(request, function (result) {
+        console.log('Service response: ', result);
+
+        // Set button color based on response
+        button.style.backgroundColor = result.success ? 'green' : 'red';
+
+        // Revert to original color after 2 seconds
+        setTimeout(() => {
+            button.style.backgroundColor = '';
+        }, 2000);
+    });
+}

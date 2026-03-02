@@ -48,9 +48,6 @@ jointButton.addEventListener('click', () => {
 });
 
 
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
   console.log('DOM fully loaded and parsed');
 
@@ -61,16 +58,71 @@ document.addEventListener('DOMContentLoaded', function () {
     name: '/path_data',
     messageType: 'std_msgs/String',
   });
-
-  // Save Path Functionality
+  
+  // for plan space
+  const cartesianButton = document.getElementById('cartesian');
+  const jointButton = document.getElementById('joint');
+  const cartesianRadio = document.getElementById('cartesianradio');
+  const jointRadio = document.getElementById('jointradio');
   const savePathButton = document.getElementById('path');
+  
+  let selectedValue = null; // Default koi bhi select nahi
+  
+  // Selection function
+  function selectOption(selected, unselected, value) {
+      if (selectedValue === value) return;
+  
+      selected.classList.add('selected');
+      unselected.classList.remove('selected');
+      selectedValue = value;
+  
+      storeValue(selectedValue);
+  }
+  
+  // Store in localStorage
+  function storeValue(value) {
+      localStorage.setItem('selectedPlanSpace', value);
+      console.log('Selected Value:', value === 1 ? 'Cartesian' : 'Joint');
+  }
+  
+  // Restore selection only if value exists
+  function restoreSelectedPlanSpace() {
+      const storedValue = localStorage.getItem('selectedPlanSpace');
+  
+      if (storedValue) {
+          if (storedValue === '1') {
+              selectOption(cartesianRadio, jointRadio, 1);
+          } else if (storedValue === '2') {
+              selectOption(jointRadio, cartesianRadio, 2);
+          }
+      }
+  }
+  
+  // Button click events
+  cartesianButton.addEventListener('click', function () {
+      selectOption(cartesianRadio, jointRadio, 1);
+  });
+  
+  jointButton.addEventListener('click', function () {
+      selectOption(jointRadio, cartesianRadio, 2);
+  });
+
+ 
+  // Restore selection when Save Path button is clicked
+  savePathButton.addEventListener('click', function () {
+      restoreSelectedPlanSpace();
+  });
+  
+  //
+  // Save Path Functionality
+  //const savePathButton = document.getElementById('path');
   const popup3 = document.getElementById('popup3');
   const pathNameField = document.getElementById('name_path');
   const speedField = document.getElementById('speed');
   const accelerationField = 1;
   const waitField = document.getElementById('wait_time');
-  const planSpaceCartesian = document.querySelector('input[value="1"]');
-  const planSpaceJoint = document.querySelector('input[value="2"]');
+  //const planSpaceCartesian = document.querySelector('input[value="1"]');
+  //const planSpaceJoint = document.querySelector('input[value="2"]');
   const pathSubmitButton = document.getElementById('path_submit');
   const pathCancelButton = document.getElementById('cancell');
 
@@ -109,7 +161,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const speed = parseFloat(speedField.value);
       const acceleration = parseFloat(accelerationField);
       const wait = parseFloat(waitField.value);
-      const plan_space = planSpaceCartesian.checked ? 'Cartesian' : 'Joint';
+     // const plan_space = planSpaceCartesian.checked ? 'Cartesian' : 'Joint';
+     const plan_space = selectedValue === 1 ? 'Cartesian' : 'Joint';
 
       // Log other input values
       console.log('Speed:', speed);
@@ -154,9 +207,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Clear the input fields and close the popup
       pathNameField.value = '';
-      speedField.value = '';
+      speedField.value = '1';
       accelerationField.value = '';
-      waitField.value = '';
+      waitField.value = '0';
       popup3.style.display = 'none';
       console.log('Popup closed and fields cleared');
     });
@@ -168,9 +221,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Clear the input fields and close the popup
       pathNameField.value = '';
-      speedField.value = '';
+      speedField.value = '1';
       accelerationField.value = '';
-      waitField.value = '';
+      waitField.value = '0';
       popup3.style.display = 'none';
       console.log('Popup closed and fields cleared');
     });
@@ -240,19 +293,6 @@ deleteAllPathButton.addEventListener('click', () => {
 });
 
 
-// const executeSlowButton = document.getElementById('executeSlowButton');
-// executeSlowButton.addEventListener('click', () => {
-//   const messageContent = 'execute_slow';
-
-//   const message = new ROSLIB.Message({
-//     data: messageContent
-//   });
-
-//   executeTopic.publish(message);
-
-//   console.log(`Published message: ${messageContent}`);
-// });
-
 const executeButton = document.getElementById('execute');
 executeButton.addEventListener('click', () => {
   const messageContent = 'execute';
@@ -300,312 +340,26 @@ deleteLastPathButton.addEventListener('click', () => {
   console.log('Published message to /delete_last_path: true');
 });
 
-async function updateButtons() {
-  try {
-    const response = await fetch('http://localhost:3001/update-buttons'); // Correct URL
-    const data = await response.json();
+// async function updateButtons() {
+//   try {
+//     const response = await fetch('http://localhost:3001/update-buttons'); // Correct URL
+//     const data = await response.json();
 
-    // Update Point Segments
-    document.getElementById('itemListPoint').innerHTML = data.pointButtons;
+//     // Update Point Segments
+//     document.getElementById('itemListPoint').innerHTML = data.pointButtons;
 
-    // Update Path Segments
-    document.getElementById('itemListPath').innerHTML = data.pathButtons;
-  } catch (error) {
-    console.error('Error updating buttons:', error);
-  }
-}
+//     // Update Path Segments
+//     document.getElementById('itemListPath').innerHTML = data.pathButtons;
+//   } catch (error) {
+//     console.error('Error updating buttons:', error);
+//   }
+// }
 
 // Poll the server every 2 seconds
 setInterval(updateButtons, 500);
 
 // Initial call to load buttons
 updateButtons();
-
-// Subscribe to the /point_save_successfully topic
-const pointSaveSuccessTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/point_save_successfully',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-// Log subscription status
-pointSaveSuccessTopic.subscribe(function (message) {
-  console.log('Received message on /point_save_successfully:', message.data);
-  if (message.data === true) {
-    // Show the success popup
-    showSuccessPopup();
-  }
-});
-
-// Function to show the popup
-function showSuccessPopup() {
-  const popup = document.getElementById('successPopup');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
-
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
-}
-
-
-// Subscribe to the /path_save_successfully topic
-const pathSaveSuccessTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/path_save_successfully',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-// Log subscription status
-pathSaveSuccessTopic.subscribe(function (message) {
-  console.log('Received message on /path_save_successfully:', message.data);
-  if (message.data === true) {
-    // Show the success popup
-    showSuccessPopupPath();
-  }
-});
-
-// Function to show the popup
-function showSuccessPopupPath() {
-  const popup = document.getElementById('pathsuccessPopup');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
-
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
-}
-
-
-
-// Subscribe to the /planning_successfully topic
-const planSaveSuccessTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/planning_successful',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-// Log subscription status
-planSaveSuccessTopic.subscribe(function (message) {
-  console.log('Received message on /planning_successfully:', message.data);
-  if (message.data === true) {
-    // Show the success popup
-    showSuccessPopupPathPlan();
-  }
-});
-
-// Function to show the popup
-function showSuccessPopupPathPlan() {
-  const popup = document.getElementById('plansuccessPopup');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
-
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
-}
-
-
-// Subscribe to the /delete_last_path_confirmation topic
-const deleteLastPathSuccessTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/delete_last_path_confirmation',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-// Log subscription status
-deleteLastPathSuccessTopic.subscribe(function (message) {
-  console.log('Received message on /planning_successfully:', message.data);
-  if (message.data === true) {
-    // Show the success popup
-    showSuccessPopupDeleteLastPath();
-  }
-});
-
-// Function to show the popup
-function showSuccessPopupDeleteLastPath() {
-  const popup = document.getElementById('deletelastpathsuccessPopup');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
-
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
-}
-
-
-
-// Subscribe to the /path_file_empty topic
-const yamlFileEmptySuccessTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/path_file_empty',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-// Log subscription status
-yamlFileEmptySuccessTopic.subscribe(function (message) {
-  console.log('Received message on /path_file_empty:', message.data);
-  if (message.data === true) {
-    // Show the success popup
-    showSuccessPopupYamlFileEmpty();
-  }
-});
-
-// Function to show the popup
-function showSuccessPopupYamlFileEmpty() {
-  const popup = document.getElementById('pathfileemptysuccessPopup');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
-
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
-}
-
-
-
-
-// Subscribe to the /point_file_empty topic
-const pointyamlFileEmptySuccessTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/point_file_empty',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-// Log subscription status
-pointyamlFileEmptySuccessTopic.subscribe(function (message) {
-  console.log('Received message on /point_file_empty:', message.data);
-  if (message.data === true) {
-    // Show the success popup
-    showSuccessPopupPointYamlFileEmpty();
-  }
-});
-
-// Function to show the popup
-function showSuccessPopupPointYamlFileEmpty() {
-  const popup = document.getElementById('pointfileemptysuccessPopup');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
-
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
-}
-
-
-// Subscribe to the /delete_last_point_confirmation topic
-const deleteLastPointSuccessTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/delete_last_point_confirmation',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-// Log subscription status
-deleteLastPointSuccessTopic.subscribe(function (message) {
-  console.log('Received message on /delete_last_point_confirmation:', message.data);
-  if (message.data === true) {
-    // Show the success popup
-    showSuccessPopupDeleteLastPoint();
-  }
-});
-
-// Function to show the popup
-function showSuccessPopupDeleteLastPoint() {
-  const popup = document.getElementById('deletelastpointsuccessPopup');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
-
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
-}
-
-
-// Subscribe to the /delete_all_path_confirmation topic
-const deleteAllPathSuccessTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/delete_all_path_confirmation',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-// Log subscription status
-deleteAllPathSuccessTopic.subscribe(function (message) {
-  console.log('Received message on /delete_all_path_confirmation:', message.data);
-  if (message.data === true) {
-    // Show the success popup
-    showSuccessPopupDeleteAllPath();
-  }
-});
-
-// Function to show the popup
-function showSuccessPopupDeleteAllPath() {
-  const popup = document.getElementById('deleteallpathsuccessPopup');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
-
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
-}
-
-
-// Subscribe to the /delete_all_point_confirmation topic
-const deleteAllPointSuccessTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/delete_all_point_confirmation',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-// Log subscription status
-deleteAllPointSuccessTopic.subscribe(function (message) {
-  console.log('Received message on /delete_all_point_confirmation:', message.data);
-  if (message.data === true) {
-    // Show the success popup
-    showSuccessPopupDeleteAllPoint();
-  }
-});
-
-// Function to show the popup
-function showSuccessPopupDeleteAllPoint() {
-  const popup = document.getElementById('deleteallpointsuccessPopup');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
-
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
-}
-
-
-
-// Subscribe to the /yaml_points_check topic
-const yamlPointsCheckSuccessTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/yaml_points_check',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-// Log subscription status
-yamlPointsCheckSuccessTopic.subscribe(function (message) {
-  console.log('Received message on /yaml_points_check:', message.data);
-  if (message.data === true) {
-    // Show the success popup
-    showSuccessPopupYamlChecksPoint();
-  }
-});
-
-// Function to show the popup
-function showSuccessPopupYamlChecksPoint() {
-  const popup = document.getElementById('yamlpointscheck');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
-
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
-}
-
-
 
 
 // Subscribe to the /plan_option_check topic
@@ -631,34 +385,6 @@ function planOptionCheck() {
 }
 
 
-// Subscribe to the /planning_successfully topic
-const planFailedSuccessTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/planning_successful',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-// Log subscription status
-planFailedSuccessTopic.subscribe(function (message) {
-  console.log('Received message on /planning_successfully:', message.data);
-  if (message.data === false) {
-    // Show the success popup
-    showSuccessPopupPathFailed();
-  }
-});
-
-// Function to show the popup
-function showSuccessPopupPathFailed() {
-  const popup = document.getElementById('planfail');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
-
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
-}
-
-
 const inputs = document.querySelectorAll("#popup3 input");
 const submitButton = document.getElementById("path_submit");
 
@@ -668,9 +394,6 @@ inputs.forEach(input => {
     submitButton.disabled = !allValid;
   });
 });
-
-
-
 
 
 // Subscribe to the /on_successful_point topic
@@ -703,36 +426,62 @@ function showSuccessPopupPositionPointFailed() {
   }, 10);
 }
 
+//function for add default value one in velocity
+
+function handleVelocityInput(input) {
+  let value = parseFloat(input.value);
+  
+  // Allow input to be empty, otherwise validate it
+  if (input.value === "") return;
+
+  // Check if the value is within the range 0.1 to 1.5
+  if (isNaN(value) || value < 0.1) {
+      input.value = 0.1; // Set minimum value to 0.1
+  } else if (value > 1.5) {
+      input.value = 1.5; // Set maximum value to 1.5
+  }
+}
+
+// If the user leaves the field empty, reset it to 1
+function resetIfEmpty(input) {
+  if (input.value.trim() === "") {
+      input.value = 1;
+  }
+}
 
 
+// function for disable -ve value in wait_time and default ZERO
 
-
-// Subscribe to the /on_successful_point topic
-const executeLastPathTopic = new ROSLIB.Topic({
-  ros: ros,
-  name: '/execute_last_success',
-  messageType: 'std_msgs/Bool' // Assuming the topic publishes a Boolean message
-});
-
-
-
-//  Log subscription status
-executeLastPathTopic.subscribe(function (message) {
-  console.log('Received message on /execute_last_success:', message.data);
-  if (message.data === true) {
-    // Show the success popup
-    showSuccessPopupExecuteLastPath();
+document.getElementById("wait_time").addEventListener("keydown", function (event) {
+  // Prevent negative values
+  if (event.key === "-") {
+      event.preventDefault();
   }
 });
 
-// Function to show the popup
-function showSuccessPopupExecuteLastPath() {
-  const popup = document.getElementById('executelast');
-  popup.classList.add('show'); // Add 'show' class to trigger the transition
+function handleWaitTime(input) {
+  let value = input.value;
 
-  // Hide the popup after 3 seconds (you can adjust this time)
-  setTimeout(function () {
-    popup.classList.remove('show'); // Remove the 'show' class to fade out
-  }, 2000); // Popup will disappear after 3 seconds
+  // Allow user to delete the value and enter a new one
+  if (value === "") return;
+
+  // If the entered value is not a number, reset to 0
+  if (isNaN(value) || parseFloat(value) < 0) {
+      input.value = 0;
+  }
 }
+
+// If the user leaves the field empty, reset it to 0
+function resetIfEmpty(input) {
+  if (input.value.trim() === "") {
+      input.value = 0;
+  }
+}
+
+/* function close popup plan */
+function closePopup(){
+  document.getElementById("popup2").style.display = "none";
+}
+
+
 

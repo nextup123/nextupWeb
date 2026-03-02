@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Paths & Points Visualizer — macOS style</title>
+  <link rel="stylesheet" href="password.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="sequenceCreator.css">
+  <link rel="stylesheet" href="sequence_runner.css">
+  <link rel="stylesheet" href="../media/fontawesome-free/css/all.min.css">
+</head>
+
+<body>
+  <div class="path-testing-body" id="path-testing-body" style="display:none">
+    <header>
+      <h1>Robot Paths & Points</h1>
+      <div class="controls">
+        <button id="reloadBtn" title="Reload points & paths">⟳ Reload</button>
+
+        <label>Plan space:
+          <select id="planSpaceFilter">
+            <option value="all">All</option>
+            <option value="joint">Joint</option>
+            <option value="cart">Cart</option>
+          </select>
+        </label>
+
+        <label>Tolerance:
+          <input id="tolerance" type="number" step="0.0001" value="0.0001" />
+        </label>
+
+        <div class="spacer"></div>
+
+        <!-- Layout Management -->
+        <div class="layout-manager">
+          <select id="layoutSelect" title="Select layout">
+            <option value="">No layout</option>
+          </select>
+
+          <button id="saveLayout" title="Save current layout" class="icon-btn">💾</button>
+          <button id="loadLayout" title="Load selected layout" class="icon-btn">↻</button>
+          <button id="deleteLayout" title="Delete selected layout" class="icon-btn icon-btn-danger">🗑️</button>
+        </div>
+
+        <label class="toggle">
+          <input id="showGrid" type="checkbox" />
+          Grid
+        </label>
+        <label class="toggle">
+          <input id="snapToGrid" type="checkbox" />
+          Snap
+        </label>
+        <button id="alignGrid" title="Align all points to grid">Align to Grid</button>
+
+        <button id="resetLayout" title="Reset layout">Reset</button>
+        <button id="exportLayout" title="Export layout">⭳ Export</button>
+      </div>
+    </header>
+
+    <main>
+
+
+      <div class="seq-runner-container" id="seq-runner-container">
+        <!-- Header -->
+        <div class="seq-runner-header">
+          <div class="seq-runner-title">
+            <div>
+              <i class="fas fa-robot"></i>
+              Sequence Runner
+            </div>
+
+
+            <div id="seq-runner-badge" class="seq-runner-badge seq-runner-badge-idle">IDLE</div>
+          </div>
+
+
+
+          <div class="seq-runner-sequence-info">
+            <div class="seq-runner-seq-name" id="seq-runner-seq-name">Loading...</div>
+            <div class="seq-runner-seq-route" id="seq-runner-seq-route">- → -</div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="seq-runner-controls">
+          <button id="seq-runner-start" class="sr-btn sr-start" title="Start Sequence">
+            <i class="fas fa-play"></i> Start
+          </button>
+          <button id="seq-runner-stop" class="sr-btn sr-stop" title="Stop Sequence">
+            <i class="fas fa-stop"></i> Stop
+          </button>
+          <button id="seq-runner-refresh" class="sr-btn sr-reset" title="Reset State">
+            <i class="fas fa-sync-alt"></i> Reset
+          </button>
+        </div>
+
+        <!-- Main content -->
+        <div class="seq-runner-main">
+          <!-- Stats -->
+          <div class="sr-stats">
+            <div class="sr-stat">
+              <div class="label">Progress</div>
+              <div class="value" id="seq-runner-progress">0/0</div>
+              <div class="sr-progress">
+                <div class="sr-progress-fill" id="seq-runner-progress-fill"></div>
+              </div>
+            </div>
+            <div class="sr-stat">
+              <div class="label">Elapsed</div>
+              <div class="value" id="seq-runner-elapsed">0s</div>
+            </div>
+          </div>
+
+          <!-- Current step -->
+          <div id="seq-runner-current-step" class="sr-current">
+            <div class="path" id="seq-runner-current-info">No step executing</div>
+            <div class="sub">
+              <span id="seq-runner-current-route">- → -</span>
+              <span id="seq-runner-current-time">-</span>
+            </div>
+          </div>
+
+          <!-- Steps list -->
+          <div class="sr-steps-wrap">
+            <div class="sr-steps" id="seq-runner-steps-grid">
+              <div class="sr-loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                Loading steps...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="canvas-wrap">
+        <svg id="viz" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <!-- (marker defs kept for compatibility if needed) -->
+            <marker id="arrow-end" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"
+              markerUnits="strokeWidth">
+              <path d="M0,0 L12,6 L0,12 L3,6 z" fill="#6b7280"></path>
+            </marker>
+          </defs>
+
+          <!-- grid layer and root group (root gets pan/zoom transforms) -->
+          <g id="grid-layer"></g>
+          <g id="root"></g>
+          <!-- arrows-layer is created by scripts.js and kept as sibling on top -->
+        </svg>
+
+        <div id="tooltip" class="tooltip" style="display:none"></div>
+      </section>
+
+      <div class="seq-creator-container">
+        <div class="seq-creator-header">
+          <h1>Sequence Creator</h1>
+        </div>
+
+        <div class="seq-creator-controls">
+          <div class="seq-creator-control-group">
+            <label class="seq-creator-control-label">Start Point</label>
+            <div class="seq-creator-select-wrapper">
+              <select id="seq-creator-startPoint" class="seq-creator-select">
+                <option value="">Select starting point...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="seq-creator-control-group">
+            <label class="seq-creator-control-label">Default Velocity (0.01 - 0.30)</label>
+            <div class="seq-creator-velocity-control">
+              <input type="range" id="seq-creator-defaultVelocity" class="seq-creator-velocity-slider seq-creator-input"
+                min="0.01" max="0.30" step="0.01" value="0.20">
+              <span id="seq-creator-velocityValue" class="seq-creator-velocity-value">0.20</span>
+            </div>
+          </div>
+
+          <div class="seq-creator-button-group">
+            <button class="seq-creator-button seq-creator-button-primary" onclick="seqCreator.createNewSequence()">
+              <span>+</span> New Sequence
+            </button>
+            <button class="seq-creator-button seq-creator-button-secondary" onclick="seqCreator.loadData()">
+              ↻ Refresh
+            </button>
+          </div>
+        </div>
+
+        <div class="seq-creator-content seq-creator-scrollbar" id="seq-creator-sequenceContent">
+          <div class="seq-creator-empty-state" id="seq-creator-emptyState">
+            <div class="seq-creator-empty-state-icon">🛣️</div>
+            <div class="seq-creator-empty-state-title">No Sequence Created</div>
+            <div class="seq-creator-empty-state-description">
+              Select a start point and create a new sequence
+            </div>
+          </div>
+
+          <div id="seq-creator-sequenceArea" style="display: none;">
+            <div id="seq-creator-startPointDisplay" class="seq-creator-start-point">
+              <div class="seq-creator-step-number">0</div>
+              <div class="seq-creator-step-info">
+                <div class="seq-creator-step-name" id="seq-creator-startPointName"></div>
+              </div>
+            </div>
+            <div class="seq-creator-steps" id="seq-creator-sequenceSteps"></div>
+          </div>
+        </div>
+
+        <!-- Velocity Modal -->
+        <div class="seq-creator-velocity-modal" id="seq-creator-velocityModal">
+          <div class="seq-creator-velocity-modal-content">
+            <h3 style="margin-bottom: var(--seq-creator-spacing-lg);">Set Velocity</h3>
+            <div class="seq-creator-control-group">
+              <label class="seq-creator-control-label">Velocity (0.01 - 0.30)</label>
+              <div class="seq-creator-velocity-control">
+                <input type="range" id="seq-creator-modalVelocity" class="seq-creator-velocity-slider seq-creator-input"
+                  min="0.01" max="0.30" step="0.01" value="0.20">
+                <span id="seq-creator-modalVelocityValue" class="seq-creator-velocity-value">0.20</span>
+              </div>
+            </div>
+            <div class="seq-creator-button-group" style="margin-top: var(--seq-creator-spacing-xl);">
+              <button class="seq-creator-button seq-creator-button-secondary"
+                onclick="seqCreator.closeVelocityModal()">Cancel</button>
+              <button class="seq-creator-button seq-creator-button-primary"
+                onclick="seqCreator.saveVelocity()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="seq-creator-status-message" id="seq-creator-statusMessage"></div>
+    </main>
+    <div class="seq-creator-status-message" id="seq_creator_statusMessage"></div>
+    <div id="seq-runner-alert-container"></div>
+
+  </div>
+
+
+  <footer>
+    <span>Visualizer — endpoints: <code>/pose/points</code> and <code>/pose/paths</code></span>
+    this is the footer
+  </footer>
+
+  <button id="secure-toggle-btn" title="Locked">
+    <span id="secure-toggle-icon">🔒</span>
+  </button>
+
+  <!-- Secure Lock Modal -->
+  <div id="secure-lock-overlay" class="secure-lock-overlay" hidden>
+    <div class="secure-lock-modal">
+      <div class="secure-lock-title">🔒 Locked</div>
+      <div class="secure-lock-subtitle">
+        Enter password to continue
+      </div>
+
+      <input type="password" id="secure-lock-input" placeholder="Password" autocomplete="off" />
+
+      <div class="secure-lock-actions">
+        <button id="secure-lock-cancel" class="secure-btn secondary">Cancel</button>
+        <button id="secure-lock-submit" class="secure-btn primary">Unlock</button>
+      </div>
+
+      <div id="secure-lock-error" class="secure-lock-error"></div>
+    </div>
+  </div>
+
+
+
+  <script src="password.js"></script>
+  <script src="scripts.js"></script>
+  <script src="enhanced-viz.js"></script>
+  <script src="sequenceCreator.js"></script>
+  <script src="sequence_runner.js"></script>
+  <script src="path-animator.js"></script>
+  <!-- <script src="ontext-menu.js"></script> -->
+</body>
+
+</html>

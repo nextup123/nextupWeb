@@ -182,8 +182,8 @@ app.use(cors());
 app.use(express.json());
 
 // File paths for the YAML files
-const pointFilePath = '/home/rocket/point_yaml.yaml';
-const pathFilePath = '/home/rocket/path_yaml.yaml';
+const pointFilePath = `/home/nextup/point_yaml.yaml`;
+const pathFilePath = `/home/nextup/path_yaml.yaml`;
 
 // Initialize the YAML files if they don't exist
 if (!fs.existsSync(pointFilePath)) {

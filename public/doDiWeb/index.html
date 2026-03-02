@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Control Behavior Tree Editor</title>
+    <link rel="stylesheet" href="../media/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ros_init.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-cogs logo-icon"></i>
+                <h1>IO Control BT Editor</h1>
+                <p id="di_indicator_status" class="di-indicator-status">Connecting...</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="openXMLModal()">
+                    <i class="fas fa-code"></i> View XML
+                </button>
+            </div>
+        </header>
+
+        <div class="main-container">
+            <div class="control-panel">
+                <div class="editor-container">
+                    <div class="editor-slider">
+                        <div class="do-editor">
+                            <div class="section-title">
+                                <i class="fas fa-toggle-on"></i>
+                                <h2>DO Control Editor</h2>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="doName">DO Name</label>
+                                    <input type="text" id="doName" placeholder="Alphanumeric" pattern="[A-Za-z0-9]+"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="doDriverId">Driver ID</label>
+                                    <select id="doDriverId">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="doId">DO ID</label>
+                                    <select id="doId"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="controlType">Control Type</label>
+                                    <select id="controlType" onchange="togglePushWait()">
+                                        <option value="switch">Switch</option>
+                                        <option value="push">Push</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pushWait">Push Wait (ms)</label>
+                                    <input type="number" id="pushWait" min="100" max="1000" value="250" disabled>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="doResponseMsg">Response Msg</label>
+                                    <input type="text" id="doResponseMsg" placeholder="Response message">
+                                </div>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="addDOControl()">Add DO</button>
+                                <button class="btn btn-warning" onclick="updateDOControl()" id="updateDOBtn"
+                                    disabled>Update DO</button>
+                            </div>
+                        </div>
+                        <div class="di-editor">
+                            <div class="section-title">
+                                <i class="fas fa-sensor"></i>
+                                <h2>DI Control Editor</h2>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="diName">DI Name</label>
+                                    <input type="text" id="diName" placeholder="Alphanumeric" pattern="[A-Za-z0-9]+"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="diDriverId">Driver ID</label>
+                                    <select id="diDriverId">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="diId">DI ID</label>
+                                    <select id="diId">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="waitTimeEnabled">Enable Wait</label>
+                                    <input type="checkbox" id="waitTimeEnabled" onchange="toggleWaitTime()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="waitTime">Wait Time (ms)</label>
+                                    <input type="number" id="waitTime" min="100" max="1000" value="250" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="waitTimeEnabled">Enable Fallback</label>
+                                    <input type="checkbox" id="diFallbackEnabled" onchange="toggleDIFallback()">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="diResponseMsg">Response Msg</label>
+                                    <input type="text" id="diResponseMsg" placeholder="Response message">
+                                </div>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="addDIControl()">Add DI</button>
+                                <button class="btn btn-warning" onclick="updateDIControl()" id="updateDIBtn"
+                                    disabled>Update DI</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nav-bar-slider-container">
+                        <button class="nav-btn nav-left" onclick="swipeEditor('left')"><i
+                                class="fas fa-chevron-left"></i></button>
+                        <button class="nav-btn nav-right" onclick="swipeEditor('right')"><i
+                                class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="di-indicator-panel">
+                    <table class="di-indicator-table" id="di_indicator_table">
+                        <thead>
+                            <tr>
+                                <th>DI #</th>
+                                <th>Driver 1</th>
+                                <th>Driver 2</th>
+                                <th>Driver 3</th>
+                                <th>Driver 4</th>
+                                <th>Driver 5</th>
+                                <th>Driver 6</th>
+                            </tr>
+                        </thead>
+                        <tbody id="di_indicator_table_body"></tbody>
+                    </table>
+                </div>
+
+
+                <div class="do-indicator-panel">
+                    <table class="do-indicator-table" id="do_indicator_table">
+                        <thead>
+                            <tr>
+                                <th>DO #</th>
+                                <th>Driver 1</th>
+                                <th>Driver 2</th>
+                                <th>Driver 3</th>
+                                <th>Driver 4</th>
+                                <th>Driver 5</th>
+                                <th>Driver 6</th>
+                            </tr>
+                        </thead>
+                        <tbody id="do_indicator_table_body">
+                            <tr>
+                                <td><b>DO1</b></td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_1_1" onchange="toggleDO(1, 1)"><span class="do-indicator"
+                                            id="do_indicator_1_1"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_2_1" onchange="toggleDO(2, 1)"><span class="do-indicator"
+                                            id="do_indicator_2_1"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_3_1" onchange="toggleDO(3, 1)"><span class="do-indicator"
+                                            id="do_indicator_3_1"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_4_1" onchange="toggleDO(4, 1)"><span class="do-indicator"
+                                            id="do_indicator_4_1"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_5_1" onchange="toggleDO(5, 1)"><span class="do-indicator"
+                                            id="do_indicator_5_1"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_6_1" onchange="toggleDO(6, 1)"><span class="do-indicator"
+                                            id="do_indicator_6_1"></span></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>DO2</b></td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_1_2" disabled><span class="do-indicator"
+                                            id="do_indicator_1_2"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_2_2" disabled><span class="do-indicator"
+                                            id="do_indicator_2_2"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_3_2" disabled><span class="do-indicator"
+                                            id="do_indicator_3_2"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_4_2" disabled><span class="do-indicator"
+                                            id="do_indicator_4_2"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_5_2" onchange="toggleDO(5, 2)"><span class="do-indicator"
+                                            id="do_indicator_5_2"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_6_2" onchange="toggleDO(6, 2)"><span class="do-indicator"
+                                            id="do_indicator_6_2"></span></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>DO3</b></td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_1_3" onchange="toggleDO(1, 3)"><span class="do-indicator"
+                                            id="do_indicator_1_3"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_2_3" onchange="toggleDO(2, 3)"><span class="do-indicator"
+                                            id="do_indicator_2_3"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_3_3" onchange="toggleDO(3, 3)"><span class="do-indicator"
+                                            id="do_indicator_3_3"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_4_3" onchange="toggleDO(4, 3)"><span class="do-indicator"
+                                            id="do_indicator_4_3"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_5_3" onchange="toggleDO(5, 3)"><span class="do-indicator"
+                                            id="do_indicator_5_3"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_6_3" onchange="toggleDO(6, 3)"><span class="do-indicator"
+                                            id="do_indicator_6_3"></span></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><b>PI_P</b></td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_1_4" onchange="toggleDO(1, 4)"><span class="do-indicator"
+                                            id="do_indicator_1_4"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_2_4" onchange="toggleDO(2, 4)"><span class="do-indicator"
+                                            id="do_indicator_2_4"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_3_4" onchange="toggleDO(3, 4)"><span class="do-indicator"
+                                            id="do_indicator_3_4"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_4_4" onchange="toggleDO(4, 4)"><span class="do-indicator"
+                                            id="do_indicator_4_4"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_5_4" onchange="toggleDO(5, 4)"><span class="do-indicator"
+                                            id="do_indicator_5_4"></span></div>
+                                </td>
+                                <td>
+                                    <div class="do-toggle-container"><input type="checkbox" class="do-toggle"
+                                            id="do_toggle_6_4" onchange="toggleDO(6, 4)"><span class="do-indicator"
+                                            id="do_indicator_6_4"></span></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="sequence-panel">
+                <div class="sequence-header">
+                    <div class="section-title">
+                        <i class="fas fa-project-diagram"></i>
+                        <h2>Control Sequences</h2>
+                        <button id="sortDiFirst">DI First</button>
+                        <button id="sortDoFirst">DO First</button>
+                    </div>
+                    <div class="sequence-count">
+                        <span class="origin-point-file-name">
+                            <span id="sequenceCount">0</span> sequences
+                        </span>
+                        <button class="btn-reload-points" onclick="reloadSequences()">
+                            <i class="fas fa-redo"></i> Reload
+                        </button>
+                        <button id="undoBtn" class="btn-reload-points btn-warning" onclick="performUndo()" disabled>
+                            <i class="fas fa-undo"></i> Undo
+                        </button>
+                        <button class="btn-reload-points btn-danger" onclick="deleteAll()">
+                            <i class="fas fa-broom"></i> Delete All
+                        </button>
+                    </div>
+                </div>
+                <div class="sequence-list" id="sequenceList">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>No sequences added yet</p>
+                        <small>Start by creating a sequence using the editors</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- XML Modal -->
+    <div id="xmlModal" class="modal">
+        <div class="modal-content xml-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-code"></i> Generated XML</h3>
+                <div class="font-controls">
+                    <button class="btn-font" onclick="changeFontSize(-1)">A-</button>
+                    <button class="btn-font" onclick="changeFontSize(1)">A+</button>
+                    <button class="modal-close" onclick="closeXMLModal()">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <pre id="xmlOutput" class="xml-content"></pre>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" onclick="reloadXML()">
+                    <i class="fas fa-refresh"></i> Reload XML
+                </button>
+                <button class="btn btn-success" onclick="copyXML()">
+                    <i class="fas fa-copy"></i> Copy to Clipboard
+                </button>
+                <button class="btn btn-danger" onclick="closeXMLModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Modal -->
+    <div id="statusModal" class="modal"></div>
+    <script src="roslib.js"></script>
+    <script src="script.js"></script>
+    <script src="actions.js"></script>
+    <script src="ros_init.js"></script>
+</body>
+
+</html>

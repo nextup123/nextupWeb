@@ -1,0 +1,790 @@
+{
+  "history": [
+    {
+      "timestamp": "2025-12-05T07:20:30.066Z",
+      "previousState": {
+        "sequences": [
+          {
+            "id": "seq_1764918381654",
+            "name": "sequence_2025-12-05",
+            "createdAt": "2025-12-05T07:06:21.654Z",
+            "start": "home",
+            "current": "point5",
+            "totalSteps": 17,
+            "steps": [
+              {
+                "order": 1,
+                "path": "home_point2",
+                "type": "J",
+                "from": "home",
+                "to": "point2",
+                "velocity": 0.3
+              },
+              {
+                "order": 2,
+                "path": "point2_point3",
+                "type": "C",
+                "from": "point2",
+                "to": "point3",
+                "velocity": 0.3
+              },
+              {
+                "order": 3,
+                "path": "point3_point2",
+                "type": "C",
+                "from": "point3",
+                "to": "point2",
+                "velocity": 0.3
+              },
+              {
+                "order": 4,
+                "path": "point2_point3",
+                "type": "C",
+                "from": "point2",
+                "to": "point3",
+                "velocity": 0.3
+              },
+              {
+                "order": 5,
+                "path": "point3_point2",
+                "type": "C",
+                "from": "point3",
+                "to": "point2",
+                "velocity": 0.3
+              },
+              {
+                "order": 6,
+                "path": "point2_point4",
+                "type": "C",
+                "from": "point2",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 7,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.3
+              },
+              {
+                "order": 8,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 9,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.3
+              },
+              {
+                "order": 10,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 11,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.3
+              },
+              {
+                "order": 12,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 13,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.3
+              },
+              {
+                "order": 14,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 15,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.3
+              },
+              {
+                "order": 16,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 17,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-08T06:02:05.877Z",
+      "previousState": {
+        "sequences": [
+          {
+            "id": "seq_1764919230062",
+            "name": "sequence_2025-12-05",
+            "createdAt": "2025-12-05T07:20:30.062Z",
+            "start": "home",
+            "current": "home",
+            "totalSteps": 7,
+            "steps": [
+              {
+                "order": 1,
+                "path": "home_point2",
+                "type": "J",
+                "from": "home",
+                "to": "point2",
+                "velocity": 0.3
+              },
+              {
+                "order": 2,
+                "path": "point2_point3",
+                "type": "C",
+                "from": "point2",
+                "to": "point3",
+                "velocity": 0.3
+              },
+              {
+                "order": 3,
+                "path": "point3_point2",
+                "type": "C",
+                "from": "point3",
+                "to": "point2",
+                "velocity": 0.3
+              },
+              {
+                "order": 4,
+                "path": "point2_point4",
+                "type": "C",
+                "from": "point2",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 5,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.3
+              },
+              {
+                "order": 6,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 7,
+                "path": "point4_home",
+                "type": "J",
+                "from": "point4",
+                "to": "home",
+                "velocity": 0.3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-08T06:06:15.961Z",
+      "previousState": {
+        "sequences": [
+          {
+            "id": "seq_1765173725866",
+            "name": "sequence_2025-12-08",
+            "createdAt": "2025-12-08T06:02:05.866Z",
+            "start": "home",
+            "current": "home",
+            "totalSteps": 7,
+            "steps": [
+              {
+                "order": 1,
+                "path": "home_point2",
+                "type": "J",
+                "from": "home",
+                "to": "point2",
+                "velocity": 0.3
+              },
+              {
+                "order": 2,
+                "path": "point2_point3",
+                "type": "C",
+                "from": "point2",
+                "to": "point3",
+                "velocity": 0.3
+              },
+              {
+                "order": 3,
+                "path": "point3_point2",
+                "type": "C",
+                "from": "point3",
+                "to": "point2",
+                "velocity": 0.3
+              },
+              {
+                "order": 4,
+                "path": "point2_point4",
+                "type": "C",
+                "from": "point2",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 5,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.3
+              },
+              {
+                "order": 6,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 7,
+                "path": "point4_home",
+                "type": "J",
+                "from": "point4",
+                "to": "home",
+                "velocity": 0.3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-10T11:57:12.311Z",
+      "previousState": {
+        "sequences": [
+          {
+            "id": "seq_1765173975958",
+            "name": "sequence_2025-12-08",
+            "createdAt": "2025-12-08T06:06:15.958Z",
+            "start": "home",
+            "current": "home",
+            "totalSteps": 7,
+            "steps": [
+              {
+                "order": 1,
+                "path": "home_point2",
+                "type": "J",
+                "from": "home",
+                "to": "point2",
+                "velocity": 0.3
+              },
+              {
+                "order": 2,
+                "path": "point2_point3",
+                "type": "C",
+                "from": "point2",
+                "to": "point3",
+                "velocity": 0.3
+              },
+              {
+                "order": 3,
+                "path": "point3_point2",
+                "type": "C",
+                "from": "point3",
+                "to": "point2",
+                "velocity": 0.3
+              },
+              {
+                "order": 4,
+                "path": "point2_point4",
+                "type": "C",
+                "from": "point2",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 5,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.3
+              },
+              {
+                "order": 6,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 7,
+                "path": "point4_home",
+                "type": "J",
+                "from": "point4",
+                "to": "home",
+                "velocity": 0.3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-10T12:09:41.405Z",
+      "previousState": {
+        "sequences": [
+          {
+            "id": "seq_1765367832308",
+            "name": "sequence_2025-12-10",
+            "createdAt": "2025-12-10T11:57:12.308Z",
+            "start": "home",
+            "current": "home",
+            "totalSteps": 3,
+            "steps": [
+              {
+                "order": 1,
+                "path": "home_point2",
+                "type": "J",
+                "from": "home",
+                "to": "point2",
+                "velocity": 0.2
+              },
+              {
+                "order": 2,
+                "path": "point2_point4",
+                "type": "C",
+                "from": "point2",
+                "to": "point4",
+                "velocity": 0.2
+              },
+              {
+                "order": 3,
+                "path": "point4_home",
+                "type": "J",
+                "from": "point4",
+                "to": "home",
+                "velocity": 0.2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-11T07:19:17.112Z",
+      "previousState": {
+        "sequences": [
+          {
+            "id": "seq_1765368581403",
+            "name": "sequence_2025-12-10",
+            "createdAt": "2025-12-10T12:09:41.403Z",
+            "start": "home",
+            "current": "point5",
+            "totalSteps": 6,
+            "steps": [
+              {
+                "order": 1,
+                "path": "home_point2",
+                "type": "J",
+                "from": "home",
+                "to": "point2",
+                "velocity": 0.2
+              },
+              {
+                "order": 2,
+                "path": "point2_point4",
+                "type": "C",
+                "from": "point2",
+                "to": "point4",
+                "velocity": 0.2
+              },
+              {
+                "order": 3,
+                "path": "point4_home",
+                "type": "J",
+                "from": "point4",
+                "to": "home",
+                "velocity": 0.2
+              },
+              {
+                "order": 4,
+                "path": "home_point2",
+                "type": "J",
+                "from": "home",
+                "to": "point2",
+                "velocity": 0.2
+              },
+              {
+                "order": 5,
+                "path": "point2_point3",
+                "type": "C",
+                "from": "point2",
+                "to": "point3",
+                "velocity": 0.2
+              },
+              {
+                "order": 6,
+                "path": "point3_point5",
+                "type": "C",
+                "from": "point3",
+                "to": "point5",
+                "velocity": 0.2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-11T07:29:16.519Z",
+      "previousState": {
+        "sequences": [
+          {
+            "id": "seq_1765437557109",
+            "name": "sequence_2025-12-11",
+            "createdAt": "2025-12-11T07:19:17.109Z",
+            "start": "home",
+            "current": "home",
+            "totalSteps": 7,
+            "steps": [
+              {
+                "order": 1,
+                "path": "home_point2",
+                "type": "J",
+                "from": "home",
+                "to": "point2",
+                "velocity": 0.2
+              },
+              {
+                "order": 2,
+                "path": "point2_point3",
+                "type": "C",
+                "from": "point2",
+                "to": "point3",
+                "velocity": 0.2
+              },
+              {
+                "order": 3,
+                "path": "point3_point2",
+                "type": "C",
+                "from": "point3",
+                "to": "point2",
+                "velocity": 0.2
+              },
+              {
+                "order": 4,
+                "path": "point2_point4",
+                "type": "C",
+                "from": "point2",
+                "to": "point4",
+                "velocity": 0.2
+              },
+              {
+                "order": 5,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.2
+              },
+              {
+                "order": 6,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.2
+              },
+              {
+                "order": 7,
+                "path": "point4_home",
+                "type": "J",
+                "from": "point4",
+                "to": "home",
+                "velocity": 0.2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-11T08:04:19.956Z",
+      "previousState": {
+        "sequences": [
+          {
+            "id": "seq_1765438156517",
+            "name": "sequence_2025-12-11",
+            "createdAt": "2025-12-11T07:29:16.517Z",
+            "start": "home",
+            "current": "home",
+            "totalSteps": 5,
+            "steps": [
+              {
+                "order": 1,
+                "path": "home_point2",
+                "type": "J",
+                "from": "home",
+                "to": "point2",
+                "velocity": 0.2
+              },
+              {
+                "order": 2,
+                "path": "point2_point4",
+                "type": "C",
+                "from": "point2",
+                "to": "point4",
+                "velocity": 0.2
+              },
+              {
+                "order": 3,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.2
+              },
+              {
+                "order": 4,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.2
+              },
+              {
+                "order": 5,
+                "path": "point4_home",
+                "type": "J",
+                "from": "point4",
+                "to": "home",
+                "velocity": 0.2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-12T05:10:58.336Z",
+      "previousState": {
+        "sequences": [
+          {
+            "id": "seq_1765440259954",
+            "name": "sequence_2025-12-11",
+            "createdAt": "2025-12-11T08:04:19.954Z",
+            "start": "home",
+            "current": "home",
+            "totalSteps": 11,
+            "steps": [
+              {
+                "order": 1,
+                "path": "home_point2",
+                "type": "J",
+                "from": "home",
+                "to": "point2",
+                "velocity": 0.3
+              },
+              {
+                "order": 2,
+                "path": "point2_point3",
+                "type": "C",
+                "from": "point2",
+                "to": "point3",
+                "velocity": 0.3
+              },
+              {
+                "order": 3,
+                "path": "point3_point2",
+                "type": "C",
+                "from": "point3",
+                "to": "point2",
+                "velocity": 0.3
+              },
+              {
+                "order": 4,
+                "path": "point2_point3",
+                "type": "C",
+                "from": "point2",
+                "to": "point3",
+                "velocity": 0.3
+              },
+              {
+                "order": 5,
+                "path": "point3_point5",
+                "type": "C",
+                "from": "point3",
+                "to": "point5",
+                "velocity": 0.3
+              },
+              {
+                "order": 6,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 7,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.3
+              },
+              {
+                "order": 8,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 9,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.3
+              },
+              {
+                "order": 10,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.3
+              },
+              {
+                "order": 11,
+                "path": "point4_home",
+                "type": "J",
+                "from": "point4",
+                "to": "home",
+                "velocity": 0.3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-16T12:02:38.686Z",
+      "previousState": {
+        "sequences": [
+          {
+            "id": "seq_1765516258316",
+            "name": "sequence_2025-12-12",
+            "createdAt": "2025-12-12T05:10:58.316Z",
+            "start": "home",
+            "current": "home",
+            "totalSteps": 7,
+            "steps": [
+              {
+                "order": 1,
+                "path": "home_point2",
+                "type": "J",
+                "from": "home",
+                "to": "point2",
+                "velocity": 0.2
+              },
+              {
+                "order": 2,
+                "path": "point2_point3",
+                "type": "C",
+                "from": "point2",
+                "to": "point3",
+                "velocity": 0.2
+              },
+              {
+                "order": 3,
+                "path": "point3_point2",
+                "type": "C",
+                "from": "point3",
+                "to": "point2",
+                "velocity": 0.2
+              },
+              {
+                "order": 4,
+                "path": "point2_point4",
+                "type": "C",
+                "from": "point2",
+                "to": "point4",
+                "velocity": 0.2
+              },
+              {
+                "order": 5,
+                "path": "point4_point5",
+                "type": "C",
+                "from": "point4",
+                "to": "point5",
+                "velocity": 0.2
+              },
+              {
+                "order": 6,
+                "path": "point5_point4",
+                "type": "C",
+                "from": "point5",
+                "to": "point4",
+                "velocity": 0.2
+              },
+              {
+                "order": 7,
+                "path": "point4_home",
+                "type": "J",
+                "from": "point4",
+                "to": "home",
+                "velocity": 0.2
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

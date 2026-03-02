@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ROS Node & Controller Monitor</title>
+
+  <!-- ROSLIB -->
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #ddd;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      border-bottom: 1px solid #444;
+      padding-bottom: 5px;
+    }
+
+    .list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .item {
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      background: #400;
+      color: #fff;
+    }
+
+    .item.active {
+      background: #1f7a1f;
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ROS Node & Controller Monitor</h1>
+
+  <div class="status" id="ros-status">ROS: connecting...</div>
+
+  <h2>Nodes</h2>
+  <div id="nodes" class="list"></div>
+
+  <h2>Controllers</h2>
+  <div id="controllers" class="list"></div>
+  <script src="../public/micron2web/scripts/roslib.js"></script>
+
+  <script>
+    const nodeContainer = document.getElementById('nodes');
+    const controllerContainer = document.getElementById('controllers');
+    const rosStatus = document.getElementById('ros-status');
+
+    const nodeElements = {};
+    const controllerElements = {};
+
+    /* -----------------------------
+       1️⃣ Load expected names (YAML)
+       ----------------------------- */
+    fetch('/ros-monitor/names')
+      .then(res => res.json())
+      .then(data => {
+        data.nodes.forEach(name => {
+          const div = document.createElement('div');
+          div.className = 'item';
+          div.textContent = name;
+          nodeContainer.appendChild(div);
+          nodeElements[name] = div;
+        });
+
+        data.controllers.forEach(name => {
+          const div = document.createElement('div');
+          div.className = 'item';
+          div.textContent = name;
+          controllerContainer.appendChild(div);
+          controllerElements[name] = div;
+        });
+      })
+      .catch(err => {
+        console.error('Failed to load expected names:', err);
+      });
+
+    /* -----------------------------
+       2️⃣ Connect to ROSBridge
+       ----------------------------- */
+    const ros = new ROSLIB.Ros({
+      url: 'ws://localhost:9090'
+    });
+
+    ros.on('connection', () => {
+      rosStatus.textContent = 'ROS: connected';
+      rosStatus.style.color = '#4caf50';
+    });
+
+    ros.on('error', () => {
+      rosStatus.textContent = 'ROS: connection error';
+      rosStatus.style.color = '#ff4444';
+    });
+
+    ros.on('close', () => {
+      rosStatus.textContent = 'ROS: disconnected';
+      rosStatus.style.color = '#ff4444';
+    });
+
+    /* -----------------------------
+       3️⃣ Subscribe to active nodes
+       ----------------------------- */
+    const activeNodesTopic = new ROSLIB.Topic({
+      ros,
+      name: '/active_nodes_report',
+      messageType: 'std_msgs/String'
+    });
+
+    activeNodesTopic.subscribe(msg => {
+      const activeNames = msg.data
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean);
+
+      // Reset all to RED
+      Object.values(nodeElements).forEach(el =>
+        el.classList.remove('active')
+      );
+      Object.values(controllerElements).forEach(el =>
+        el.classList.remove('active')
+      );
+
+      // Mark active as GREEN
+      activeNames.forEach(name => {
+        if (nodeElements[name]) {
+          nodeElements[name].classList.add('active');
+        }
+        if (controllerElements[name]) {
+          controllerElements[name].classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

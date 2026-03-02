@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Pose Testing Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background: #1a202c;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            color: #63b3ed;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2d3748;
+        }
+
+        .connection-status {
+            background: #2d3748;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background: #e53e3e;
+        }
+
+        .status-dot.connected {
+            background: #38a169;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .robot-info {
+            background: #2d3748;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .joints-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .joint {
+            background: #4a5568;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .joint-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #63b3ed;
+        }
+
+        .joint-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 10px;
+            padding: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: #718096;
+        }
+
+        .tab.active {
+            background: #4299e1;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .card h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 30px;
+            height: 30px;
+            background: #4299e1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 6px;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .metric-change {
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .metric-change.negative {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        /* Points Table */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #edf2f7;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5568;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.available {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-badge.unavailable {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        /* Visualization */
+        .visualization-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .visualization {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .visualization h3 {
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #4299e1;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3182ce;
+        }
+
+        .btn-secondary {
+            background: #718096;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        .btn-success {
+            background: #38a169;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #2f855a;
+        }
+
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c53030;
+        }
+
+        /* Input Groups */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #4299e1;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+
+        .alert-error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #fc8181;
+        }
+
+        .alert-warning {
+            background: #feebc8;
+            color: #744210;
+            border: 1px solid #fbd38d;
+        }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            color: #718096;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #4299e1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Response Viewer */
+        .response-viewer {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .response-viewer pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Path Graph */
+        .path-graph {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .path-node {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .path-node.current {
+            border-color: #4299e1;
+            background: #ebf8ff;
+        }
+
+        .path-node.connected {
+            border-color: #38a169;
+            background: #f0fff4;
+        }
+
+        .node-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #cbd5e0;
+        }
+
+        .node-indicator.current {
+            background: #4299e1;
+            box-shadow: 0 0 10px rgba(66, 153, 225, 0.5);
+        }
+
+        .node-indicator.connected {
+            background: #38a169;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .visualization-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>🤖 Robot Pose Monitor</h2>
+            
+            <div class="connection-status">
+                <div class="status-dot" id="connectionDot"></div>
+                <span id="connectionStatus">Connecting...</span>
+            </div>
+            
+            <div class="robot-info">
+                <h3>Current State</h3>
+                <div id="currentStateLoading" class="loading">
+                    <div class="spinner"></div>
+                    Waiting for robot data...
+                </div>
+                <div id="jointsDisplay" class="joints-grid" style="display: none;">
+                    <!-- Joints will be populated here -->
+                </div>
+                <div id="robotTimestamp" style="margin-top: 10px; font-size: 0.8rem; color: #a0aec0;"></div>
+            </div>
+            
+            <h2>Points</h2>
+            <div id="pointsList">
+                <!-- Points will be populated here -->
+            </div>
+            
+            <h2>Paths</h2>
+            <div id="pathsList" class="path-graph">
+                <!-- Paths will be populated here -->
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Robot Pose Testing Dashboard</h1>
+                <div id="lastUpdate" style="color: #718096; font-size: 0.9rem;"></div>
+            </div>
+
+            <!-- Alerts -->
+            <div id="alert" class="alert"></div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('dashboard', this)">📊 Dashboard</div>
+                <div class="tab" onclick="switchTab('testing', this)">🧪 Testing</div>
+                <div class="tab" onclick="switchTab('analysis', this)">📈 Analysis</div>
+                <div class="tab" onclick="switchTab('visualization', this)">🎨 Visualization</div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content active">
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3><div class="card-icon">📊</div> System Status</h3>
+                        <div class="metric">
+                            <span>Connected Points</span>
+                            <span id="connectedPoints" class="metric-value">0</span>
+                        </div>
+                        <div class="metric">
+                            <span>Available Paths</span>
+                            <span id="availablePaths" class="metric-value">0</span>
+                        </div>
+                        <div class="metric">
+                            <span>Current Matches</span>
+                            <span id="currentMatches" class="metric-value">0</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3><div class="card-icon">⚙️</div> Robot Info</h3>
+                        <div class="metric">
+                            <span>Total Points</span>
+                            <span id="totalPoints" class="metric-value">0</span>
+                        </div>
+                        <div class="metric">
+                            <span>Total Paths</span>
+                            <span id="totalPaths" class="metric-value">0</span>
+                        </div>
+                        <div class="metric">
+                            <span>Joint Count</span>
+                            <span class="metric-value">6</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3><div class="card-icon">🚀</div> Quick Actions</h3>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <button class="btn btn-primary" onclick="testEndpoint('current')">
+                                🔄 Refresh State
+                            </button>
+                            <button class="btn btn-secondary" onclick="loadAllData()">
+                                📥 Load All Data
+                            </button>
+                            <button class="btn btn-success" onclick="testEndpoint('whereami')">
+                                🧭 Where Am I?
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Location -->
+                <div class="table-container">
+                    <h3>Current Location Analysis</h3>
+                    <div id="locationAnalysis">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            Analyzing current position...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Points Table -->
+                <div class="table-container">
+                    <h3>📋 All Points</h3>
+                    <table id="pointsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Nature</th>
+                                <th>Joints</th>
+                                <th>Coordinates</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Points will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Testing Tab -->
+            <div id="testing-tab" class="tab-content">
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="testEndpoint('current')">
+                        🔄 Current Pose
+                    </button>
+                    <button class="btn btn-secondary" onclick="testEndpoint('points')">
+                        📍 All Points
+                    </button>
+                    <button class="btn btn-secondary" onclick="testEndpoint('paths')">
+                        🛣️ All Paths
+                    </button>
+                    <button class="btn btn-success" onclick="testEndpoint('whereami')">
+                        🧭 Where Am I?
+                    </button>
+                </div>
+
+                <div class="visualization">
+                    <h3>🎯 Point Matching</h3>
+                    <div class="input-group">
+                        <label>Point Name:</label>
+                        <select id="pointSelect">
+                            <option value="">Select a point...</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Tolerance:</label>
+                        <input type="number" id="tolerance" value="0.0001" step="0.0001" min="0">
+                    </div>
+                    <button class="btn btn-primary" onclick="testMatchPoint()">
+                        ✅ Match Point
+                    </button>
+                </div>
+
+                <div class="response-viewer">
+                    <pre id="responseContent">Select an endpoint to test...</pre>
+                </div>
+            </div>
+
+            <!-- Analysis Tab -->
+            <div id="analysis-tab" class="tab-content">
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="testEndpoint('check_path_continuity')">
+                        🔗 Check Path Continuity
+                    </button>
+                    <button class="btn btn-secondary" onclick="testEndpoint('check_duplicate_points')">
+                        🔍 Find Duplicate Points
+                    </button>
+                    <button class="btn btn-success" onclick="testEndpoint('debug/distances')">
+                        📏 Debug Distances
+                    </button>
+                </div>
+
+                <div class="visualization-container">
+                    <div class="visualization">
+                        <h3>📊 Continuity Analysis</h3>
+                        <div id="continuityResults">
+                            <div class="loading">
+                                <div class="spinner"></div>
+                                Run analysis to see results
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="visualization">
+                        <h3>🎯 Duplicate Points</h3>
+                        <div id="duplicateResults">
+                            <div class="loading">
+                                <div class="spinner"></div>
+                                Check for duplicates
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Tab -->
+            <div id="visualization-tab" class="tab-content">
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="visualizeCurrentPath()">
+                        🛣️ Show Current Paths
+                    </button>
+                    <button class="btn btn-secondary" onclick="showAllPaths()">
+                        🗺️ Show All Paths
+                    </button>
+                </div>
+
+                <div class="visualization-container">
+                    <div class="visualization">
+                        <h3>📍 Points Network</h3>
+                        <div id="networkGraph" style="height: 300px;">
+                            <!-- Network graph will be rendered here -->
+                        </div>
+                    </div>
+
+                    <div class="visualization">
+                        <h3>📈 Joint Values</h3>
+                        <div id="jointChart" style="height: 300px;">
+                            <!-- Chart will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://localhost:3003';
+        let currentData = {
+            points: [],
+            paths: [],
+            currentState: null,
+            matchedPoints: []
+        };
+
+        // DOM Elements
+        const elements = {
+            connectionDot: document.getElementById('connectionDot'),
+            connectionStatus: document.getElementById('connectionStatus'),
+            jointsDisplay: document.getElementById('jointsDisplay'),
+            currentStateLoading: document.getElementById('currentStateLoading'),
+            robotTimestamp: document.getElementById('robotTimestamp'),
+            pointsList: document.getElementById('pointsList'),
+            pathsList: document.getElementById('pathsList'),
+            alert: document.getElementById('alert'),
+            responseContent: document.getElementById('responseContent'),
+            pointSelect: document.getElementById('pointSelect'),
+            lastUpdate: document.getElementById('lastUpdate'),
+            
+            // Dashboard elements
+            connectedPoints: document.getElementById('connectedPoints'),
+            availablePaths: document.getElementById('availablePaths'),
+            currentMatches: document.getElementById('currentMatches'),
+            totalPoints: document.getElementById('totalPoints'),
+            totalPaths: document.getElementById('totalPaths'),
+            pointsTable: document.querySelector('#pointsTable tbody'),
+            locationAnalysis: document.getElementById('locationAnalysis'),
+            
+            // Analysis elements
+            continuityResults: document.getElementById('continuityResults'),
+            duplicateResults: document.getElementById('duplicateResults')
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            checkConnection();
+            loadAllData();
+            startAutoRefresh();
+        });
+
+        // Connection Check
+        async function checkConnection() {
+            try {
+                const start = Date.now();
+                const response = await fetch(`${BASE_URL}/pose/current`, { timeout: 5000 });
+                const time = Date.now() - start;
+                
+                if (response.ok) {
+                    elements.connectionDot.classList.add('connected');
+                    elements.connectionStatus.textContent = `Connected (${time}ms)`;
+                    showAlert('Connected to backend successfully', 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                elements.connectionDot.classList.remove('connected');
+                elements.connectionStatus.textContent = 'Disconnected';
+                showAlert('Cannot connect to backend. Make sure server is running on port 3003.', 'error');
+            }
+        }
+
+        // Alert System
+        function showAlert(message, type = 'info') {
+            elements.alert.textContent = message;
+            elements.alert.className = `alert alert-${type} show`;
+            
+            setTimeout(() => {
+                elements.alert.classList.remove('show');
+            }, 5000);
+        }
+
+        // Tab Switching
+        function switchTab(tabName, element) {
+            // Update active tab
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            element.classList.add('active');
+            
+            // Update active content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+
+        // Generic Endpoint Testing
+        async function testEndpoint(endpoint) {
+            const button = event?.target || null;
+            const originalText = button ? button.innerHTML : '';
+            
+            if (button) {
+                button.innerHTML = '<div class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></div> Loading...';
+                button.disabled = true;
+            }
+            
+            try {
+                let url = `${BASE_URL}/pose/${endpoint}`;
+                const params = {};
+                
+                // Handle specific endpoints
+                if (endpoint === 'whereami') {
+                    params.tolerance = document.getElementById('tolerance').value || '0.0001';
+                } else if (endpoint === 'debug/distances') {
+                    params.tolerance = document.getElementById('tolerance').value || '0.0001';
+                }
+                
+                // Build query string
+                const queryString = Object.keys(params).length 
+                    ? '?' + new URLSearchParams(params).toString()
+                    : '';
+                
+                const startTime = Date.now();
+                const response = await fetch(url + queryString);
+                const endTime = Date.now();
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // Display response
+                elements.responseContent.textContent = JSON.stringify(data, null, 2);
+                
+                // Update last update time
+                elements.lastUpdate.textContent = `Last update: ${new Date().toLocaleTimeString()}`;
+                
+                // Update data based on endpoint
+                updateData(endpoint, data);
+                
+                // Update response time
+                showAlert(`${endpoint} executed successfully in ${endTime - startTime}ms`, 'success');
+                
+            } catch (error) {
+                elements.responseContent.textContent = `Error: ${error.message}`;
+                showAlert(`Error: ${error.message}`, 'error');
+            } finally {
+                if (button) {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
+            }
+        }
+
+        // Update data based on endpoint response
+        function updateData(endpoint, data) {
+            switch(endpoint) {
+                case 'current':
+                    updateRobotState(data);
+                    break;
+                case 'points':
+                    currentData.points = data.points || [];
+                    updatePointsList();
+                    updatePointsTable();
+                    break;
+                case 'paths':
+                    currentData.paths = data.paths || [];
+                    updatePathsList();
+                    break;
+                case 'whereami':
+                    currentData.matchedPoints = data.points || [];
+                    updateLocationAnalysis(data);
+                    break;
+            }
+            updateDashboard();
+        }
+
+        // Update robot state display
+        function updateRobotState(data) {
+            if (data.latest && data.latest.position) {
+                elements.currentStateLoading.style.display = 'none';
+                elements.jointsDisplay.style.display = 'grid';
+                
+                currentData.currentState = data.latest;
+                
+                // Update joint displays
+                const joints = data.latest.position;
+                elements.jointsDisplay.innerHTML = joints.map((value, index) => `
+                    <div class="joint">
+                        <div class="joint-label">J${index + 1}</div>
+                        <div class="joint-value">${value.toFixed(4)}</div>
+                    </div>
+                `).join('');
+                
+                // Update timestamp
+                const time = data.latest.received_at ? new Date(data.latest.received_at).toLocaleTimeString() : 'N/A';
+                elements.robotTimestamp.textContent = `Updated: ${time}`;
+            }
+        }
+
+        // Update points list in sidebar
+        function updatePointsList() {
+            elements.pointsList.innerHTML = currentData.points.map(point => `
+                <div class="path-node ${currentData.matchedPoints.includes(point.name) ? 'current' : ''}">
+                    <div class="node-indicator ${currentData.matchedPoints.includes(point.name) ? 'current' : ''}"></div>
+                    <div>
+                        <strong>${point.name}</strong>
+                        <div style="font-size: 0.8rem; color: #a0aec0;">${point.nature}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Update select dropdown
+            elements.pointSelect.innerHTML = '<option value="">Select a point...</option>' +
+                currentData.points.map(point => 
+                    `<option value="${point.name}">${point.name} (${point.nature})</option>`
+                ).join('');
+        }
+
+        // Update paths list in sidebar
+        function updatePathsList() {
+            elements.pathsList.innerHTML = currentData.paths.map(path => `
+                <div class="path-node">
+                    <div class="node-indicator ${path.start_point === currentData.matchedPoints[0] ? 'connected' : ''}"></div>
+                    <div>
+                        <strong>${path.name}</strong>
+                        <div style="font-size: 0.8rem; color: #a0aec0;">
+                            ${path.start_point} → ${path.end_point}
+                            <span style="float: right;">${path.plan_space}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update points table
+        function updatePointsTable() {
+            elements.pointsTable.innerHTML = currentData.points.map(point => {
+                const joints = point.joints || [];
+                const coordinates = point.coordinate || {};
+                const isMatched = currentData.matchedPoints.includes(point.name);
+                
+                return `
+                    <tr>
+                        <td><strong>${point.name}</strong></td>
+                        <td>${point.nature}</td>
+                        <td>${joints.map(j => j.toFixed(4)).join(', ')}</td>
+                        <td>X:${coordinates.x?.toFixed(2) || 0}, Y:${coordinates.y?.toFixed(2) || 0}, Z:${coordinates.z?.toFixed(2) || 0}</td>
+                        <td>
+                            <span class="status-badge ${isMatched ? 'available' : 'unavailable'}">
+                                ${isMatched ? 'MATCHED' : 'AVAILABLE'}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Update location analysis
+        function updateLocationAnalysis(data) {
+            if (data.matched) {
+                elements.locationAnalysis.innerHTML = `
+                    <div style="padding: 20px; text-align: center;">
+                        <div style="font-size: 1.5rem; color: #38a169; margin-bottom: 10px;">
+                            ✅ Robot is at ${data.points.length > 1 ? 'multiple points' : data.points[0]}
+                        </div>
+                        <div style="color: #718096; margin-bottom: 15px;">
+                            Tolerance: ${data.tolerance} | Timestamp: ${new Date(data.timestamp).toLocaleTimeString()}
+                        </div>
+                        ${data.points.map(point => `
+                            <div style="background: #f7fafc; padding: 10px; border-radius: 8px; margin: 5px 0;">
+                                <strong>${point}</strong> - ${data.available_paths_per_point?.find(p => p.point === point)?.total_outgoing || 0} paths available
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                elements.locationAnalysis.innerHTML = `
+                    <div style="padding: 20px; text-align: center;">
+                        <div style="font-size: 1.5rem; color: #e53e3e; margin-bottom: 10px;">
+                            ❌ Robot not at any known point
+                        </div>
+                        <div style="color: #718096;">
+                            Check tolerance settings or move robot to a known position
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Update dashboard metrics
+        function updateDashboard() {
+            elements.totalPoints.textContent = currentData.points.length;
+            elements.totalPaths.textContent = currentData.paths.length;
+            elements.connectedPoints.textContent = currentData.matchedPoints.length;
+            elements.currentMatches.textContent = currentData.matchedPoints.length;
+            
+            // Calculate available paths
+            const availablePaths = currentData.paths.filter(path => 
+                currentData.matchedPoints.includes(path.start_point)
+            ).length;
+            elements.availablePaths.textContent = availablePaths;
+        }
+
+        // Test match point
+        async function testMatchPoint() {
+            const pointName = elements.pointSelect.value;
+            if (!pointName) {
+                showAlert('Please select a point first', 'warning');
+                return;
+            }
+            
+            const tolerance = document.getElementById('tolerance').value || '0.0001';
+            
+            try {
+                const url = `${BASE_URL}/pose/match_point/${encodeURIComponent(pointName)}?tolerance=${tolerance}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                elements.responseContent.textContent = JSON.stringify(data, null, 2);
+                
+                if (data.matched) {
+                    showAlert(`✅ Robot matches point ${pointName}`, 'success');
+                } else {
+                    showAlert(`❌ Robot does not match point ${pointName}`, 'error');
+                }
+            } catch (error) {
+                showAlert(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Load all data
+        async function loadAllData() {
+            try {
+                showAlert('Loading all data...', 'info');
+                
+                // Load points
+                const pointsResponse = await fetch(`${BASE_URL}/pose/points`);
+                const pointsData = await pointsResponse.json();
+                currentData.points = pointsData.points || [];
+                
+                // Load paths
+                const pathsResponse = await fetch(`${BASE_URL}/pose/paths`);
+                const pathsData = await pathsResponse.json();
+                currentData.paths = pathsData.paths || [];
+                
+                // Load current state
+                const currentResponse = await fetch(`${BASE_URL}/pose/current`);
+                const currentState = await currentResponse.json();
+                updateRobotState(currentState);
+                
+                // Update displays
+                updatePointsList();
+                updatePathsList();
+                updatePointsTable();
+                updateDashboard();
+                
+                showAlert('All data loaded successfully', 'success');
+                
+            } catch (error) {
+                showAlert(`Error loading data: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-refresh
+        function startAutoRefresh() {
+            // Refresh current state every 2 seconds
+            setInterval(async () => {
+                try {
+                    const response = await fetch(`${BASE_URL}/pose/current`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        updateRobotState(data);
+                    }
+                } catch (error) {
+                    // Silent fail for auto-refresh
+                }
+            }, 2000);
+            
+            // Refresh whereami every 5 seconds
+            setInterval(async () => {
+                try {
+                    const tolerance = document.getElementById('tolerance').value || '0.0001';
+                    const response = await fetch(`${BASE_URL}/pose/whereami?tolerance=${tolerance}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        updateLocationAnalysis(data);
+                        currentData.matchedPoints = data.points || [];
+                        updatePointsList();
+                        updatePointsTable();
+                        updateDashboard();
+                    }
+                } catch (error) {
+                    // Silent fail
+                }
+            }, 5000);
+        }
+
+        // Visualization functions
+        function visualizeCurrentPath() {
+            showAlert('Path visualization feature coming soon!', 'info');
+        }
+
+        function showAllPaths() {
+            showAlert('All paths visualization feature coming soon!', 'info');
+        }
+
+        // Initialize
+        loadAllData();
+    </script>
+</body>
+</html>
