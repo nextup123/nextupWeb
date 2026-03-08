@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COMIC BOOK CLOCK</title>
+
+<style>
+/* ───────────── GLOBAL RESET ───────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ───────────── BACKGROUND (NEWS PRINT + HALFTONE) ───────────── */
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fdfbf4;
+  font-family: Impact, "Arial Black", sans-serif;
+  overflow: hidden;
+
+  background-image:
+    radial-gradient(#000 1px, transparent 1px),
+    radial-gradient(#000 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: 0 0, 11px 11px;
+}
+
+/* explosive burst */
+body::before {
+  content: "";
+  position: absolute;
+  width: 900px;
+  height: 900px;
+  background:
+    repeating-conic-gradient(
+      #000 0deg 4deg,
+      transparent 4deg 10deg
+    );
+  mask: radial-gradient(circle, black 35%, transparent 65%);
+  opacity: 0.07;
+  z-index: 0;
+}
+
+/* ───────────── MAIN COMIC PANEL ───────────── */
+.clock-container {
+  position: relative;
+  padding: 4rem 6rem;
+  background: white;
+  border: 14px solid black;
+  transform: rotate(-1deg) skewX(1deg);
+  box-shadow:
+    18px 18px 0 black,
+    28px 28px 0 rgba(0,0,0,0.2);
+  z-index: 10;
+  text-align: center;
+}
+
+/* speech bubble tail */
+.clock-container::after {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%) rotate(10deg);
+  width: 0;
+  height: 0;
+  border-left: 35px solid transparent;
+  border-right: 35px solid transparent;
+  border-top: 55px solid black;
+}
+
+/* inner white of bubble tail */
+.clock-container::before {
+  content: "";
+  position: absolute;
+  bottom: -42px;
+  left: 50%;
+  transform: translateX(-50%) rotate(10deg);
+  width: 0;
+  height: 0;
+  border-left: 28px solid transparent;
+  border-right: 28px solid transparent;
+  border-top: 45px solid white;
+  z-index: 11;
+}
+
+/* ───────────── CLOCK TEXT ───────────── */
+#clock {
+  font-size: clamp(3rem, 10vw, 7rem);
+  letter-spacing: 6px;
+  font-weight: 900;
+  color: white;
+  background: black;
+  padding: 1rem 3rem;
+  border: 10px solid black;
+  text-shadow:
+    6px 6px 0 white,
+    10px 10px 0 black;
+  display: inline-block;
+  transform: rotate(1deg);
+  margin-bottom: 2rem;
+}
+
+/* ───────────── DATE TEXT ───────────── */
+#date {
+  font-size: 1.6rem;
+  letter-spacing: 4px;
+  font-weight: bold;
+  color: black;
+  background: white;
+  border: 8px solid black;
+  padding: 0.8rem 2rem;
+  display: inline-block;
+  transform: rotate(-1deg);
+  box-shadow: 8px 8px 0 black;
+}
+
+/* ───────────── ONOMATOPOEIA TEXT ───────────── */
+.pow {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  font-size: 3rem;
+  font-weight: 900;
+  color: black;
+  opacity: 0.15;
+  transform: rotate(-20deg);
+  letter-spacing: 3px;
+}
+
+/* speed lines */
+.speed-line {
+  position: absolute;
+  width: 120px;
+  height: 8px;
+  background: black;
+  opacity: 0.2;
+  transform: rotate(-20deg);
+}
+
+.speed-left {
+  top: 30%;
+  left: -60px;
+}
+
+.speed-right {
+  bottom: 30%;
+  right: -60px;
+  transform: rotate(20deg);
+}
+
+@media (max-width: 700px) {
+  .clock-container {
+    padding: 2rem 2rem;
+  }
+
+  #clock {
+    font-size: 3rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  #date {
+    font-size: 1rem;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="speed-line speed-left"></div>
+<div class="speed-line speed-right"></div>
+<div class="pow">⚡ POW ⚡</div>
+
+<div class="clock-container">
+  <div id="clock">00:00:00</div>
+  <div id="date">LOADING...</div>
+</div>
+
+<script>
+(function comicClock() {
+  function updateTime() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById("clock").textContent = `${h}:${m}:${s}`;
+
+    const dateStr = now.toLocaleDateString(undefined, {
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    });
+
+    document.getElementById("date").textContent =
+      dateStr.toUpperCase().replace(/,/g, " ⚡");
+  }
+
+  updateTime();
+  setInterval(updateTime, 1000);
+})();
+</script>
+
+</body>
+</html>

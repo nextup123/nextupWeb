@@ -69,7 +69,6 @@ function publishRosString(topicName, messageData) {
     console.log(`Published to ${topicName}: ${messageData}`);
 }
 
-
 // Assign webpage sources
 document.getElementById("page1").src = `http://localhost:${port}/pointPlanning`;
 document.getElementById("page2").src = `http://localhost:${port}/pathPlanning`;

@@ -4,7 +4,7 @@
     "y": 50
   },
   "di_vaccumsensor2_di__5_2": {
-    "x": 450,
+    "x": 420,
     "y": 100
   },
   "di_cncsafetysensor1_di__5_3": {
@@ -20,15 +20,15 @@
     "y": 50
   },
   "di_station2cncrunning_di__2_2": {
-    "x": 430,
+    "x": 400,
     "y": 150
   },
   "di_cncalarm_di__2_3": {
-    "x": 500,
+    "x": 430,
     "y": 0
   },
   "di_cncauto_di__2_4": {
-    "x": 500,
+    "x": 430,
     "y": 50
   },
   "di_holdstatus_di__3_1": {

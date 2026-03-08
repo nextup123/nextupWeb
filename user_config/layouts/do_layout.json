@@ -4,8 +4,12 @@
     "y": 40
   },
   "do_robotgripper2_do__1_3": {
-    "x": 240,
+    "x": 310,
     "y": 0
+  },
+  "do_cncresettrigger_do__3_1": {
+    "x": 370,
+    "y": 160
   },
   "do_cnccycletrigger_do__2_1": {
     "x": 290,
@@ -14,10 +18,6 @@
   "do_cncemergencytrigger_do__2_3": {
     "x": 550,
     "y": 20
-  },
-  "do_cncresettrigger_do__3_1": {
-    "x": 370,
-    "y": 160
   },
   "do_cncholdtrigger_do__3_3": {
     "x": 0,

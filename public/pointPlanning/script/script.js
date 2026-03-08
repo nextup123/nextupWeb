@@ -1078,5 +1078,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
 
     pubRosBool('disable_delete_point', true);
-
 });
