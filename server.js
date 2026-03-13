@@ -1,28 +1,31 @@
-const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
-const path = require("path");
-const cors = require("cors");
-const fs = require("fs");
-const yaml = require("js-yaml");
+import express from "express";
+import http from "http";
+import { Server } from "socket.io";
+import cors from "cors";
+import fs from "fs";
+import yaml from "js-yaml";
+import { exec } from "child_process";
 
-// const errorRoutes = require("./routes/errorJsonRoutes");
-const logRoutes = require("./routes/misLogRoutes");
-const fileRoutes = require("./routes/xlsxFileRoutes");
-const {
-  router: pathPlanningBtRoutes,
+import logRoutes from "./routes/misLogRoutes.js";
+
+import {
+  router as pathPlanningBtRoutes,
   initXMLBackup,
-} = require("./routes/pathPlanningBtRoutes");
-const pointPlanningBtRoutes = require("./routes/pointPlanningBtRoutes");
-const pathTestingRoutes = require("./routes/pathTestingRoutes");
-const { router: oiConrol, initIOXMLBackup } = require("./routes/ioRoutes");
-const settingsRoute = require("./routes/settings");
-const cycleRoute = require("./routes/cycle");
-const rosRoutes = require("./routes/rosRoutes");
-const errorLogsServiceRoutes = require("./routes/errorLogsServiceRoutes");
-const { exec } = require("child_process");
-const shoeMouldRoutes = require("./routes/shoeMouldRoutes");
-const mappedDataRoutes = require("./routes/mappedDataRoutes");
+} from "./routes/pathPlanningBtRoutes.js";
+
+import pointPlanningBtRoutes from "./routes/pointPlanningBtRoutes.js";
+import pathTestingRoutes from "./routes/pathTestingRoutes.js";
+
+import {
+  router as oiConrol,
+} from "./routes/ioRoutes.js";
+
+import settingsRoute from "./routes/settings.js";
+import cycleRoute from "./routes/cycle.js";
+import rosRoutes from "./routes/rosRoutes.js";
+import errorLogsServiceRoutes from "./routes/errorLogsServiceRoutes.js";
+import shoeMouldRoutes from "./routes/shoeMouldRoutes.js";
+import mappedDataRoutes from "./routes/mappedDataRoutes.js";
 
 const app = express();
 const port = 3000;
@@ -31,8 +34,8 @@ app.use(cors());
 // Middleware
 app.use(express.json());
 
-app.use("/path-planning", pathPlanningBtRoutes);
 app.use("/point-planning", pointPlanningBtRoutes);
+app.use("/path-planning", pathPlanningBtRoutes);
 app.use("/path-testing", pathTestingRoutes);
 app.use("/io-control", oiConrol);
 app.use("/ros", rosRoutes);

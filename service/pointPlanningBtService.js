@@ -1,9 +1,11 @@
 import fs from "fs/promises";
 import yaml from "js-yaml";
+import { pointPlanningFilePath } from "../config/path.js"; 
 
-const YAML_FILE = '/home/nextup/user_config_files/planning_data/points/points.yaml';
-const YAML_BACKUP_FILE = 'points_backup.yaml';
-const BACKUP_DIR = '/home/nextup/user_config_files/planning_data/points/backup';
+const YAML_FILE = pointPlanningFilePath.POINTS_YAML_FILE;
+const YAML_BACKUP_FILE = pointPlanningFilePath.POINTS_BACKUP_YAML_FILE;
+
+
 
 // Helper function to check if file exists
 export async function fileExists(filePath) {

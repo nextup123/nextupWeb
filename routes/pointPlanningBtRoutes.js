@@ -1,5 +1,5 @@
-const express = require("express");
-const yaml = require("js-yaml");
+import express from 'express';
+
 const {
   getPointFileNameController,
   getPointsController,
@@ -45,17 +45,5 @@ router.post("/undo", undoController);
 // /canUndo endpoint
 router.get("/canUndo", canUndoController);
 
-module.exports = router;
+export default router;
 
-// // Initialize server and create initial backup
-// app.listen(3003, async () => {
-//     console.log('Server running on http://localhost:3003');
-//     if (await fileExists(YAML_FILE) && !await fileExists(YAML_BACKUP_FILE)) {
-//         try {
-//             await createBackup();
-//             console.log('Initial backup created');
-//         } catch (err) {
-//             console.error('Failed to create initial backup:', err);
-//         }
-//     }
-// });

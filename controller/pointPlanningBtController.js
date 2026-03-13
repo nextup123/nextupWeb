@@ -1,6 +1,9 @@
 import fs from "fs/promises";
 import path from "path";
-import { fileExists, formatPointData, loadYAML, saveYAML, swapWithBackup, validatePoint } from "../service/pointPlanningBtService";
+import { fileExists, formatPointData, loadYAML, saveYAML, swapWithBackup, validatePoint } from "../service/pointPlanningBtService.js";
+import { BACKUP_DIR, pointPlanningFilePath } from "../config/path.js";
+
+const YAML_BACKUP_FILE = pointPlanningFilePath.POINTS_BACKUP_YAML_FILE;
 
 export const getPointFileNameController = async (req, res) => {
     try {
@@ -66,7 +69,7 @@ export const updatePointController =  async (req, res) => {
         const { oldName, ...point } = req.body;
         point.sequence = Number(point.sequence);
         if (!oldName || !point.name) {
-            return res.status(400).json({ message: 'Missing oldName or name' });
+            return res.status(400).json({ message: 'Missing oldName or name' }); 
         }
 
         const validationError = validatePoint(point, true);
