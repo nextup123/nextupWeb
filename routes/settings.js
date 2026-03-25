@@ -1,7 +1,11 @@
 // routes/settings.js
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 const SETTINGS_PATH = path.join(__dirname, '../user_config/user_settings.json');
@@ -42,4 +46,4 @@ router.post('/', express.json(), (req, res) => {
   else res.status(500).json({ message: 'Failed to save settings' });
 });
 
-module.exports = router;
+export default router;

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MICRON MIS</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="../media/fontawesome-free/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>MICRON MANAGEMENT INFORMATION SYSTEM (MMIS)</h1>
+        <div id="digital-clock" class="digital-clock"></div>
+        <div class="selection-panel">
+            <button class="live-view-btn" id="live-view">
+                <i class="fas fa-play"></i> Start Live View
+            </button>
+            <div id="connection-status">
+                <span class="dot"></span> Connection Status
+            </div>
+            <div class="dropdown-group">
+                <label for="year"><i class="fas fa-calendar-alt"></i> Year:</label>
+                <select id="year">
+                    <option value="">Select Year</option>
+                </select>
+            </div>
+
+            <div class="dropdown-group">
+                <label for="month"><i class="fas fa-calendar"></i> Month:</label>
+                <select id="month">
+                    <option value="">Select Month</option>
+                </select>
+            </div>
+
+            <div class="dropdown-group">
+                <label for="date"><i class="fas fa-file-excel"></i> Date (Excel File):</label>
+                <select id="date">
+                    <option value="">Select Date</option>
+                </select>
+            </div>
+
+            <button id="load-file" class="action-btn">
+                <i class="fas fa-upload"></i> Load Data
+            </button>
+        </div>
+
+        <div class="pendrive-section">
+            <div class="copy-options">
+                <label>
+                    <input type="radio" name="copy-scope" value="file" checked>
+                    <i class="fas fa-file"></i> Copy Current File
+                </label>
+                <label>
+                    <input type="radio" name="copy-scope" value="month">
+                    <i class="fas fa-folder"></i> Copy Monthly Data
+                </label>
+                <label>
+                    <input type="radio" name="copy-scope" value="year">
+                    <i class="fas fa-archive"></i> Copy Yearly Data
+                </label>
+            </div>
+            <div class="pendrive-controls">
+
+                <label for="pendrive-select"><i class="fas"></i> Select Pendrive:</label>
+                <select id="pendrive-select">
+                    <option value="">Select Pendrive</option>
+                </select>
+                <button id="refresh-pendrives" class="refresh-btn">
+                    <i class="fas fa-sync"></i> Refresh Drives
+                </button>
+                <button id="copy-data" class="action-btn">
+                    <i class="fas fa-copy"></i> Copy Data to Pendrive
+                </button>
+            </div>
+
+
+        </div>
+
+        <div class="table-container">
+            <table id="data-table">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal for displaying the image -->
+    <div id="image-modal" class="modal">
+        <span id="close-modal" class="close">&times;</span>
+        <img id="modal-image" class="modal-content" />
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="scripts/roslib.js"></script>
+    <script src="scripts/script.js"></script>
+</body>
+
+</html>

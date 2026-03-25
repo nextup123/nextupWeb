@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COBOT CONTROLLER NEXTUP ROBOTICS</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/gpio.css">
+    <link rel="stylesheet" href="styles/usb-indicator.css">
+    <link rel="stylesheet" href="styles/gripper.css">
+    <link rel="stylesheet" href="styles/popup.css">
+    <link rel="stylesheet" href="intro/intro.min.css">
+    <link rel="stylesheet" href="styles/intro.css">
+    <link rel="stylesheet" href="../media/fontawesome-free-6.7.2-web/css/svg-with-js.min.css">
+</head>
+
+<body>
+    <h1 class="robot-title">ROBOT CONTROL DASHBOARD
+
+    </h1>
+
+    <button id="start-tour" onclick="startTutorial()"
+        data-intro="Click this button anytime to restart this guided tour and learn about all dashboard features."
+        data-step="14">
+        <i class="fas fa-robot icon"></i> Start Guided Tour
+    </button>
+    <div class="container mt-5 dual-container" data-intro="<strong style='font-size:1.2em'>🤖 ROBOT CONTROL DASHBOARD</strong><hr>
+     <span style='color:var(--accent-color)'>Main control interface for NextUp Robotics System</span><hr>
+     • <strong>Left Panel</strong>: Robot operation controls<br>
+     • <strong>Right Panel</strong>: Real-time status monitoring<br>
+     • <strong>Color Coding</strong>: Green = Active/Normal | Red = Fault" data-step="1">
+
+        <div class="left-container" data-intro="<strong style='font-size:1.2em'>🎮 CONTROL SECTION</strong><hr>
+            <span style='color:var(--accent-color)'>Command center for all robot operations</span><hr>
+            • Mode Selection → CNC Selection → Start<br>
+            • Emergency stop functions<br>
+            • Operation counters<hr>
+            <strong style='color:orange'>⚠️ All actions logged</strong>" data-step="2">
+
+            <div class="unit-container">
+                <div class="unit">CONTROL</div>
+            </div>
+            <div class="control-container">
+
+                <div class="selector-group"
+                    data-intro="<strong style='font-size:1.2em'>🛠️ OPERATION MODE</strong><hr>
+                    <span style='color:var(--accent-color)'>Select system behavior mode</span><hr>
+                    • <strong>Testing</strong>: Diagnostic & development<br>
+                    • <strong>Production</strong>: Normal operation<hr>
+                    <strong style='color:orange;background:#fff8e6;padding:2px 5px;border-radius:3px'>DEFAULT: PRODUCTION</strong>"
+                    data-step="3">
+                    <div class="selector-title">Mode Selection</div>
+                    <div class="option-grid">
+                        <div class="option-card" id="testing" onclick="selectMode('testing')">Testing</div>
+                        <div class="option-card" id="production" onclick="selectMode('production')">Production</div>
+                    </div>
+                </div>
+
+                <div class="selector-group"
+                    data-intro="<strong style='font-size:1.2em'>🏭 CNC SELECTION</strong><hr>
+                    <span style='color:var(--accent-color)'>Choose machine interaction mode</span><hr>
+                    • <strong>CNC 1</strong>: First machine only<br>
+                    • <strong>CNC 2</strong>: Second machine only<br>
+                    • <strong>BOTH</strong>: Synchronized control<hr>
+                    <strong style='color:orange;background:#fff8e6;padding:2px 5px;border-radius:3px'>DEFAULT: BOTH CNC</strong>"
+                    data-step="4">
+                    <div class="selector-title">CNC Selection</div>
+                    <div class="option-grid">
+                        <div class="option-card" id="cnc1" onclick="selectCNC('cnc1')">CNC 1</div>
+                        <div class="option-card" id="cnc2" onclick="selectCNC('cnc2')">CNC 2</div>
+                        <div class="option-card" id="both" onclick="selectCNC('both')">BOTH CNC</div>
+                    </div>
+                </div>
+
+                <div class="loading-container" data-intro="<strong>START BUTTON</strong><br>Initiate the robot's programmed operation sequence<hr>
+                • Only enabled when all safety conditions pass<br>
+                • Requires proper mode/CNC selection<br>
+                • Begins continuous production cycle<hr>
+                    <strong style='color:orange'>NOTE: Confirm environment is clear before starting</strong>"
+                    data-step="5">
+                    <button id="startButton" class="control-button-start button-disabled" disabled>
+                        START
+                        <div class="loading-bar"></div>
+                    </button>
+                </div>
+
+                <!-- Modal for displaying errors -->
+                <div id="errorModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div id="errorMessage"></div>
+                    </div>
+                </div>
+                <!-- Modal for displaying errors -->
+
+
+                <!-- <div class="loading-container">
+                    <button id="playPauseButton" class="control-button two playPause play" onclick="togglePlayPause()">
+                        PLAY
+                        <div class="loading-bar"></div>
+                    </button>
+                </div> -->
+
+                <div class="loading-container"
+                    data-intro="<strong style='font-size:1.2em'>⏸️ PAUSE/EXIT BUTTON</strong><hr>
+                    <span style='color:var(--accent-color)'>Safely pauses robot operation after completing its current cycle</span><hr>
+                    • <strong>Soft Stop</strong>: Completes current motion before pausing<br>
+                    • <strong>Program Exit</strong>: Fully stops operation (requires restart)<br>
+                    • <strong>Safety First</strong>: Won't interrupt mid-movement<hr>
+                    <strong style='color:red;background:#ffecec;padding:2px 5px;border-radius:3px;display:inline-block'>⚠️ EMERGENCY NOTE:</strong><br>
+                    For <u>immediate stops</u>, use the <strong style='color:white;background:red;padding:1px 4px'>Physical Emergency Button</strong> instead"
+                    data-step="6">
+                    <button id="exitButton" class="control-button three button2disable" onclick="publishBoolMessage('/reset_bt', true)
+                        // disableButton('0001')
+                        ">
+                        PAUSE / EXIT
+                        <div class="loading-bar"></div>
+                    </button>
+                </div>
+
+                <div class="loading-container" data-intro="<strong>RUN ONCE BUTTON</strong><br>Execute single test cycle<hr>
+                    • Performs one complete operation<br>
+                    • Doesn't start continuous production<br>
+                    • Useful for program verification<hr>
+                    <strong style='color:yellow'>TESTING FEATURE</strong>" data-step="7">
+                    <button id="runOnceButton" class="control-button-run-once button-disabled four">
+                        RUN ONCE
+                        <div class="loading-bar"></div>
+                    </button>
+                </div>
+
+
+
+                <div class="counter-container" data-intro="<strong>OPERATION COUNTERS</strong><hr>
+                    <u>Current Operations</u>: Live session cycle count<br>
+                    <u>Last Cycle Time</u>: Duration of previous operation<br>
+                    <u>Total Operations</u>: Lifetime count (persistent) | adds up each session operations to the total operations<hr>
+                    <u>Reset Total Ops</u>: Resets the Lifetime count (0)<hr>
+                    <strong style='color:green'>SYSTEM METRICS</strong>" data-step="8">
+                    <div class="current-counter-container">
+                        <label>Current Operations:</label>
+                        <div class="counter" id="operation-counter">
+                            001
+                        </div>
+                        <label>Last Cycle Time:</label>
+                        <div class="cycle-time" id="cycle-time">
+                            Waiting for first cycle...
+                        </div>
+                    </div>
+                    <div class="total-counter-container">
+                        <label>Total Operations:</label>
+                        <div class="counter" id="total-operation-conter">
+                            000
+                        </div>
+                        <button class="control-button-reset" onclick="showResetConfirmationPopup()" data-intro="<strong>RESET BUTTON</strong><br>Zero the total operations counter<hr>
+                        • Requires confirmation<br>
+                        • Doesn't affect current session count<br>
+                        • Resets lifetime statistics<hr>
+                        <strong style='color:red'>IRREVERSIBLE ACTION</strong>" data-step="9">Reset Total OPs
+                        </button>
+                    </div>
+                </div>
+                <div id="reset-confirmation-popup" class="reset-popup-container">
+                    <div class="reset-popup-content">
+                        <p>Are you sure you want to reset the total counts of operations?</p>
+                        <div class="reset-popup-buttons">
+                            <button class="reset-popup-button confirm" onclick="confirmReset()">Yes</button>
+                            <button class="reset-popup-button cancel" onclick="closePopup()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="right-container"
+            data-intro="<strong style='font-size:1.2em'>📊 REAL-TIME STATUS MONITORING</strong><hr>
+            <span style='color:var(--accent-color)'>Live system health and sensor feedback</span><hr>
+            • <strong>Top Section</strong>: Robot joint status<br>
+            • <strong>Bottom Section</strong>: I/O device status<br>
+            • <strong>Color Code</strong>: <span style='color:green'>■</span> Normal | <span style='color:red'>■</span> Fault" data-step="10">
+
+            <div class="top-right-container" data-intro="<strong style='font-size:1.2em'>🤖 ROBOT JOINTS STATUS</strong><hr>
+                <span style='color:var(--accent-color)'>Axis-by-axis monitoring</span><hr>
+                • <strong>Joints 1-3</strong>: Base to elbow movement<br>
+                • <strong>Joints 4-6</strong>: Wrist rotation/gripper control<br>
+                • <strong>Robot Status</strong>: Overall system health<hr>
+                <strong style='color:orange'>⚠️ Check any red indicators immediately</strong>" data-step="11">
+
+                <div class="unit-container">
+                    <div class="unit">ROBOT JOINTS STATUS</div>
+                </div>
+
+                <div class="joint-container">
+                    <div class="joint">JOINT 1</div>
+                    <div id="joint1-led-op" class="indicator indicator-false"></div>
+
+                    <div class="joint">JOINT 2</div>
+                    <div id="joint2-led-op" class="indicator indicator-false"></div>
+
+                    <div class="joint">JOINT 3</div>
+                    <div id="joint3-led-op" class="indicator indicator-false"></div>
+                </div>
+
+                <div class="joint-container">
+                    <div class="joint">JOINT 4</div>
+                    <div id="joint4-led-op" class="indicator indicator-false"></div>
+
+                    <div class="joint">JOINT 5</div>
+                    <div id="joint5-led-op" class="indicator indicator-false"></div>
+
+                    <div class="joint">JOINT 6</div>
+                    <div id="joint6-led-op" class="indicator indicator-false"></div>
+                </div>
+                <div class="joint-container robot-error-status-container">
+                    <div class="joint joint-robot-error">ROBOT STATUS</div>
+                    <div id="robot-error-status-indicator" class="indicator indicator-false"></div>
+                </div>
+            </div>
+
+            <div class="bottom-right-container" data-intro="<strong style='font-size:1.2em'>🔌 I/O DEVICES STATUS</strong><hr>
+            <span style='color:var(--accent-color)'>Peripheral equipment monitoring</span><hr>
+            • <strong>Left Panel</strong>: Pneumatics & grippers<br>
+            • <strong>Right Panel</strong>: Conveyor sensors<br>
+            • <strong>Bottom Panel</strong>: CNC machine status<hr>
+            <strong style='color:orange'>ℹ️ All indicators update in real-time</strong>" data-step="12">
+                <div class="unit-container">
+                    <div class="unit gpio-label">INPUT AND OUTPUT DEVICES STATUS</div>
+                </div>
+
+                <div class="gpio-container">
+                    <div class="gpio-status-pane">
+                        <!-- <div class="gpio-border-div">
+                            <div class="gpio-status-label">CAMERA CONNECTION</div>
+                            <div id="camera-indicator" class="indicator indicator-false"></div>
+                        </div>
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label">DI CONNECTION</div>
+                            <div id="digital-indicator-indicator" class="indicator indicator-false"></div>
+                        </div> -->
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label">Air Pressure Status</div>
+                            <div id="air-pressure-status-indicator" class="indicator indicator-false"></div>
+                        </div>
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label"> Gripper 1</div>
+                            <div id="gripper-one-indicator" class="indicator indicator-false"></div>
+                        </div>
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label">Gripper 2</div>
+                            <div id="gripper-two-indicator" class="indicator indicator-false"></div>
+                        </div>
+                    </div>
+
+                    <div class="gpio-status-pane">
+                        <!-- <div class="gpio-border-div">
+                            <div class="gpio-status-label"> GRIPPER ONE</div>
+                            <div id="gripper-one-indicator" class="indicator indicator-false"></div>
+                        </div>
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label">GRIPPER TWO</div>
+                            <div id="gripper-two-indicator" class="indicator indicator-false"></div>
+                        </div> -->
+                    </div>
+
+                    <div class="gpio-status-pane">
+                        <!-- <div class="gpio-border-div">
+                            <div class="gpio-status-label">CAP AVAILABILTY</div>
+                            <div id="cap-availability-indicator" class="indicator indicator-false"></div>
+                        </div>
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label">CAMERA PNEUMATIC</div>
+                            <div id="pneumatic-indicator" class="indicator indicator-false"></div>
+                        </div> -->
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label"> Conveyor Proximity 1</div>
+                            <div id="convery-proximity-one-indicator" class="indicator indicator-false"></div>
+                        </div>
+                        <div class="gpio-border-div">
+                            <div class="gpio-status-label"> Conveyor Proximity 2</div>
+                            <div id="convery-proximity-two-indicator" class="indicator indicator-false"></div>
+                        </div>
+                    </div>
+                    <div class="gpio-status-pane-cnc" data-intro="<strong style='font-size:1.2em'>🏭 CNC MACHINE STATUS</strong><hr>
+                        <span style='color:var(--accent-color)'>Dual-machine monitoring system</span><hr>
+                        • <strong>Left Column</strong>: CNC 1 status indicators<br>
+                        • <strong>Right Column</strong>: CNC 2 status indicators<br>
+                        • <strong>Key Parameters</strong>:<br>
+                        &nbsp;&nbsp;- Clamp/Cycle/Homing status<br>
+                        &nbsp;&nbsp;- Rotor/Fault/Gate status<hr>
+                        <strong style='color:red'>■ Fault Status</strong> = Requires immediate attention"
+                        data-step="13">
+                        <div class="gpio-status-pane-cnc-column">
+                            <div class="gpio-border-div-cnc">
+                                <div class="gpio-status-label-cnc">CNC 1</div>
+                            </div>
+                            <div class="gpio-border-div-cnc-container">
+                                <div class="gpio-status-pane">
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">Clamp </div>
+                                        <div id="cnc1-clamp-status-indicator" class="indicator indicator-false"></div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">Cycle Completed </div>
+                                        <div id="cnc1-cycle-completed-indicator" class="indicator indicator-false">
+                                        </div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">Homing Status </div>
+                                        <div id="cnc1-homing-status-indicator" class="indicator indicator-false"></div>
+                                    </div>
+                                </div>
+                                <div class="gpio-cnc-divider">
+                                </div>
+                                <div class="gpio-status-pane gpio-status-pane-two">
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">Rotor Status </div>
+                                        <div id="cnc1-rotor-status-indicator" class="indicator indicator-false"></div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">Fault Status </div>
+                                        <div id="cnc1-fault-status-indicator" class="indicator indicator-false">
+                                        </div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc" data-intro="hello this is a test" data-step="15">
+                                        <div class="gpio-status-label">CNC Gate Status </div>
+                                        <div id="cnc1-cnc-gate-status-indicator" class="indicator indicator-false">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="gpio-cnc-divider">
+                        </div>
+                        <div class="gpio-status-pane">
+                            <div class="gpio-border-div-cnc">
+                                <div class="gpio-status-label-cnc">CNC 2</div>
+                            </div>
+                            <div class="gpio-border-div-cnc">
+                                <div class="gpio-status-label">CHUCK STATUS</div>
+                                <div id="cnc2-chuck-status-indicator" class="indicator indicator-false"></div>
+                            </div>
+                            <div class="gpio-border-div-cnc">
+                                <div class="gpio-status-label">RUNNING STATUS</div>
+                                <div id="cnc2-running-status-indicator" class="indicator indicator-false"></div>
+                            </div>
+                            <div class="gpio-border-div-cnc">
+                                <div class="gpio-status-label">DOOR STATUS</div>
+                                <div id="cnc2-door-status-indicator" class="indicator indicator-false"></div>
+                            </div>
+                        </div> -->
+                        <div class="gpio-cnc-divider">
+                        </div>
+
+                        <div class="gpio-status-pane-cnc-column">
+                            <div class="gpio-border-div-cnc">
+                                <div class="gpio-status-label-cnc">CNC 2</div>
+                            </div>
+                            <div class="gpio-border-div-cnc-container">
+                                <div class="gpio-status-pane">
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">Clamp </div>
+                                        <div id="cnc2-clamp-status-indicator" class="indicator indicator-false"></div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">Cycle Completed </div>
+                                        <div id="cnc2-cycle-completed-indicator" class="indicator indicator-false">
+                                        </div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">Homing Status </div>
+                                        <div id="cnc2-homing-status-indicator" class="indicator indicator-false"></div>
+                                    </div>
+                                </div>
+                                <div class="gpio-cnc-divider">
+                                </div>
+                                <div class="gpio-status-pane gpio-status-pane-two">
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">Rotor Status </div>
+                                        <div id="cnc2-rotor-status-indicator" class="indicator indicator-false"></div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">Fault Status </div>
+                                        <div id="cnc2-fault-status-indicator" class="indicator indicator-false">
+                                        </div>
+                                    </div>
+                                    <div class="gpio-border-div-cnc">
+                                        <div class="gpio-status-label">CNC Gate Status </div>
+                                        <div id="cnc2-cnc-gate-status-indicator" class="indicator indicator-false">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div id="startrobot" class="startrobot-popup">
+        <p>Robot Started!</p>
+    </div>
+
+
+    <div id="playrobot" class="playrobot-popup">
+        <p>Robot Play!</p>
+    </div>
+
+
+    <div id="homingrobot" class="homingrobot-popup">
+        <p>Homing Done!</p>
+    </div>
+
+
+    <div id="exitrobot" class="exitrobot-popup">
+        <p>Exit!</p>
+    </div>
+
+
+    <div id="resetrobot" class="resetrobot-popup">
+        <p>RESET!</p>
+    </div>
+
+    <div id="pauserobot" class="pauserobot-popup">
+        <p>Robot Pause!</p>
+    </div>
+
+
+    </div>
+    <script src="scripts/roslib.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/ros_subscriptions.js"></script>
+    <script src="scripts/popup.js"></script>
+    <!-- <script>disableButton("1111")</script> -->
+    <script src="intro/intro.min.js"></script>
+    <script src="scripts/intro.js"></script>
+
+</body>
+
+</html>

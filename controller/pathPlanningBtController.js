@@ -1,6 +1,5 @@
 import fs from "fs";
 import yaml from "js-yaml";
-import xml2js from "xml2js";
 import { buildXML, fileExists, findRootPlanSequence, loadXML, saveXML, swapWithBackup } from "../service/pathPlanningBtService.js";
 import { pathPlanningFilePath, pointPlanningFilePath } from "../config/path.js";
 

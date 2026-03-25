@@ -1,27 +1,9 @@
-points_file_name: newFile
+points_file_name: new_testing_file
 points:
-  - name: point1
-    date_time: 06mar_1506
+  - name: home
+    date_time: 25mar_1453
     sequence: 1
-    nature: new point
-    joints_values:
-      joint1: 0
-      joint2: 0
-      joint3: 0
-      joint4: 0
-      joint5: 0
-      joint6: 0
-    coordinate:
-      x: 0
-      y: -28.15
-      z: 135.7
-      r: 90
-      p: 0
-      w: 0
-  - name: point2
-    date_time: 06mar_1506
-    sequence: 1
-    nature: point2
+    nature: home
     joints_values:
       joint1: 0
       joint2: 0

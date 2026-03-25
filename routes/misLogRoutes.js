@@ -1,6 +1,11 @@
-const express = require("express");
-const fs = require("fs-extra");
-const path = require("path");
+import express from 'express';
+import fs from 'fs-extra';
+import path from 'path';
+
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 const logsDir = path.resolve(__dirname, "../public/ui_micron_diagnosis/logs");
@@ -144,4 +149,4 @@ router.get("/logs/:year/:month/:date", (req, res) => {
 });
 
 
-module.exports = router;
+export default router;

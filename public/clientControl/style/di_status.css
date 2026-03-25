@@ -1,0 +1,231 @@
+/* style/di_status.css - UPDATED */
+/* === DI STATUS SECTION === */
+.di-status {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px;
+  position: relative;
+    height: 35%;
+
+}
+
+/* ---- Container behaves like fixed workspace ---- */
+.di-container {
+  position: relative;
+  width: 100%;
+  height: 35%;
+  min-height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+/* When in edit mode, show guiding grid background */
+.di-container.edit-mode {
+  background-image: radial-gradient(#ccc 1px, transparent 1px);
+  background-size: 20px 20px;
+  cursor: move;
+}
+
+/* ---- Each DI item behaves like a floating widget ---- */
+.di-item {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 140px;
+  cursor: grab;
+  transition: transform 0.25s ease, background 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.di-item:active { 
+  cursor: grabbing; 
+}
+
+.di-item:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.8);
+}
+
+/* Visual feedback for status changes */
+.di-item.status-change {
+  box-shadow: 0 0 0 2px rgba(39, 201, 63, 0.3);
+}
+
+/* Dragging state */
+.di-item.dragging {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  border: 2px dashed rgba(0, 122, 255, 0.5);
+}
+
+/* Better visual feedback for edit mode */
+.di-container.edit-mode .di-item {
+  cursor: grab;
+  border: 2px dashed rgba(0, 122, 255, 0.3);
+}
+
+.di-container.edit-mode .di-item:hover {
+  border-color: rgba(0, 122, 255, 0.6);
+}
+
+.di-container.edit-mode .di-item:active {
+  cursor: grabbing;
+}
+
+.di-label {
+  font-weight: 500;
+  color: #333;
+}
+
+.di-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ff5f56;
+  transition: all 0.3s ease;
+}
+
+.di-indicator.active {
+  background: #27c93f;
+  box-shadow: 0 0 6px rgba(39, 201, 63, 0.4);
+}
+
+/* Add to your di_status.css */
+
+/* Toggle button styling */
+.toggle-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.toggle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.toggle-btn:active {
+    transform: translateY(0);
+}
+
+.toggle-btn i {
+    font-size: 14px;
+}
+
+/* Enhanced status-change animation */
+.di-item.status-change {
+    animation: statusChangePulse 0.3s ease;
+    border: 2px solid rgba(39, 201, 63, 0.5) !important;
+}
+
+@keyframes statusChangePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Demo item styling */
+.di-item.demo-item {
+    background: rgba(255, 255, 255, 0.8);
+    border-left: 4px solid #667eea;
+}
+
+.di-item.demo-item .di-label {
+    font-style: italic;
+}
+
+/* Timestamp display */
+.timestamp-display {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 11px;
+    color: #666;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 4px 8px;
+    border-radius: 6px;
+    z-index: 10;
+}
+
+
+/* Add to your di_status.css */
+
+/* Connection status display */
+.connection-status {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    z-index: 10;
+}
+
+.connection-status.connected {
+    background: rgba(39, 201, 63, 0.2);
+    color: #27c93f;
+    border: 1px solid rgba(39, 201, 63, 0.3);
+}
+
+.connection-status.connecting {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.connection-status.disconnected {
+    background: rgba(255, 107, 107, 0.2);
+    color: #ff6b6b;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.connection-status.demo {
+    background: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+
+
+/* Demo item styling */
+.di-item.demo-item {
+    background: rgba(255, 255, 255, 0.8);
+    border-left: 4px solid #667eea;
+}
+
+.di-item.demo-item .di-label {
+    font-style: italic;
+}
+
+/* Status change animation */
+.di-item.status-change {
+    animation: statusChangePulse 0.3s ease;
+    border: 2px solid rgba(39, 201, 63, 0.5) !important;
+}
+
+@keyframes statusChangePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}

@@ -1,0 +1,128 @@
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.toast {
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 24px;
+    min-width: 300px;
+    min-height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.5s, fadeOut 0.5s 3s forwards;
+}
+
+.toast-party {
+    background: linear-gradient(to right, #1dd275, #2cab8e);
+}
+
+.toast-spider {
+    background: linear-gradient(to right, #d2ab1d, #ab5f2c);
+}
+
+.toast-done {
+    background: linear-gradient(to right, #1dd2ba, #0c82b9);
+}
+
+.toast-error {
+    background: linear-gradient(to right, #ff1d1d, #ab2c2c);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+}
+
+.toast button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.toast-close-button i:hover {
+    transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .toast {
+        min-width: 90%;
+        font-size: 18px;
+    }
+
+    .toast-container {
+        right: 10px;
+        top: 10px;
+    }
+}
+
+
+
+.popup_multiplan {
+    display: none; /* 🔥 Ensure it's hidden initially */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 400px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px gray;
+    border-radius: 5px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+
+.popup_multiplan img {
+    width: 40px;
+    height: 40px;
+    display: none; /* Hide until needed */
+}
+
+.error { background: rgb(245, 60, 60); }
+.success { background: rgb(38, 163, 38); }
+.warning { background: rgb(243, 166, 24); }
+
+
+
+.multi-popup-heading{
+    margin-left: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: large;
+    color: rgb(243, 247, 250);
+}

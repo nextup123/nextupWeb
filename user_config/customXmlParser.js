@@ -3,16 +3,16 @@
 // Behavior Tree XML <-> JSON parser with stable internal _uid support
 // ===================================================================
 
-const { DOMParser } = require('xmldom'); // npm install xmldom
-const crypto = require('crypto');
+import { DOMParser } from 'xmldom';
+import crypto from 'crypto';
 
 // ======================= UID Generator =======================
-function generateUniqueId(prefix = 'uid_') {
+export function generateUniqueId(prefix = 'uid_') {
   return prefix + crypto.randomBytes(6).toString('hex') + '_' + Date.now().toString(36);
 }
 
 // ======================= XML → JSON =======================
-function xmlToJson(xml) {
+export function xmlToJson(xml) {
   let obj = {};
 
   // --- element node ---
@@ -51,7 +51,7 @@ function xmlToJson(xml) {
 }
 
 // ======================= UID Injection =======================
-function ensureUids(node) {
+export function ensureUids(node) {
   if (!node) return;
 
   if (node['@attributes']) {
@@ -69,7 +69,7 @@ function ensureUids(node) {
 }
 
 // ======================= Strip UIDs before writing =======================
-function stripInternalUids(node) {
+export function stripInternalUids(node) {
   if (!node) return;
 
   if (node['@attributes'] && node['@attributes']._uid) {
@@ -82,7 +82,7 @@ function stripInternalUids(node) {
 }
 
 // ======================= JSON → XML =======================
-function jsonToXml(obj, includeHeader = false) {
+export function jsonToXml(obj, includeHeader = false) {
   let xml = '';
 
   if (includeHeader) {
@@ -144,7 +144,7 @@ function jsonToXml(obj, includeHeader = false) {
 }
 
 // ======================= Parse from string =======================
-function parseXmlString(xmlString) {
+export function parseXmlString(xmlString) {
   const xmlDoc = new DOMParser().parseFromString(xmlString, 'text/xml');
   const rootJson = xmlToJson(xmlDoc.documentElement);
   ensureUids(rootJson); // add internal uids
@@ -152,7 +152,7 @@ function parseXmlString(xmlString) {
 }
 
 // ======================= XML Pretty Print (optional debug) =======================
-function formatXml(xml) {
+export function formatXml(xml) {
   let formatted = '';
   let indent = '';
   const tab = '  ';
@@ -163,14 +163,3 @@ function formatXml(xml) {
   });
   return formatted.substring(1, formatted.length - 2);
 }
-
-// ======================= Export API =======================
-module.exports = {
-  parseXmlString,
-  xmlToJson,
-  jsonToXml,
-  ensureUids,
-  stripInternalUids,
-  formatXml,
-  generateUniqueId
-};

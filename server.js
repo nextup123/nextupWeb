@@ -8,17 +8,12 @@ import { exec } from "child_process";
 
 import logRoutes from "./routes/misLogRoutes.js";
 
-import {
-  router as pathPlanningBtRoutes,
-  initXMLBackup,
-} from "./routes/pathPlanningBtRoutes.js";
+import pathPlanningBtRoutes from "./routes/pathPlanningBtRoutes.js";
 
 import pointPlanningBtRoutes from "./routes/pointPlanningBtRoutes.js";
 import pathTestingRoutes from "./routes/pathTestingRoutes.js";
 
-import {
-  router as oiConrol,
-} from "./routes/ioRoutes.js";
+import oiConrol from "./routes/ioRoutes.js";
 
 import settingsRoute from "./routes/settings.js";
 import cycleRoute from "./routes/cycle.js";
@@ -26,6 +21,9 @@ import rosRoutes from "./routes/rosRoutes.js";
 import errorLogsServiceRoutes from "./routes/errorLogsServiceRoutes.js";
 import shoeMouldRoutes from "./routes/shoeMouldRoutes.js";
 import mappedDataRoutes from "./routes/mappedDataRoutes.js";
+import { initSequenceModule } from "./service/sequenceCreatorService.js";
+import { initXMLBackup } from "./service/pathPlanningBtService.js";
+import mainTreeRoutes from './routes/mainTreeRoutes.js';
 
 const app = express();
 const port = 3000;
@@ -33,7 +31,10 @@ app.use(cors());
 
 // Middleware
 app.use(express.json());
+app.use(express.static("public")); // Serve static files
 
+
+initSequenceModule();
 app.use("/point-planning", pointPlanningBtRoutes);
 app.use("/path-planning", pathPlanningBtRoutes);
 app.use("/path-testing", pathTestingRoutes);
@@ -44,6 +45,7 @@ app.use("/cycle", cycleRoute);
 app.use("/error-logs", errorLogsServiceRoutes);
 app.use("/shoe-mould", shoeMouldRoutes);
 app.use("/shoe-mould", mappedDataRoutes);
+app.use("/main-tree",mainTreeRoutes);
 // app.use("/error-handling/errors", errorRoutes);
 
 app.use("/ui_micron_diagnosis", logRoutes);

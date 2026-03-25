@@ -1,11 +1,11 @@
 // routes/robotPoseRoutes.js
 // Robust minimal 6-joint robot-pose routes with cached YAML loading and path lookup.
 
-const express = require('express');
-const rclnodejs = require('rclnodejs');
-const robotUtils = require('../utils/robotUtils'); // Import shared utilities
-const ros2Manager = require('../utils/ros2Manager'); // Use shared manager
-const throttleHz = require('../utils/rosThrottle');
+import express from "express";
+import rclnodejs from "rclnodejs";
+import robotUtils from "../utils/robotUtils.js";
+import ros2Manager from "../utils/ros2Manager.js";
+import throttleHz from "../utils/rosThrottle.js";
 
 const router = express.Router();
 
@@ -408,4 +408,4 @@ router.get('/path_progress/:pathName', (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

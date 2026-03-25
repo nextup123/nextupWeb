@@ -1,8 +1,8 @@
 // routes/sequenceRoutes.js - FIXED VERSION (Circular Reference Issue)
-const express = require('express');
-const robotUtils = require('../utils/robotUtils');
-const ros2Manager = require('../utils/ros2Manager');
-const throttleHz = require('../utils/rosThrottle');
+import express from 'express';
+import robotUtils from '../utils/robotUtils.js';
+import ros2Manager from '../utils/ros2Manager.js';
+import throttleHz from '../utils/rosThrottle.js';
 
 const router = express.Router();
 

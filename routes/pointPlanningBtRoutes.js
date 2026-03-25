@@ -1,6 +1,6 @@
 import express from 'express';
 
-const {
+import  {
   getPointFileNameController,
   getPointsController,
   getPointBackupFileNamesController,
@@ -11,7 +11,7 @@ const {
   reorderPointsController,
   canUndoController,
   undoController,
-} = require("../controller/pointPlanningBtController");
+}  from "../controller/pointPlanningBtController.js";
 
 const router = express.Router();
 
