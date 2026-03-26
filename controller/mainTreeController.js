@@ -931,7 +931,7 @@ export const getTreeXMLController =  async (req, res) => {
     }
 
     const filePath = path.join(XML_BASE_DIR, XML_MAP[treeType]);
-
+    cons
     const xmlText = await fs.readFile(filePath, 'utf8');
 
     const rootContent = parseXmlString(xmlText);

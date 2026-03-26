@@ -136,19 +136,19 @@ disableDeleteTopic.subscribe(function (message) {
     const isDisabled = message.data;
 
     // Enable/disable Delete All button
-    deleteAllButton.disabled = isDisabled;
-    deleteAllButton.style.opacity = isDisabled ? '0.5' : '1';
-    deleteAllButton.style.cursor = isDisabled ? 'not-allowed' : 'pointer';
+    // deleteAllButton.disabled = isDisabled;
+    // deleteAllButton.style.opacity = isDisabled ? '0.5' : '1';
+    // deleteAllButton.style.cursor = isDisabled ? 'not-allowed' : 'pointer';
 
-    addPointBtn.disabled = isDisabled;
-    addPointBtn.style.opacity = isDisabled ? '0.5' : '1';
-    addPointBtn.style.cursor = isDisabled ? 'not-allowed' : 'pointer';
+    // addPointBtn.disabled = isDisabled;
+    // addPointBtn.style.opacity = isDisabled ? '0.5' : '1';
+    // addPointBtn.style.cursor = isDisabled ? 'not-allowed' : 'pointer';
 
-    deleteButtons.forEach(button => {
-        button.disabled = isDisabled;
-        button.style.opacity = isDisabled ? '0.5' : '1';
-        button.style.cursor = isDisabled ? 'not-allowed' : 'pointer';
-    });
+    // deleteButtons.forEach(button => {
+    //     button.disabled = isDisabled;
+    //     button.style.opacity = isDisabled ? '0.5' : '1';
+    //     button.style.cursor = isDisabled ? 'not-allowed' : 'pointer';
+    // });
 
     updatePointPublishState = isDisabled;
 
@@ -964,9 +964,9 @@ function clearForm() {
     nature.value = '';
     editingPointName = null;
     oldPointName = null;
-    updateBtn.disabled = true;
-    updateBtn.style.opacity = '0.5';
-    updateBtn.style.cursor = 'not-allowed';
+    // updateBtn.disabled = true;
+    // updateBtn.style.opacity = '0.5';
+    // updateBtn.style.cursor = 'not-allowed';
     showStatus('Form cleared', 'success', 1500);
 }
 
@@ -1041,11 +1041,11 @@ async function updatePoint() {
 
     }
 
-    if (updatePointPublishState) {
-        setTimeout(() => {
-            disableDeleteButtons();
-        }, 700);
-    }
+    // if (updatePointPublishState) {
+    //     setTimeout(() => {
+    //         disableDeleteButtons();
+    //     }, 700);
+    // }
 }
 
 document.addEventListener('DOMContentLoaded', init);
@@ -1058,24 +1058,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteButtons = document.querySelectorAll('.btn-icon.btn-delete');
     const updateButton = document.getElementById('updateBtn');
 
-    deleteAllButton.disabled = true;
-    deleteAllButton.style.opacity = '0.5';
-    deleteAllButton.style.cursor = 'not-allowed';
+    // deleteAllButton.disabled = true;
+    // deleteAllButton.style.opacity = '0.5';
+    // deleteAllButton.style.cursor = 'not-allowed';
 
     // Initialize update button as disabled
-    updateButton.disabled = true;
-    updateButton.style.opacity = '0.5';
-    updateButton.style.cursor = 'not-allowed';
-    updatePointPublishState = false;
+    // updateButton.disabled = true;
+    // updateButton.style.opacity = '0.5';
+    // updateButton.style.cursor = 'not-allowed';
+    // updatePointPublishState = false;
 
-    addPointBtn.disabled = true;
-    addPointBtn.style.opacity = '0.5';
-    addPointBtn.style.cursor = 'not-allowed';
+    // addPointBtn.disabled = true;
+    // addPointBtn.style.opacity = '0.5';
+    // addPointBtn.style.cursor = 'not-allowed';
 
 
-    setTimeout(() => {
-        disableDeleteButtons();
-    }, 1000);
+    // setTimeout(() => {
+    //     disableDeleteButtons();
+    // }, 1000);
 
     pubRosBool('disable_delete_point', true);
 

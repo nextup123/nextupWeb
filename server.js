@@ -24,7 +24,9 @@ import mappedDataRoutes from "./routes/mappedDataRoutes.js";
 import { initSequenceModule } from "./service/sequenceCreatorService.js";
 import { initXMLBackup } from "./service/pathPlanningBtService.js";
 import mainTreeRoutes from './routes/mainTreeRoutes.js';
-
+import projectRoutes from "./routes/pm_projects.js";
+import statusRoutes from "./routes/pm_status.js";
+import { initializeRuntime } from "./utils/pm_utils/runTimeInitializer.js";
 const app = express();
 const port = 3000;
 app.use(cors());
@@ -47,6 +49,11 @@ app.use("/shoe-mould", shoeMouldRoutes);
 app.use("/shoe-mould", mappedDataRoutes);
 app.use("/main-tree",mainTreeRoutes);
 // app.use("/error-handling/errors", errorRoutes);
+
+
+app.use("/api/projects", projectRoutes);
+app.use("/api/status", statusRoutes); // ✅ ADD THIS
+
 
 app.use("/ui_micron_diagnosis", logRoutes);
 // app.use("/files", fileRoutes);
@@ -207,6 +214,11 @@ app.get("/security/visualizer-password", (req, res) => {
     res.json({ password: null });
   }
 });
+
+setTimeout (async () => {
+  await initializeRuntime(); 
+}, 500);
+
 
 // Start server
 server.listen(port, () =>

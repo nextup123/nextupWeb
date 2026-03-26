@@ -71,7 +71,7 @@ function publishRosString(topicName, messageData) {
 
 
 // Assign webpage sources
-document.getElementById("page0").src = `http://localhost:${port}/projectManager`;
+document.getElementById("page0").src = `http://localhost:${port}/projectManagerEn`;
 document.getElementById("page1").src = `http://localhost:${port}/pointPlanning`;
 document.getElementById("page2").src = `http://localhost:${port}/pathPlanning`;
 document.getElementById("page3").src = `http://localhost:3003/`;

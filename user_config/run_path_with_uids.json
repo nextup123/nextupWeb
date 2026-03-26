@@ -1,7 +1,7 @@
 {
   "@attributes": {
     "BTCPP_format": "4",
-    "_uid": "uid_9d8446041212_mmvn15yg"
+    "_uid": "uid_25187fa316d6_mn76gvi6"
   },
   "@children": [
     {
@@ -9,40 +9,40 @@
       "content": {
         "@attributes": {
           "ID": "complete_run_path",
-          "name": "complete_run_path_3313",
-          "_uid": "uid_c26db83bd1a8_mmvn15yg"
+          "name": "complete_run_path_3924",
+          "_uid": "uid_713ac0b712cf_mn76gvi6"
         },
         "@children": [
           {
             "tagName": "Sequence",
             "content": {
               "@attributes": {
-                "ID": "root_sequence_2996",
-                "_uid": "uid_2e3a83051102_mmvn15yg"
+                "ID": "root_sequence_1536",
+                "_uid": "uid_3ef953585f7f_mn76gvi6"
               },
               "@children": [
                 {
                   "tagName": "Sequence",
                   "content": {
                     "@attributes": {
-                      "ID": "seq_home_point2_5448",
-                      "_uid": "uid_f03f7a101c64_mmvn15yg"
+                      "ID": "seq_home_point2_1814",
+                      "_uid": "uid_6c081fbd6347_mn76gvi6"
                     },
                     "@children": [
                       {
                         "tagName": "Fallback",
                         "content": {
                           "@attributes": {
-                            "ID": "fallback_6411",
-                            "_uid": "uid_f4c57b124ff2_mmvn15yg"
+                            "ID": "fallback_7932",
+                            "_uid": "uid_d00f3e472419_mn76gvi6"
                           },
                           "@children": [
                             {
                               "tagName": "Sequence",
                               "content": {
                                 "@attributes": {
-                                  "ID": "seq_success_home_point2_3963",
-                                  "_uid": "uid_a48b8b1710e6_mmvn15yg"
+                                  "ID": "seq_success_home_point2_8662",
+                                  "_uid": "uid_5498f774cb41_mn76gvi6"
                                 },
                                 "@children": [
                                   {
@@ -50,9 +50,9 @@
                                     "content": {
                                       "@attributes": {
                                         "path_name": "home_point2",
-                                        "ID": "home_point2_4267",
+                                        "ID": "home_point2_9268",
                                         "speed_scale": "0.75",
-                                        "_uid": "uid_e313291057a1_mmvn15yg"
+                                        "_uid": "uid_8487dd54f79a_mn76gvi6"
                                       }
                                     }
                                   },
@@ -60,9 +60,9 @@
                                     "tagName": "MsgLoggerNode",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "msg_success_home_point2_8869",
+                                        "ID": "msg_success_home_point2_9838",
                                         "msg_log": "home_point2 success",
-                                        "_uid": "uid_a6306280e939_mmvn15yg"
+                                        "_uid": "uid_2372f7e66ccb_mn76gvi6"
                                       }
                                     }
                                   }
@@ -73,17 +73,17 @@
                               "tagName": "Sequence",
                               "content": {
                                 "@attributes": {
-                                  "ID": "seq_failure_home_point2_8028",
-                                  "_uid": "uid_4dc96212ca4a_mmvn15yg"
+                                  "ID": "seq_failure_home_point2_9383",
+                                  "_uid": "uid_07122318465b_mn76gvi6"
                                 },
                                 "@children": [
                                   {
                                     "tagName": "MsgLoggerNode",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "msg_fail_home_point2_6923",
+                                        "ID": "msg_fail_home_point2_8787",
                                         "msg_log": "home_point2 failed",
-                                        "_uid": "uid_4f054171c76d_mmvn15yg"
+                                        "_uid": "uid_4ef7b8ea8ca0_mn76gvi6"
                                       }
                                     }
                                   },
@@ -91,11 +91,11 @@
                                     "tagName": "PopupMsg",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "popup_home_point2_3818",
+                                        "ID": "popup_home_point2_7752",
                                         "msg": "home_point2 path failed",
                                         "type": "failure",
                                         "timeout": "0",
-                                        "_uid": "uid_c1a3cffeabdf_mmvn15yg"
+                                        "_uid": "uid_094b5c6db357_mn76gvi6"
                                       }
                                     }
                                   },
@@ -103,102 +103,7 @@
                                     "tagName": "AlwaysFailure",
                                     "content": {
                                       "@attributes": {
-                                        "_uid": "uid_daa2dfaddd49_mmvn15yg"
-                                      }
-                                    }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  "tagName": "Sequence",
-                  "content": {
-                    "@attributes": {
-                      "ID": "seq_point2_home_3904",
-                      "_uid": "uid_c3239a0d5b77_mmvn15yg"
-                    },
-                    "@children": [
-                      {
-                        "tagName": "Fallback",
-                        "content": {
-                          "@attributes": {
-                            "ID": "fallback_5171",
-                            "_uid": "uid_94402abdd59d_mmvn15yg"
-                          },
-                          "@children": [
-                            {
-                              "tagName": "Sequence",
-                              "content": {
-                                "@attributes": {
-                                  "ID": "seq_success_point2_home_7102",
-                                  "_uid": "uid_35404c293f03_mmvn15yg"
-                                },
-                                "@children": [
-                                  {
-                                    "tagName": "RunPath",
-                                    "content": {
-                                      "@attributes": {
-                                        "path_name": "point2_home",
-                                        "ID": "point2_home_2419",
-                                        "speed_scale": "0.75",
-                                        "_uid": "uid_17f68e74a8b2_mmvn15yg"
-                                      }
-                                    }
-                                  },
-                                  {
-                                    "tagName": "MsgLoggerNode",
-                                    "content": {
-                                      "@attributes": {
-                                        "ID": "msg_success_point2_home_8913",
-                                        "msg_log": "point2_home success",
-                                        "_uid": "uid_7257ed844abc_mmvn15yg"
-                                      }
-                                    }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              "tagName": "Sequence",
-                              "content": {
-                                "@attributes": {
-                                  "ID": "seq_failure_point2_home_6895",
-                                  "_uid": "uid_df7cba0d57ec_mmvn15yg"
-                                },
-                                "@children": [
-                                  {
-                                    "tagName": "MsgLoggerNode",
-                                    "content": {
-                                      "@attributes": {
-                                        "ID": "msg_fail_point2_home_2112",
-                                        "msg_log": "point2_home failed",
-                                        "_uid": "uid_d61998b47488_mmvn15yg"
-                                      }
-                                    }
-                                  },
-                                  {
-                                    "tagName": "PopupMsg",
-                                    "content": {
-                                      "@attributes": {
-                                        "ID": "popup_point2_home_6337",
-                                        "msg": "point2_home path failed",
-                                        "type": "failure",
-                                        "timeout": "0",
-                                        "_uid": "uid_57684c4fdd6f_mmvn15yg"
-                                      }
-                                    }
-                                  },
-                                  {
-                                    "tagName": "AlwaysFailure",
-                                    "content": {
-                                      "@attributes": {
-                                        "_uid": "uid_f6a4c95243b1_mmvn15yg"
+                                        "_uid": "uid_268afd3109fa_mn76gvi6"
                                       }
                                     }
                                   }
@@ -222,40 +127,40 @@
       "content": {
         "@attributes": {
           "ID": "home_point2",
-          "name": "home_point2_9367",
-          "_uid": "uid_02dffd95f04c_mmvn15yg"
+          "name": "home_point2_2523",
+          "_uid": "uid_85ed7ee2dbda_mn76gvi6"
         },
         "@children": [
           {
             "tagName": "Sequence",
             "content": {
               "@attributes": {
-                "ID": "root_sequence_4221",
-                "_uid": "uid_0bc31e3a40d5_mmvn15yg"
+                "ID": "root_sequence_9986",
+                "_uid": "uid_a90f5c288e4a_mn76gvi6"
               },
               "@children": [
                 {
                   "tagName": "Sequence",
                   "content": {
                     "@attributes": {
-                      "ID": "seq_home_point2_7945",
-                      "_uid": "uid_24e41bc28522_mmvn15yg"
+                      "ID": "seq_home_point2_6748",
+                      "_uid": "uid_7259c56f30d4_mn76gvi6"
                     },
                     "@children": [
                       {
                         "tagName": "Fallback",
                         "content": {
                           "@attributes": {
-                            "ID": "fallback_3402",
-                            "_uid": "uid_f0b28375e0e2_mmvn15yg"
+                            "ID": "fallback_8759",
+                            "_uid": "uid_aea1686f1e48_mn76gvi6"
                           },
                           "@children": [
                             {
                               "tagName": "Sequence",
                               "content": {
                                 "@attributes": {
-                                  "ID": "seq_success_home_point2_8907",
-                                  "_uid": "uid_aa2672c8aba7_mmvn15yg"
+                                  "ID": "seq_success_home_point2_3403",
+                                  "_uid": "uid_a9b1aa298d1b_mn76gvi6"
                                 },
                                 "@children": [
                                   {
@@ -263,9 +168,9 @@
                                     "content": {
                                       "@attributes": {
                                         "path_name": "home_point2",
-                                        "ID": "home_point2_1559",
+                                        "ID": "home_point2_4450",
                                         "speed_scale": "0.75",
-                                        "_uid": "uid_9c9a9cd01f90_mmvn15yg"
+                                        "_uid": "uid_dec980f442f6_mn76gvi6"
                                       }
                                     }
                                   },
@@ -273,9 +178,9 @@
                                     "tagName": "MsgLoggerNode",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "msg_success_home_point2_1174",
+                                        "ID": "msg_success_home_point2_2243",
                                         "msg_log": "home_point2 success",
-                                        "_uid": "uid_4cf80bf99cb5_mmvn15yg"
+                                        "_uid": "uid_e3ea019021d4_mn76gvi6"
                                       }
                                     }
                                   }
@@ -286,17 +191,17 @@
                               "tagName": "Sequence",
                               "content": {
                                 "@attributes": {
-                                  "ID": "seq_failure_home_point2_9237",
-                                  "_uid": "uid_7d466a31ac1d_mmvn15yg"
+                                  "ID": "seq_failure_home_point2_2965",
+                                  "_uid": "uid_ef6b13e994c2_mn76gvi6"
                                 },
                                 "@children": [
                                   {
                                     "tagName": "MsgLoggerNode",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "msg_fail_home_point2_7751",
+                                        "ID": "msg_fail_home_point2_9293",
                                         "msg_log": "home_point2 failed",
-                                        "_uid": "uid_5e99e8e91db9_mmvn15yg"
+                                        "_uid": "uid_8896d9a42bb1_mn76gvi6"
                                       }
                                     }
                                   },
@@ -304,11 +209,11 @@
                                     "tagName": "PopupMsg",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "popup_home_point2_5457",
+                                        "ID": "popup_home_point2_9396",
                                         "msg": "home_point2 path failed",
                                         "type": "failure",
                                         "timeout": "0",
-                                        "_uid": "uid_ba7e206b2469_mmvn15yg"
+                                        "_uid": "uid_1316c4360ff4_mn76gvi6"
                                       }
                                     }
                                   },
@@ -316,125 +221,7 @@
                                     "tagName": "AlwaysFailure",
                                     "content": {
                                       "@attributes": {
-                                        "_uid": "uid_6a64950d216d_mmvn15yg"
-                                      }
-                                    }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "tagName": "BehaviorTree",
-      "content": {
-        "@attributes": {
-          "ID": "point2_home",
-          "name": "point2_home_5185",
-          "_uid": "uid_193ff7e7fb25_mmvn15yg"
-        },
-        "@children": [
-          {
-            "tagName": "Sequence",
-            "content": {
-              "@attributes": {
-                "ID": "root_sequence_4879",
-                "_uid": "uid_040332af1970_mmvn15yg"
-              },
-              "@children": [
-                {
-                  "tagName": "Sequence",
-                  "content": {
-                    "@attributes": {
-                      "ID": "seq_point2_home_5880",
-                      "_uid": "uid_8df4b5c53213_mmvn15yg"
-                    },
-                    "@children": [
-                      {
-                        "tagName": "Fallback",
-                        "content": {
-                          "@attributes": {
-                            "ID": "fallback_3888",
-                            "_uid": "uid_a768acad3deb_mmvn15yg"
-                          },
-                          "@children": [
-                            {
-                              "tagName": "Sequence",
-                              "content": {
-                                "@attributes": {
-                                  "ID": "seq_success_point2_home_2623",
-                                  "_uid": "uid_c62567fe69be_mmvn15yg"
-                                },
-                                "@children": [
-                                  {
-                                    "tagName": "RunPath",
-                                    "content": {
-                                      "@attributes": {
-                                        "path_name": "point2_home",
-                                        "ID": "point2_home_2483",
-                                        "speed_scale": "0.75",
-                                        "_uid": "uid_9c4ac6356638_mmvn15yg"
-                                      }
-                                    }
-                                  },
-                                  {
-                                    "tagName": "MsgLoggerNode",
-                                    "content": {
-                                      "@attributes": {
-                                        "ID": "msg_success_point2_home_9456",
-                                        "msg_log": "point2_home success",
-                                        "_uid": "uid_0952c08b76d7_mmvn15yg"
-                                      }
-                                    }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              "tagName": "Sequence",
-                              "content": {
-                                "@attributes": {
-                                  "ID": "seq_failure_point2_home_5222",
-                                  "_uid": "uid_97a67e78f2a7_mmvn15yg"
-                                },
-                                "@children": [
-                                  {
-                                    "tagName": "MsgLoggerNode",
-                                    "content": {
-                                      "@attributes": {
-                                        "ID": "msg_fail_point2_home_6039",
-                                        "msg_log": "point2_home failed",
-                                        "_uid": "uid_eafbc5d8a487_mmvn15yg"
-                                      }
-                                    }
-                                  },
-                                  {
-                                    "tagName": "PopupMsg",
-                                    "content": {
-                                      "@attributes": {
-                                        "ID": "popup_point2_home_9850",
-                                        "msg": "point2_home path failed",
-                                        "type": "failure",
-                                        "timeout": "0",
-                                        "_uid": "uid_9552b0d9e092_mmvn15yg"
-                                      }
-                                    }
-                                  },
-                                  {
-                                    "tagName": "AlwaysFailure",
-                                    "content": {
-                                      "@attributes": {
-                                        "_uid": "uid_f92f51e8244e_mmvn15yg"
+                                        "_uid": "uid_31b3ccc62bf8_mn76gvi6"
                                       }
                                     }
                                   }
@@ -458,40 +245,40 @@
       "content": {
         "@attributes": {
           "ID": "group_1",
-          "name": "group_1_8115",
-          "_uid": "uid_3b6b5e12739e_mmvn15yg"
+          "name": "group_1_4912",
+          "_uid": "uid_6799dfe07bbf_mn76gvi6"
         },
         "@children": [
           {
             "tagName": "Sequence",
             "content": {
               "@attributes": {
-                "ID": "root_sequence_8170",
-                "_uid": "uid_dc053f8c3cf0_mmvn15yg"
+                "ID": "root_sequence_3185",
+                "_uid": "uid_7bf37fc92221_mn76gvi6"
               },
               "@children": [
                 {
                   "tagName": "Sequence",
                   "content": {
                     "@attributes": {
-                      "ID": "seq_home_point2_3982",
-                      "_uid": "uid_270a8b0c88ac_mmvn15yg"
+                      "ID": "seq_home_point2_6840",
+                      "_uid": "uid_716db0e636cb_mn76gvi6"
                     },
                     "@children": [
                       {
                         "tagName": "Fallback",
                         "content": {
                           "@attributes": {
-                            "ID": "fallback_7029",
-                            "_uid": "uid_f2df4d2cf202_mmvn15yg"
+                            "ID": "fallback_8086",
+                            "_uid": "uid_4ebc6be812a4_mn76gvi6"
                           },
                           "@children": [
                             {
                               "tagName": "Sequence",
                               "content": {
                                 "@attributes": {
-                                  "ID": "seq_success_home_point2_5168",
-                                  "_uid": "uid_12f33f45aadc_mmvn15yg"
+                                  "ID": "seq_success_home_point2_6002",
+                                  "_uid": "uid_92aa479f5f27_mn76gvi6"
                                 },
                                 "@children": [
                                   {
@@ -499,9 +286,9 @@
                                     "content": {
                                       "@attributes": {
                                         "path_name": "home_point2",
-                                        "ID": "home_point2_6333",
+                                        "ID": "home_point2_4054",
                                         "speed_scale": "0.75",
-                                        "_uid": "uid_c3ecdd1abb87_mmvn15yg"
+                                        "_uid": "uid_94a1ba18166c_mn76gvi6"
                                       }
                                     }
                                   },
@@ -509,9 +296,9 @@
                                     "tagName": "MsgLoggerNode",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "msg_success_home_point2_1474",
+                                        "ID": "msg_success_home_point2_4405",
                                         "msg_log": "home_point2 success",
-                                        "_uid": "uid_e436fb0346f3_mmvn15yg"
+                                        "_uid": "uid_a897812190ed_mn76gvi6"
                                       }
                                     }
                                   }
@@ -522,17 +309,17 @@
                               "tagName": "Sequence",
                               "content": {
                                 "@attributes": {
-                                  "ID": "seq_failure_home_point2_6889",
-                                  "_uid": "uid_0c6f5a84197a_mmvn15yg"
+                                  "ID": "seq_failure_home_point2_3756",
+                                  "_uid": "uid_189c7b13dc73_mn76gvi6"
                                 },
                                 "@children": [
                                   {
                                     "tagName": "MsgLoggerNode",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "msg_fail_home_point2_5000",
+                                        "ID": "msg_fail_home_point2_5435",
                                         "msg_log": "home_point2 failed",
-                                        "_uid": "uid_ea443fa9e407_mmvn15yg"
+                                        "_uid": "uid_5d4ef6b4b787_mn76gvi6"
                                       }
                                     }
                                   },
@@ -540,11 +327,11 @@
                                     "tagName": "PopupMsg",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "popup_home_point2_5375",
+                                        "ID": "popup_home_point2_2800",
                                         "msg": "home_point2 path failed",
                                         "type": "failure",
                                         "timeout": "0",
-                                        "_uid": "uid_201f139688ac_mmvn15yg"
+                                        "_uid": "uid_9dd7f5da9914_mn76gvi6"
                                       }
                                     }
                                   },
@@ -552,102 +339,7 @@
                                     "tagName": "AlwaysFailure",
                                     "content": {
                                       "@attributes": {
-                                        "_uid": "uid_a8fb90343a3f_mmvn15yg"
-                                      }
-                                    }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  "tagName": "Sequence",
-                  "content": {
-                    "@attributes": {
-                      "ID": "seq_point2_home_6032",
-                      "_uid": "uid_f2fb6bb4ad12_mmvn15yg"
-                    },
-                    "@children": [
-                      {
-                        "tagName": "Fallback",
-                        "content": {
-                          "@attributes": {
-                            "ID": "fallback_9672",
-                            "_uid": "uid_ce015806ba3d_mmvn15yg"
-                          },
-                          "@children": [
-                            {
-                              "tagName": "Sequence",
-                              "content": {
-                                "@attributes": {
-                                  "ID": "seq_success_point2_home_8362",
-                                  "_uid": "uid_64da309d1863_mmvn15yg"
-                                },
-                                "@children": [
-                                  {
-                                    "tagName": "RunPath",
-                                    "content": {
-                                      "@attributes": {
-                                        "path_name": "point2_home",
-                                        "ID": "point2_home_8623",
-                                        "speed_scale": "0.75",
-                                        "_uid": "uid_7a4f07d3af53_mmvn15yg"
-                                      }
-                                    }
-                                  },
-                                  {
-                                    "tagName": "MsgLoggerNode",
-                                    "content": {
-                                      "@attributes": {
-                                        "ID": "msg_success_point2_home_8245",
-                                        "msg_log": "point2_home success",
-                                        "_uid": "uid_002c344dd877_mmvn15yg"
-                                      }
-                                    }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              "tagName": "Sequence",
-                              "content": {
-                                "@attributes": {
-                                  "ID": "seq_failure_point2_home_4739",
-                                  "_uid": "uid_d047b6b65ded_mmvn15yg"
-                                },
-                                "@children": [
-                                  {
-                                    "tagName": "MsgLoggerNode",
-                                    "content": {
-                                      "@attributes": {
-                                        "ID": "msg_fail_point2_home_1569",
-                                        "msg_log": "point2_home failed",
-                                        "_uid": "uid_67edc53c5994_mmvn15yg"
-                                      }
-                                    }
-                                  },
-                                  {
-                                    "tagName": "PopupMsg",
-                                    "content": {
-                                      "@attributes": {
-                                        "ID": "popup_point2_home_1464",
-                                        "msg": "point2_home path failed",
-                                        "type": "failure",
-                                        "timeout": "0",
-                                        "_uid": "uid_1e956713f970_mmvn15yg"
-                                      }
-                                    }
-                                  },
-                                  {
-                                    "tagName": "AlwaysFailure",
-                                    "content": {
-                                      "@attributes": {
-                                        "_uid": "uid_f6a8eb5f7322_mmvn15yg"
+                                        "_uid": "uid_96f66afb8997_mn76gvi6"
                                       }
                                     }
                                   }
