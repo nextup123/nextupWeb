@@ -17,7 +17,7 @@ import oiConrol from "./routes/ioRoutes.js";
 
 import settingsRoute from "./routes/settings.js";
 import cycleRoute from "./routes/cycle.js";
-import rosRoutes from "./routes/rosRoutes.js";
+import rosRoutes from "./ros/rosRoutes.js";
 import errorLogsServiceRoutes from "./routes/errorLogsServiceRoutes.js";
 import shoeMouldRoutes from "./routes/shoeMouldRoutes.js";
 import mappedDataRoutes from "./routes/mappedDataRoutes.js";
@@ -49,7 +49,6 @@ app.use("/shoe-mould", shoeMouldRoutes);
 app.use("/shoe-mould", mappedDataRoutes);
 app.use("/main-tree",mainTreeRoutes);
 // app.use("/error-handling/errors", errorRoutes);
-
 
 app.use("/api/projects", projectRoutes);
 app.use("/api/status", statusRoutes); // ✅ ADD THIS

@@ -1,8 +1,7 @@
 import fs from "fs";
-
-
+import { parseXmlString } from "../user_config/customXmlParser";
 import { ioFilePath } from "../config/path.js";
-import { parseXmlString } from "../user_config/customXmlParser.js";
+
 
 const XML_PATH = ioFilePath.DO_DI_TREE_XML_FILE;
 

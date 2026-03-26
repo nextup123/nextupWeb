@@ -31,4 +31,16 @@ router.get("/di-layout", getDiLayoutController);
 
 router.post("/di-layout", postDiLayoutController);
 
+
+//ROS ROUTES RELATED TO POINT PLANNING//
+
+
+
+
+
+////////////////////////////////////////
+
+
+
+
 export default router;
