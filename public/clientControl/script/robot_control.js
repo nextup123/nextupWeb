@@ -180,6 +180,20 @@ document.addEventListener('DOMContentLoaded', () => {
       processIndicator.classList.remove('running');
     }
   });
+////////////////////////////////////////////////////////////////////////////////////
+  const failedNodeSubscriber = new ROSLIB.Topic({
+    ros: ros,
+    name: '/bt_failed_node',
+    messageType: 'std_msgs/msg/String'
+  });
+
+
+
+  failedNodeSubscriber.subscribe(function (message) {
+    const data = message.data.toLowerCase();
+    console.log("==============>", data);
+  });
+////////////////////////////////////////////////////////////////////////////////////
 
 
   processToggle.addEventListener('click', () => {
@@ -207,10 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
       processControlPub.publish({ data: 'start' });
     }
   });
-
-
-
-
 });
 
 

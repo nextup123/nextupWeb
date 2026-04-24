@@ -6,7 +6,6 @@
     <title>Control Behavior Tree Editor</title>
     <link rel="stylesheet" href="../media/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="ros_init.css">
 </head>
 
 <body>
@@ -15,7 +14,7 @@
             <div class="logo">
                 <i class="fas fa-cogs logo-icon"></i>
                 <h1>IO Control BT Editor</h1>
-                <p id="di_indicator_status" class="di-indicator-status">Connecting...</p>
+                <!-- <p id="di_indicator_status" class="di-indicator-status">Connecting...</p> -->
             </div>
             <div class="header-actions">
                 <button class="btn btn-secondary" onclick="openXMLModal()">
@@ -27,121 +26,129 @@
         <div class="main-container">
             <div class="control-panel">
                 <div class="editor-container">
-                    <div class="editor-slider">
-                        <div class="do-editor">
-                            <div class="section-title">
-                                <i class="fas fa-toggle-on"></i>
-                                <h2>DO Control Editor</h2>
-                            </div>
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label for="doName">DO Name</label>
-                                    <input type="text" id="doName" placeholder="Alphanumeric" pattern="[A-Za-z0-9]+"
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="doDriverId">Driver ID</label>
-                                    <select id="doDriverId">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="doId">DO ID</label>
-                                    <select id="doId"></select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="controlType">Control Type</label>
-                                    <select id="controlType" onchange="togglePushWait()">
-                                        <option value="switch">Switch</option>
-                                        <option value="push">Push</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pushWait">Push Wait (ms)</label>
-                                    <input type="number" id="pushWait" min="100" max="1000" value="250" disabled>
-                                </div>
-                                <div class="form-group full-width">
-                                    <label for="doResponseMsg">Response Msg</label>
-                                    <input type="text" id="doResponseMsg" placeholder="Response message">
-                                </div>
-                            </div>
-                            <div class="button-group">
-                                <button class="btn btn-primary" onclick="addDOControl()">Add DO</button>
-                                <button class="btn btn-warning" onclick="updateDOControl()" id="updateDOBtn"
-                                    disabled>Update DO</button>
-                            </div>
+                    <div class="editor-toggle-btn">
+                        <div id="doEditor" class="section-title active" onclick="swipeEditor('left')">
+                            <!-- <i class="fas fa-toggle-on"></i> -->
+                            <h2>DO Control Editor</h2>
                         </div>
-                        <div class="di-editor">
-                            <div class="section-title">
-                                <i class="fas fa-sensor"></i>
-                                <h2>DI Control Editor</h2>
-                            </div>
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label for="diName">DI Name</label>
-                                    <input type="text" id="diName" placeholder="Alphanumeric" pattern="[A-Za-z0-9]+"
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="diDriverId">Driver ID</label>
-                                    <select id="diDriverId">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="diId">DI ID</label>
-                                    <select id="diId">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="waitTimeEnabled">Enable Wait</label>
-                                    <input type="checkbox" id="waitTimeEnabled" onchange="toggleWaitTime()">
-                                </div>
-                                <div class="form-group">
-                                    <label for="waitTime">Wait Time (ms)</label>
-                                    <input type="number" id="waitTime" min="100" max="1000" value="250" disabled>
-                                </div>
-                                <div class="form-group">
-                                    <label for="waitTimeEnabled">Enable Fallback</label>
-                                    <input type="checkbox" id="diFallbackEnabled" onchange="toggleDIFallback()">
-                                </div>
-                                <div class="form-group full-width">
-                                    <label for="diResponseMsg">Response Msg</label>
-                                    <input type="text" id="diResponseMsg" placeholder="Response message">
-                                </div>
-                            </div>
-                            <div class="button-group">
-                                <button class="btn btn-primary" onclick="addDIControl()">Add DI</button>
-                                <button class="btn btn-warning" onclick="updateDIControl()" id="updateDIBtn"
-                                    disabled>Update DI</button>
-                            </div>
+                        <div id="diEditor" class="section-title" onclick="swipeEditor('right')">
+                            <!-- <i class="fas fa-sensor"></i> -->
+                            <h2>DI Control Editor</h2>
                         </div>
                     </div>
+                    <div class="editor-slider">
+                        <!-- <div> -->
 
-                    <div class="nav-bar-slider-container">
+                            <div class="do-editor">
+
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="doName">DO Name</label>
+                                        <input type="text" id="doName" placeholder="Alphanumeric" pattern="[A-Za-z0-9]+"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="doDriverId">Driver ID</label>
+                                        <select id="doDriverId">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="doId">DO ID</label>
+                                        <select id="doId"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="controlType">Control Type</label>
+                                        <select id="controlType" onchange="togglePushWait()">
+                                            <option value="switch">Switch</option>
+                                            <option value="push">Push</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pushWait">Push Wait (ms)</label>
+                                        <input type="number" id="pushWait" min="100" max="1000" value="250" disabled>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="doResponseMsg">Response Msg</label>
+                                        <input type="text" id="doResponseMsg" placeholder="Response message">
+                                    </div>
+                                </div>
+                                <div class="button-group">
+                                    <button class="btn btn-primary" onclick="addDOControl()">Add DO</button>
+                                    <button class="btn btn-warning" onclick="updateDOControl()" id="updateDOBtn"
+                                        disabled>Update DO</button>
+                                </div>
+                            </div>
+                            <div class="di-editor">
+
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="diName">DI Name</label>
+                                        <input type="text" id="diName" placeholder="Alphanumeric" pattern="[A-Za-z0-9]+"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="diDriverId">Driver ID</label>
+                                        <select id="diDriverId">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="diId">DI ID</label>
+                                        <select id="diId">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="waitTimeEnabled">Enable Wait</label>
+                                        <input type="checkbox" id="waitTimeEnabled" onchange="toggleWaitTime()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="waitTime">Wait Time (ms)</label>
+                                        <input type="number" id="waitTime" min="100" max="1000" value="250" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="waitTimeEnabled">Enable Fallback</label>
+                                        <input type="checkbox" id="diFallbackEnabled" onchange="toggleDIFallback()">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="diResponseMsg">Response Msg</label>
+                                        <input type="text" id="diResponseMsg" placeholder="Response message">
+                                    </div>
+                                </div>
+                                <div class="button-group">
+                                    <button class="btn btn-primary" onclick="addDIControl()">Add DI</button>
+                                    <button class="btn btn-warning" onclick="updateDIControl()" id="updateDIBtn"
+                                        disabled>Update DI</button>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+
+                    </div>
+
+                    <!-- <div class="nav-bar-slider-container">
                         <button class="nav-btn nav-left" onclick="swipeEditor('left')"><i
                                 class="fas fa-chevron-left"></i></button>
                         <button class="nav-btn nav-right" onclick="swipeEditor('right')"><i
                                 class="fas fa-chevron-right"></i></button>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="di-indicator-panel">
@@ -378,10 +385,7 @@
 
     <!-- Status Modal -->
     <div id="statusModal" class="modal"></div>
-    <script src="roslib.js"></script>
     <script src="script.js"></script>
-    <script src="actions.js"></script>
-    <script src="ros_init.js"></script>
 </body>
 
 </html>

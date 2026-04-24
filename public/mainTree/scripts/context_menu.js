@@ -22,7 +22,7 @@ document.addEventListener("contextmenu", (e) => {
   addContextItem("⤴️ Add Wrapper ▸", createWrapperSubmenu(), contextMenu);
 
   addSeparator(contextMenu);
-
+  addSimpleItem("📋 Copy Node  [Ctrl+D]", copyNode, contextMenu);
   addSimpleItem("❌ Delete Node", deleteNode, contextMenu);
   addSimpleItem("🗑️ Delete Wrapper", deleteWrapperOnly, contextMenu);
 
@@ -202,3 +202,54 @@ function autoAddNode(cat, type) {
     })
     .catch((err) => showToast(err.message));
 }
+
+
+/* -------------------------------------------------
+   Context menu for nested view — reuses context_menu.js
+   ------------------------------------------------- */
+document.addEventListener('contextmenu', (e) => {
+  const header = e.target.closest('#nested-view .nested-node-header');
+  if (!header) return;
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  const uid = header.dataset.uid;
+  if (!uid) return;
+
+  selectedNodeUid = uid;
+
+  // ✅ Wrap raw node in { data: ... } so ALL downstream functions work
+  const rawNode = findNodeByUid(lastRenderedTreeData, uid);
+  if (!rawNode) return;
+
+  const parentRaw = findParentByUid(lastRenderedTreeData, uid);
+  selectedNode = {
+    data: rawNode,
+    parent: parentRaw ? { data: parentRaw } : null
+  };
+
+  showNodeDetails(rawNode);
+  updateButtonStates(selectedNode);
+  renderNestedView();
+
+  if (contextMenu) contextMenu.remove();
+
+  contextMenu = document.createElement('div');
+  contextMenu.className = 'context-menu';
+  contextMenu.style.top  = `${e.pageY}px`;
+  contextMenu.style.left = `${e.pageX}px`;
+
+  addContextItem('➕ Add Node ▸',    createNodeSubmenu(),    contextMenu);
+  addContextItem('⤴️ Add Wrapper ▸', createWrapperSubmenu(), contextMenu);
+  addSeparator(contextMenu);
+  addSimpleItem('📋 Copy Node  [Ctrl+D]', copyNode,         contextMenu);
+  addSimpleItem('❌ Delete Node',          deleteNode,        contextMenu);
+  addSimpleItem('🗑️ Delete Wrapper',      deleteWrapperOnly, contextMenu);
+
+  document.body.appendChild(contextMenu);
+
+  setTimeout(() => {
+    document.addEventListener('click', closeContextMenu, { once: true });
+  }, 0);
+});

@@ -22,37 +22,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+
+
     function publishDO(driver, doId, state) {
-        const topicName = `/nextup_digital_output_controller_${driver}/commands`;
+        let mappedDoId;
 
-        const digitalOutputTopic = new ROSLIB.Topic({
-            ros,
-            name: topicName,
-            messageType: 'nextup_joint_interfaces/NextupDigitalOutputs'
-        });
+        if (doId === 'pi_p') mappedDoId = 4;
+        else mappedDoId = parseInt(doId);
 
-        const message = {
-            do1: [],
-            do2: [],
-            do3: [],
-            pi_p: []
-        };
-
-        // Handle numeric DOs
-        if (doId === '1' || doId === '2' || doId === '3') {
-            message[`do${doId}`] = [state];
-        }
-        // Handle pi_p
-        else if (doId === 'pi_p') {
-            message.pi_p = [state];
-        }
-
-        digitalOutputTopic.publish(new ROSLIB.Message(message));
-
-        console.log(`📤 Published → ${topicName}: ${doId} = [${state}]`);
+        window.parent.postMessage({
+            type: "TOGGLE_DO",
+            payload: {
+                driver,
+                doId: mappedDoId,
+                state
+            }
+        }, "*");
     }
-
-
 
     // 🟢 Push Type: momentary button
     async function handlePush(doItem, btn) {
@@ -174,15 +160,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 div.title = `${doItem.name} (Driver: ${doItem.driver_id}, DO: ${doItem.do_id})`;
 
                 div.innerHTML = `
-        <span class="do-label">${doItem.name} :</span>
-        ${doItem.type_of_control === 'switch'
+            <span class="do-label">${doItem.name} :</span>
+            ${doItem.type_of_control === 'switch'
                         ? `<label class="switch-wrapper">
-                 <input type="checkbox" class="switch-input">
-                 <span class="switch-slider"></span>
-               </label>`
+                    <input type="checkbox" class="switch-input">
+                    <span class="switch-slider"></span>
+                </label>`
                         : `<button class="do-btn">Push</button>`
                     }
-      `;
+        `;
                 tempElements.push({ doItem, div, doId });
             });
 
@@ -315,8 +301,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadDOList();
     });
 
-    await loadLayoutFromBackend();
+    // await loadLayoutFromBackend();
     loadDOList();
-
-
 }); 

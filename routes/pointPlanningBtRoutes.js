@@ -11,6 +11,14 @@ import  {
   reorderPointsController,
   canUndoController,
   undoController,
+  moveToPointController,
+  setMotionTypeController,
+  getRobotStatusController,
+  editedPointNotificationController,
+  savePointFileController,
+  loadBackupFileController,
+  createNewFileController,
+  deleteBackupFileController
 }  from "../controller/pointPlanningBtController.js";
 
 const router = express.Router();
@@ -45,5 +53,14 @@ router.post("/undo", undoController);
 // /canUndo endpoint
 router.get("/canUndo", canUndoController);
 
-export default router;
+// NEW ENDPOINTS FOR ROS COMMUNICATION
+router.post("/moveToPoint", moveToPointController);
+router.post("/setMotionType", setMotionTypeController);
+router.get("/robotStatus", getRobotStatusController);
+router.post("/editedPoint", editedPointNotificationController);
+router.post("/savePointFile", savePointFileController);
+router.post("/loadBackupFile", loadBackupFileController);
+router.post("/createNewFile", createNewFileController);
+router.post("/deleteBackupFile", deleteBackupFileController);
 
+export default router;

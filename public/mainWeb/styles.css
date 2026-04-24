@@ -163,3 +163,421 @@ button:hover {
     opacity: 0;
     pointer-events: none;
 }
+
+
+/* ===== Drawer Toggle Button ===== */
+/* ===== Drawer Toggle Button ===== */
+/* ===== Enhanced Drawer Toggle Button ===== */
+.drawer-toggle {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 100px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: none;
+    cursor: pointer;
+    z-index: 10000;
+    border-radius: 10px 0 0 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -4px 0 16px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: 2px;
+    padding: 8px 0;
+}
+
+.drawer-toggle:hover {
+    width: 52px;
+    background: linear-gradient(135deg, #334155, #1e293b);
+    box-shadow: -6px 0 20px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.drawer-toggle:active {
+    transform: translateY(-50%) scale(0.98);
+}
+
+/* Toggle icon/text enhancement */
+.drawer-toggle::before {
+    content: "📋";
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+/* ===== Enhanced Drawer Panel ===== */
+.drawer {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100%;
+    background: linear-gradient(180deg, #020617 0%, #0a0f1f 100%);
+    color: #e2e8f0;
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.7);
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(12px);
+    border-left: 1px solid rgba(51, 65, 85, 0.3);
+}
+
+.drawer.open {
+    right: 0;
+}
+
+/* ===== Enhanced Header ===== */
+.drawer-header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    background: rgba(15, 23, 42, 0.95);
+    border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+.drawer-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.drawer-header h3::before {
+    content: "📊";
+    font-size: 20px;
+    -webkit-text-fill-color: initial;
+    color: #3b82f6;
+}
+
+.drawer-header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.drawer-header button {
+    background: rgba(51, 65, 85, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drawer-header button:hover {
+    background: rgba(51, 65, 85, 0.6);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+/* ===== Enhanced Controls ===== */
+.drawer-controls {
+    position: sticky;
+    top: 64px;
+    z-index: 2;
+    display: flex;
+    gap: 10px;
+    padding: 14px 16px;
+    background: rgba(2, 6, 23, 0.95);
+    border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+.drawer-controls select {
+    flex: 1;
+    padding: 9px 12px;
+    background: #0f172a;
+    color: #e2e8f0;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.drawer-controls select:hover {
+    border-color: #64748b;
+    background: #1e293b;
+}
+
+.drawer-controls select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Add clear button */
+.clear-btn {
+    content: "Clear";
+    padding: 9px 16px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.drawer-controls::after:hover {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border-color: #ef4444;
+}
+
+/* ===== Enhanced Content ===== */
+.drawer-content {
+    padding: 16px 12px;
+    overflow-y: auto;
+    flex: 1;
+    scroll-behavior: smooth;
+}
+
+/* Enhanced Scrollbar */
+.drawer-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.drawer-content::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.3);
+    border-radius: 4px;
+}
+
+.drawer-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #334155 0%, #475569 100%);
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.drawer-content::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #475569 0%, #64748b 100%);
+}
+
+/* Empty State */
+.drawer-content:empty::before {
+    content: "📭 No logs to display";
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: #64748b;
+    text-align: center;
+    font-size: 14px;
+    padding: 40px 20px;
+}
+
+/* ===== Enhanced Log Cards ===== */
+.log-card {
+    padding: 14px;
+    margin: 12px 6px;
+    border-radius: 10px;
+    font-size: 13px;
+    background: linear-gradient(145deg, #020617, #0f172a);
+    border: 1px solid rgba(51, 65, 85, 0.3);
+    border-left-width: 4px;
+    border-left-style: solid;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Subtle glow effect */
+.log-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.log-card:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== Enhanced Type Colors with Gradients ===== */
+.log-error {
+    border-left-color: #ef4444;
+    background: linear-gradient(145deg, rgba(239, 68, 68, 0.05), #0f172a);
+}
+
+.log-warn {
+    border-left-color: #f59e0b;
+    background: linear-gradient(145deg, rgba(245, 158, 11, 0.05), #0f172a);
+}
+
+.log-success {
+    border-left-color: #22c55e;
+    background: linear-gradient(145deg, rgba(34, 197, 94, 0.05), #0f172a);
+}
+
+/* Add info type */
+.log-info {
+    border-left-color: #3b82f6;
+    background: linear-gradient(145deg, rgba(59, 130, 246, 0.05), #0f172a);
+}
+
+/* ===== Enhanced Message ===== */
+.log-message {
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    word-break: break-word;
+    color: #f1f5f9;
+}
+
+/* Add timestamp icon */
+.log-message::before {
+    margin-right: 6px;
+    opacity: 0.7;
+}
+
+/* ===== Enhanced Meta ===== */
+.log-meta {
+    font-size: 11px;
+    color: #94a3b8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 6px;
+    border-top: 1px solid rgba(51, 65, 85, 0.3);
+}
+
+.log-time {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.log-time::before {
+    content: "🕐";
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+/* ===== Enhanced Badge ===== */
+.log-type-badge {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+}
+
+.badge-error {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.badge-warn {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fcd34d;
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.badge-success {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86efac;
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.badge-info {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.log-card:hover .log-type-badge {
+    transform: scale(1.05);
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 768px) {
+    .drawer {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .drawer-toggle {
+        width: 36px;
+        height: 80px;
+        font-size: 11px;
+    }
+}
+
+/* ===== Performance Optimizations ===== */
+.log-card {
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+.drawer {
+    will-change: right;
+}
+
+/* ===== Accessibility Improvements ===== */
+.drawer-toggle:focus-visible,
+.drawer-header button:focus-visible,
+.drawer-controls select:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .log-card {
+        border-width: 2px;
+    }
+}

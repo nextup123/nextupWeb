@@ -5,8 +5,8 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const path = require('path');
 
-const POINTS_FILE = '/home/nextup/user_config_files/planning_data/points/points.yaml';
-const PATHS_FILE = '/home/nextup/user_config_files/planning_data/paths/paths.yaml';
+const POINTS_FILE = '/home/nextup/NextupRobot/src/active_project_configs/planning_data/points.yaml';
+const PATHS_FILE = '/home/nextup/NextupRobot/src/active_project_configs/planning_data/paths.yaml';
 const DEFAULT_TOLERANCE = 0.0001;
 const REQUIRED_JOINT_COUNT = 6;
 const JOINT_KEYS = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6'];

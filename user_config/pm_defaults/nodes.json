@@ -1,7 +1,199 @@
 {
-  "yo": [
-    "yo",
-    "boi"
-  ]
-  
+  "default": {
+    "Control": {
+      "Sequence": {
+        "type": "wrapper",
+        "children": []
+      },
+      "Fallback": {
+        "type": "wrapper",
+        "children": [
+          {
+            "type": "Sequence",
+            "name": "Sequence1"
+          },
+          {
+            "type": "Sequence",
+            "name": "Sequence2"
+          }
+        ]
+      },
+      "Parallel": {
+        "type": "wrapper",
+        "attributes": {
+          "success_threshold": "",
+          "failure_threshold": ""
+        },
+        "children": [
+          {
+            "type": "Sequence",
+            "name": "Sequence1"
+          },
+          {
+            "type": "Sequence",
+            "name": "Sequence2"
+          }
+        ]
+      },
+      "WhileDoElse": {
+        "type": "wrapper",
+        "children": [
+          {
+            "type": "Sequence",
+            "name": "ConditionSeq"
+          },
+          {
+            "type": "Sequence",
+            "name": "DoSeq"
+          },
+          {
+            "type": "Sequence",
+            "name": "ElseSeq"
+          }
+        ]
+      }
+    },
+    "Decorator": {
+      "Invertor": {
+        "type": "wrapper",
+        "children": []
+      },
+      "ForceFailure": {
+        "type": "wrapper",
+        "children": []
+      },
+      "ForceSuccess": {
+        "type": "wrapper",
+        "children": []
+      },
+      "Repeat": {
+        "type": "wrapper",
+        "children": [],
+        "attributes": {
+          "num_cycle": ""
+        }
+      },
+      "RetryUntilSuccessful": {
+        "type": "wrapper",
+        "children": [],
+        "attributes": {
+          "num_attempts": ""
+        }
+      },
+      "KeepRunningUntilFailure": {
+        "type": "wrapper",
+        "children": []
+      },
+      "Timeout": {
+        "type": "wrapper",
+        "children": [],
+        "attributes": {
+          "msec": ""
+        }
+      },
+      "WaitUntilTrue": {
+        "type": "wrapper",
+        "children": [],
+        "attributes": {
+          "timeout_ms": ""
+        }
+      }
+    },
+    "Action": {
+      "AlwaysFailure": {
+        "type": "leaf"
+      },
+      "AlwaysSuccess": {
+        "type": "leaf"
+      },
+      "Sleep": {
+        "type": "leaf",
+        "attributes": {
+          "msec": ""
+        }
+      },
+      "FailureAfterTimeout": {
+        "type": "leaf",
+        "attributes": {
+          "timeout_ms": ""
+        }
+      }
+    }
+  },
+  "custom": {
+    "Action": {
+      "Trigger": {
+        "type": "leaf",
+        "attributes": {}
+      },
+      "MsgLoggerNode": {
+        "type": "leaf",
+        "attributes": {
+          "msg_log": ""
+        }
+      },
+      "CheckPosition": {
+        "type": "leaf",
+        "attributes": {
+          "point_name": "",
+          "accuracy": ""
+        }
+      },
+      "PublishDataOnTopic": {
+        "type": "leaf",
+        "attributes": {
+          "type_of_topic": "std_msgs/msg/Bool",
+          "msg_on_topic": "false",
+          "topic_name": ""
+        }
+      }
+    },
+    "Decorator": {
+      "WaitForTrue": {
+        "type": "wrapper",
+        "attributes": {
+          "time": ""
+        },
+        "children": []
+      },
+      "custom_parellel": {
+        "type": "wrapper",
+        "attributes": {
+          "min_seq": "1",
+          "max_seq": "4"
+        },
+        "children": []
+      },
+      "hgjg": {
+        "type": "wrapper",
+        "attributes": {
+          "dfhtfhf": "1",
+          "fghfjg": "2"
+        },
+        "children": []
+      },
+      "AlternatingSelector": {
+        "type": "wrapper",
+        "attributes": {
+          "mode": "{desired_mode}"
+        },
+        "children": [
+          {
+            "type": "Sequence",
+            "name": "Sequence1"
+          },
+          {
+            "type": "Sequence",
+            "name": "Sequence2"
+          }
+        ]
+      },
+      "IsAtPose": {
+        "type": "leaf",
+        "attributes": {
+          "target_name": ""
+        }
+      }
+    }
+  }
 }

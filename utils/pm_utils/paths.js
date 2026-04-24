@@ -5,9 +5,9 @@ const PROJECTS_ROOT = `${USER_CONFIG_ROOT}/projects`;
 const PROJECT_BACKUP_ROOT = `${USER_CONFIG_ROOT}/.project_backups`;
 
 const ACTIVE_RUNTIME_PATH =
-  '/home/shashikant/NextupRobot/src/active_project_configs';
+  '/home/nextup/NextupRobot/src/active_project_configs';
 const TEMPLATE_PATH =
-  '/home/shashikant/NextupRobot/src/nextupWeb/user_config/pm_templates/default_project_template.json';
+  '/home/nextup/NextupRobot/src/nextupWeb/user_config/pm_templates/default_project_template.json';
 
 export {
   USER_CONFIG_ROOT,

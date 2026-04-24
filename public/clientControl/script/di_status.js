@@ -1,4 +1,15 @@
 // script/di_status.js - WITH ROS SUBSCRIPTION
+
+window.addEventListener("message", (event) => {
+    const msg = event.data;
+
+    if (!msg || !msg.type) return;
+
+    if (msg.type === "DI_STATUS") {
+        updateDIStatusFromBackend(msg.payload);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('di-container');
     let editMode = false;
@@ -111,112 +122,46 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // --- Update DI status from ROS message ---
-    function updateDIStatusFromROS(msg) {
-        // console.log('DI Status update received:', msg);
 
-        const diMap = {
-            di1: msg.di1,
-            di2: msg.di2,
-            di3: msg.di3,
-            di4: msg.di4,
-            di5: msg.di5,
-            sto1: msg.sto1,
-            sto2: msg.sto2,
-            edm: msg.edm
-        };
 
-        // console.log('DI Map from ROS:', diMap);
-
+    function updateDIStatusFromBackend(payload) {
         const diItems = document.querySelectorAll('.di-item');
-        // console.log(`Found ${diItems.length} DI items to update`);
 
         diItems.forEach(item => {
             const driver = parseInt(item.dataset.driver, 10);
             const diKey = item.dataset.diKey;
 
             const indicator = item.querySelector('.di-indicator');
-            if (!indicator) {
-                console.warn('No indicator found for item:', item);
-                return;
-            }
+            if (!indicator) return;
 
-            const arr = diMap[diKey];
-            if (!arr) {
-                console.warn(`No array found for diKey: ${diKey}`);
-                return;
-            }
+            const driverData = payload[driver - 1]; // 👈 KEY CHANGE
 
-            // Check if driver index exists in the array
-            if (driver - 1 >= arr.length) {
-                console.warn(`Driver ${driver} not found in ${diKey} array (length: ${arr.length})`);
-                return;
-            }
+            if (!driverData) return;
 
-            const isActive = arr[driver - 1];
+            // Mapping index
+            const indexMap = {
+                di1: 0,
+                di2: 1,
+                di3: 2,
+                di4: 3,
+                di5: 4,
+                sto1: 5,
+                sto2: 6,
+                edm: 7
+            };
 
-            // Update indicator
+            const index = indexMap[diKey];
+            const isActive = driverData[index];
+
             if (isActive) {
                 indicator.classList.add('active');
-                indicator.title = `Active - ${new Date().toLocaleTimeString()}`;
             } else {
                 indicator.classList.remove('active');
-                indicator.title = `Inactive - ${new Date().toLocaleTimeString()}`;
-            }
-
-            // Add visual feedback for status change
-            const wasActive = indicator.classList.contains('active');
-            if (isActive !== wasActive) {
-                item.classList.add('status-change');
-                setTimeout(() => {
-                    item.classList.remove('status-change');
-                }, 300);
             }
         });
-
-        // Update timestamp display
-        const timestampElement = document.getElementById('di-timestamp');
-        if (timestampElement && msg.header && msg.header.stamp) {
-            const timestamp = new Date(
-                msg.header.stamp.sec * 1000 +
-                Math.floor(msg.header.stamp.nanosec / 1000000)
-            );
-            timestampElement.textContent = `Last update: ${timestamp.toLocaleTimeString()}`;
-        }
-
-        // console.log('UI update complete from ROS');
     }
-
     // --- Initialize ROS Subscription ---
-    function initializeROSSubscription() {
-        // Check if ROS is available
-        if (typeof ros === 'undefined' || !ros) {
-            console.error('ROS connection not available. DI status will not update.');
-            showConnectionError();
-            return;
-        }
 
-        try {
-            // Create the topic subscription
-            const diStatusTopic = new ROSLIB.Topic({
-                ros: ros,
-                name: '/nextup_digital_inputs',
-                messageType: 'nextup_joint_interfaces/msg/NextupDigitalInputs'
-            });
-
-            // Subscribe to the topic (5Hz update rate)
-            diStatusTopic.subscribe((msg) => {
-                updateDIStatusFromROS(msg);
-            });
-
-            console.log('Subscribed to /nextup_digital_inputs topic');
-
-
-
-        } catch (error) {
-            console.error('Failed to initialize ROS subscription:', error);
-            showConnectionError();
-        }
-    }
 
     // --- Show connection error ---
     function showConnectionError() {
@@ -315,7 +260,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             // Initialize ROS subscription for real-time updates
-            initializeROSSubscription();
 
         } catch (err) {
             console.error('Failed to fetch DI list:', err);

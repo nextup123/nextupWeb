@@ -120,48 +120,7 @@
                         </div>
                     </div>
 
-                    <div class="file-editor">
-                        <div class="section-title">
-                            <i class="fas fa-file-alt"></i>
-                            <h2>File Editor</h2>
-                        </div>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="fileName"><i class="fas fa-file"></i> File Name</label>
-                                <input type="text" id="fileName" placeholder="e.g., backup_1">
-                            </div>
-                            <div class="form-group">
-                                <label for="backupFilesInput">
-                                    <i class="fas fa-folder-open"></i> Backup Files
-                                    <button class="btn-refresh" onclick="clearBackupFileForm()">
-                                        <i class="fas fa-sync-alt"></i>
-                                    </button>
-                                </label>
-                                <div class="dropdown-container">
-                                    <input type="text" id="backupFilesInput" placeholder="Type to search or select...">
-                                    <div id="backupFilesDropdown" class="dropdown-list" style="display: none;">
-                                        <div class="dropdown-item" data-value="">Select a backup file</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="button-group">
-                            <button class="btn btn-primary" onclick="saveFile()">
-                                <i class="fas fa-save"></i> Save File
-                            </button>
-                            <button class="btn btn-success" onclick="loadFile()">
-                                <i class="fas fa-upload"></i> Load File
-                            </button>
-                        </div>
-                        <div class="button-group">
-                            <button class="btn btn-primary" onclick="createNewFile()">
-                                <i class="fas fa-file"></i> Create New File
-                            </button>
-                            <button class="btn btn-danger" onclick="deleteFile()">
-                                <i class="fas fa-trash"></i> Delete File
-                            </button>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div class="sequence-panel">
@@ -642,45 +601,14 @@
         </div>
 
 
-        <script src="script/roslib.js"></script>
-        <script src="script/js-yaml-min.js"></script>
+        <!-- <script src="script/roslib.js"></script> -->
+        <!-- <script src="script/js-yaml-min.js"></script> -->
 
         <script src="script/script.js"></script>
-        <script src="script/yaml_view.js"></script>
-        <script src="script/gamepad.js"></script>
+        <!-- <script src="script/yaml_view.js"></script> -->
+        <!-- <script src="script/gamepad.js"></script> -->
 
 
-        <script>
-
-            const framePub = new ROSLIB.Topic({
-                ros: ros,
-                name: '/frame_mode',
-                messageType: 'std_msgs/String'
-            });
-
-            // Publish selected frame
-            function setFrame(frameName) {
-
-                const msg = new ROSLIB.Message({ data: frameName });
-                framePub.publish(msg);
-
-                // UI active button highlight
-                document.getElementById("btnEnd").classList.remove("active");
-                document.getElementById("btnBase").classList.remove("active");
-                document.getElementById("btnExt").classList.remove("active");
-
-                if (frameName === "end") document.getElementById("btnEnd").classList.add("active");
-                if (frameName === "base_link") document.getElementById("btnBase").classList.add("active");
-                if (frameName === "external_link") document.getElementById("btnExt").classList.add("active");
-
-                console.log("Published frame_mode:", frameName);
-            }
-
-            setTimeout(() => {
-                setFrame('end');
-            }, 1000);
-
-        </script>
 </body>
 
 </html>

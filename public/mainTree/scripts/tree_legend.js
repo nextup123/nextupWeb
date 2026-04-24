@@ -274,7 +274,7 @@ function renderTree(data, containerId = 'tree-view') {
         }
 
 
-
+        if (lastSearchQuery) applySearchHighlight();
     } catch (err) {
         console.error(`Error rendering tree in ${containerId}:`, err);
         throw err;

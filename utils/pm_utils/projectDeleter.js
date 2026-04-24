@@ -41,4 +41,4 @@ async function deleteProject(name) {
   return { success: true, deleted: name };
 }
 
-export { deleteProject };
+export { deleteProject }; 

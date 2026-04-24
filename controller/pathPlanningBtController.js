@@ -52,15 +52,20 @@ export const getPointNamesController =  async (req, res) => {
 }
 
 export const getPathNamesController = async (req, res) => {
+    console.log("0--------------------------------------------------------------------------");
     try {
         console.log(`Attempting to read ${pathsYamlFile}`);
         await fs.promises.access(pathsYamlFile, fs.constants.R_OK);
         console.log(`${pathsYamlFile} is accessible`);
+        console.log("1--------------------------------------------------------------------------");
         const file = await fs.promises.readFile(pathsYamlFile, 'utf8');
         // console.log(`Read ${pathsYamlFile}, content: ${file.slice(0, 100)}...`);
+        console.log("2--------------------------------------------------------------------------");
         const parsed = yaml.load(file);
         // console.log(`Parsed YAML: ${JSON.stringify(parsed, null, 2).slice(0, 100)}...`);
+        console.log("3--------------------------------------------------------------------------");
         const paths = parsed.paths ? parsed.paths.map(p => p.name) : [];
+        console.log("4--------------------------------------------------------------------------");
         console.log(`Returning path names: ${paths}`);
         res.json(paths);
     } catch (err) {

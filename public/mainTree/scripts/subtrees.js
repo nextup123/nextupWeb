@@ -67,70 +67,70 @@ function renderSubtrees() {
 let templateSelectedChild = null;
 
 function openTemplateModal(childSubtreeId) {
-  if (!selectedNode) {
-    showToast('Select a parent node first!', 'warn');
-    return;
-  }
+    if (!selectedNode) {
+        showToast('Select a parent node first!', 'warn');
+        return;
+    }
 
-  if (!checkIsWrapper(selectedNode.data.type)) {
-    showToast('Subtrees can only be added under wrapper nodes!', 'warn');
-    return;
-  }
+    if (!checkIsWrapper(selectedNode.data.type)) {
+        showToast('Subtrees can only be added under wrapper nodes!', 'warn');
+        return;
+    }
 
-  templateSelectedChild = childSubtreeId;
-  document.getElementById('template-subtree-name').textContent =
-    `Subtree: ${childSubtreeId}`;
+    templateSelectedChild = childSubtreeId;
+    document.getElementById('template-subtree-name').textContent =
+        `Subtree: ${childSubtreeId}`;
 
-  document.getElementById('template-modal').style.display = 'flex';
+    document.getElementById('template-modal').style.display = 'flex';
 }
 
 function closeTemplateModal() {
-  document.getElementById('template-modal').style.display = 'none';
-  templateSelectedChild = null;
+    document.getElementById('template-modal').style.display = 'none';
+    templateSelectedChild = null;
 }
 
 document.getElementById('template-cancel-btn')
-  .onclick = closeTemplateModal;
+    .onclick = closeTemplateModal;
 
 document.getElementById('template-full-btn')
-  .onclick = () => handleTemplateAdd('full');
+    .onclick = () => handleTemplateAdd('full');
 
 document.getElementById('template-ref-btn')
-  .onclick = () => handleTemplateAdd('reference');
+    .onclick = () => handleTemplateAdd('reference');
 
 async function handleTemplateAdd(mode) {
-  if (!templateSelectedChild || !selectedNode || !currentSubtreeId) {
-    closeTemplateModal();
-    return;
-  }
+    if (!templateSelectedChild || !selectedNode || !currentSubtreeId) {
+        closeTemplateModal();
+        return;
+    }
 
-  try {
-    const res = await fetch(`${API_BASE}/addSubtreeAsChild`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        subtreeId: currentSubtreeId,
-        parentPath: selectedNode.data.path.slice(1),
-        childSubtreeId: templateSelectedChild,
-        mode
-      })
-    });
+    try {
+        const res = await fetch(`${API_BASE}/addSubtreeAsChild`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                subtreeId: currentSubtreeId,
+                parentPath: selectedNode.data.path.slice(1),
+                childSubtreeId: templateSelectedChild,
+                mode
+            })
+        });
 
-    if (!res.ok) throw new Error(await res.text());
+        if (!res.ok) throw new Error(await res.text());
 
-    showToast(
-      mode === 'reference'
-        ? 'Subtree added as <SubTreePlus>'
-        : 'Subtree added as full copy'
-    );
+        showToast(
+            mode === 'reference'
+                ? 'Subtree added as <SubTreePlus>'
+                : 'Subtree added as full copy'
+        );
 
-    loadSubtree(currentSubtreeId);
-  } catch (err) {
-    console.error(err);
-    showToast(err.message, 'failure');
-  } finally {
-    closeTemplateModal();
-  }
+        loadSubtree(currentSubtreeId);
+    } catch (err) {
+        console.error(err);
+        showToast(err.message, 'failure');
+    } finally {
+        closeTemplateModal();
+    }
 }
 
 
@@ -340,6 +340,8 @@ async function loadSubtree(subtreeId) {
             subtree.tagName
         );
         renderTree(treeData);
+        highlightFailedNodes(failedNodeName, failedTraceNodes);
+
     } catch (err) {
         console.error('Error loading subtree:', err);
         showToast(`Failed to load subtree: ${err.message}`, 'failure');

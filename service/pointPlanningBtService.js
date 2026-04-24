@@ -64,7 +64,7 @@ export async function swapWithBackup() {
 export async function saveYAML(data) {
     try {
         await createBackup();
-        console.log('Saving YAML data:', JSON.stringify(data, null, 2));
+        // console.log('Saving YAML data:', JSON.stringify(data, null, 2));
         const yamlStr = yaml.dump(data, { noRefs: true, noCompatMode: true });
         await fs.writeFile(YAML_FILE, yamlStr, 'utf8');
         console.log('Generated YAML:', yamlStr);

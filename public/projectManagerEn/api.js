@@ -36,6 +36,18 @@ const api = {
     return r.json();
   },
 
+  // ── NEW: real file-level copy ──────────────────────────────────
+  // sourceName : the existing project to duplicate
+  // payload    : { name, owner, description }
+  async copy(sourceName, payload) {
+    const r = await fetch("/api/projects/copy", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sourceName, ...payload }),
+    });
+    return { ok: r.ok, data: await r.json() };
+  },
+ 
   async save() {
     const r = await fetch("/api/projects/save", { method: "POST" });
     return r.json();
@@ -90,4 +102,12 @@ const api = {
     });
     return r.json();
   },
+  async rename(currentName, newName) {
+  const r = await fetch("/api/projects/rename", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ currentName, newName }),
+  });
+  return { ok: r.ok, data: await r.json() };
+},
 };

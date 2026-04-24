@@ -3,8 +3,8 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const chokidar = require('chokidar');
 
-const POINTS_FILE = '/home/nextup/user_config_files/planning_data/points/points.yaml';
-const PATHS_FILE = '/home/nextup/user_config_files/planning_data/paths/paths.yaml';
+const POINTS_FILE = '/home/nextup/NextupRobot/src/active_project_configs/planning_data/points.yaml';
+const PATHS_FILE = '/home/nextup/NextupRobot/src/active_project_configs/planning_data/paths.yaml';
 const TOLERANCE = 0.0001;
 
 // Cache + invalidation
@@ -183,7 +183,7 @@ function analyzePathContinuity() {
 }
 
 // Auto-reload on file change
-chokidar.watch('/home/nextup/user_config_files/planning_data/**/*.yaml')
+chokidar.watch('/home/nextup/NextupRobot/src/active_project_configs/**/*.yaml')
   .on('change', (path) => {
     console.log(`File changed: ${path} → Reloading data...`);
     cachedPoints = cachedPaths = null;

@@ -55,8 +55,8 @@ export const addCustomNodeController = async (req, res) => {
 
 export const getDoDiSubtreesController = async (req, res) => {
   try {
-    const force = String(req.query.force_xml2js_parse === 'true');
-
+    const force = req.query.force_xml2js_parse === 'true';
+    console.log("==============================Line 61 mainTreeController.js:",force);
     const result = await readAndParseXML(DO_DI_TEMPLATE_PATH, force);
     const allChildren = Array.isArray(result['@children']) ? result['@children'] : [];
 
@@ -240,7 +240,7 @@ export const addRunPathSubtreeAsChildController = async (req, res) => {
 
 export const getSubtreesController = async (req, res) => {
   try {
-    const force = String(req.query.force_xml2js_parse === 'true');
+    const force = req.query.force_xml2js_parse === 'true';
     // console.log(`🚀 /getSubtrees requested | force_xml2js_parse=${force}`);
     const result = await readAndParseXML(TEMPLATE_PATH, force);
     const allChildren = Array.isArray(result['@children']) ? result['@children'] : [];
@@ -855,6 +855,7 @@ export const moveNodeAfterController =  async (req, res) => {
     return res.status(400).send('subtreeId and node paths required');
 
   try {
+    
     const result = await readAndParseXML();
 
     const subtree = result['@children']

@@ -1,8 +1,9 @@
-import fs from "fs";
 import path from "path";
-
+import fs from "fs/promises";
 import { fileURLToPath } from "url";
-import { extractNodes, getParsedXml } from "./rosService.js";
+import { extractNodes, getParsedXml } from "./rosHelper.js";
+import { getROSNode } from "./rosService.js";
+import { LOGS_JSON_FILE } from "../config/path.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,13 +14,15 @@ const DO_LAYOUT_PATH = path.join(
 );
 
 const SETTINGS_PATH = path.join(__dirname, "../user_config/user_settings.json");
+
 const DI_LAYOUT_PATH = path.join(
   __dirname,
   "../user_config/layouts/di_layout.json",
 );
 
-fs.mkdirSync(path.dirname(DO_LAYOUT_PATH), { recursive: true });
-fs.mkdirSync(path.dirname(DI_LAYOUT_PATH), { recursive: true });
+// Ensure directories exist
+await fs.mkdir(path.dirname(DO_LAYOUT_PATH), { recursive: true });
+await fs.mkdir(path.dirname(DI_LAYOUT_PATH), { recursive: true });
 
 export const doListController = async (req, res) => {
   try {
@@ -39,34 +42,40 @@ export const doListController = async (req, res) => {
     });
   } catch (err) {
     console.error("Error reading DOs:", err);
-    res
-      .status(500)
-      .json({ error: "Failed to read DO list", details: err.message });
+    res.status(500).json({
+      error: "Failed to read DO list",
+      details: err.message,
+    });
   }
 };
 
-export const getDoLayoutController = (req, res) => {
+export const getDoLayoutController = async (req, res) => {
   try {
-    if (!fs.existsSync(DO_LAYOUT_PATH)) return res.json({});
-    res.json(JSON.parse(fs.readFileSync(DO_LAYOUT_PATH, "utf-8")));
+    const data = await fs.readFile(DO_LAYOUT_PATH, "utf-8").catch(() => null);
+
+    if (!data) return res.json({});
+
+    res.json(JSON.parse(data));
   } catch (e) {
     console.error("Failed to read DO layout:", e);
     res.status(500).json({ error: "Failed to load DO layout" });
   }
 };
 
-export const postDoLayoutController = (req, res) => {
+export const postDoLayoutController = async (req, res) => {
   try {
     const tmp = DO_LAYOUT_PATH + ".tmp";
-    fs.writeFileSync(tmp, JSON.stringify(req.body, null, 2));
-    fs.renameSync(tmp, DO_LAYOUT_PATH);
+
+    await fs.writeFile(tmp, JSON.stringify(req.body, null, 2));
+    await fs.rename(tmp, DO_LAYOUT_PATH);
+
     res.json({ status: "ok" });
   } catch (e) {
-    console.error("Failed to save DO layout:", e);
-    res.status(500).json({ error: "Failed to save DO layout" });
-  }
-};
-
+    console.error("Failed to save DO layout:", e); {
+      res.status(500).json({ error: "Failed to save DO layout" });
+    }
+  };
+}
 export const diListController = async (req, res) => {
   try {
     const jsonRoot = getParsedXml();
@@ -83,27 +92,27 @@ export const diListController = async (req, res) => {
     });
   } catch (err) {
     console.error("Error reading DIs:", err);
-    res
-      .status(500)
-      .json({ error: "Failed to read DI list", details: err.message });
+    res.status(500).json({
+      error: "Failed to read DI list",
+      details: err.message,
+    });
   }
 };
 
-export const getDiLayoutController = (req, res) => {
+export const getDiLayoutController = async (req, res) => {
   try {
-    if (!fs.existsSync(DI_LAYOUT_PATH)) {
-      return res.json({});
-    }
+    const data = await fs.readFile(DI_LAYOUT_PATH, "utf-8").catch(() => null);
 
-    const layout = JSON.parse(fs.readFileSync(DI_LAYOUT_PATH, "utf-8"));
-    res.json(layout);
+    if (!data) return res.json({});
+
+    res.json(JSON.parse(data));
   } catch (err) {
     console.error("Failed to read DI layout:", err);
     res.status(500).json({ error: "Failed to load DI layout" });
   }
 };
 
-export const postDiLayoutController = (req, res) => {
+export const postDiLayoutController = async (req, res) => {
   try {
     const layout = req.body;
 
@@ -112,8 +121,9 @@ export const postDiLayoutController = (req, res) => {
     }
 
     const tempPath = DI_LAYOUT_PATH + ".tmp";
-    fs.writeFileSync(tempPath, JSON.stringify(layout, null, 2));
-    fs.renameSync(tempPath, DI_LAYOUT_PATH); // atomic replace
+
+    await fs.writeFile(tempPath, JSON.stringify(layout, null, 2));
+    await fs.rename(tempPath, DI_LAYOUT_PATH);
 
     res.json({ status: "ok" });
   } catch (err) {
@@ -121,3 +131,61 @@ export const postDiLayoutController = (req, res) => {
     res.status(500).json({ error: "Failed to save DI layout" });
   }
 };
+
+export const startMotionPlanningController = async (req, res) => {
+  try {
+    console.log("Line 130 ros controller.js");
+
+    const ros = getROSNode();
+
+    if (!ros) {
+      console.error("ROS not initialized yet");
+      return res.status(500).json({ error: "ROS not initialized" });
+    }
+
+    await ros.publishMotionStart(true); // assuming this can be async
+
+    res.json({ status: "started" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to start motion planning" });
+  }
+};
+
+export async function getLogsController(req, res) {
+  try {
+    const data = await fs.readFile(LOGS_JSON_FILE, "utf-8");
+    const logs = JSON.parse(data);
+
+    res.json({
+      success: true,
+      data: logs,
+    });
+  } catch (err) {
+    console.error("Error reading logs:", err);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch logs",
+    });
+  }
+}
+
+export async function setFrameController(req, res) {
+  const { frame } = req.body;
+  if (!frame || typeof frame !== 'string') {
+    return res.status(400).json({ error: 'Missing or invalid "frame" field' });
+  }
+
+  const ros = getROSNode();
+  if (!ros) {
+    console.error("ROS not initialized yet");
+    return res.status(500).json({ error: "ROS not initialized" });
+  }
+
+  // ✅ Correct: call the dedicated method
+  ros.publishFrameMode(frame);
+
+  console.log(`Published frame_mode: ${frame}`);
+  res.json({ success: true, frame });
+}

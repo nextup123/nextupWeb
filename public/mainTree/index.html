@@ -124,17 +124,35 @@
         <span id="current-subtree-name">
           No Subtree Selected
         </span>
-        <div class="tree-spacing-control">
-          <label>Horizontal</label>
-          <input type="range" id="spacing-x-slider" min="10" max="250" step="1" value="30">
 
-          <label>Vertical</label>
-          <input type="range" id="spacing-y-slider" min="20" max="250" step="1" value="90">
+        <div id="search-bar" style="display:flex; align-items:center; gap:6px; padding:4px 8px;">
+          <input type="text" id="search-input" placeholder="Search nodes..."
+            style="flex:1; padding:4px 8px; font-size:12px;" />
+          <span id="search-counter" style="font-size:11px; color:#888; min-width:40px;"></span>
+          <button onclick="navigateMatch(-1)" title="Previous" style="padding:6px 10px;">prev</button>
+          <button onclick="navigateMatch(1)" title="Next" style="padding:6px 10px;">next</button>
+          <button onclick="clearSearch()" title="Clear" style="padding:6px 10px;">clear</button>
+        </div>
+
+        <div id="view-toggle" style="display:flex; gap:4px;">
+          <button id="btn-tree-view" class="view-btn active" onclick="switchView('tree')" title="Tree view">⬡  Tree</button>
+          <button id="btn-nested-view" class="view-btn" onclick="switchView('nested')" title="Nested view">☰  ladder</button>
+        </div>
+        <div class="tree-spacing-control">
+          <div style="display: flex;justify-content: space-between;">
+            <label>Horizontal</label>
+            <input type="range" id="spacing-x-slider" min="10" max="250" step="1" value="30">
+          </div>
+          <div style="display: flex;justify-content: space-between;">
+            <label>Vertical</label>
+            <input type="range" id="spacing-y-slider" min="20" max="250" step="1" value="90">
+          </div>
         </div>
       </div>
       <div id="tree-view"></div>
-      <div id="tree-legend">loading</div>
+      <div id="nested-view" style="display:none; overflow:auto; padding:12px;"></div>
     </div>
+    <div id="tree-legend" style="display: none;">loading</div>
 
     <!-- ==================== TEMPLATE PANEL ==================== -->
     <div id="template-panel">
@@ -148,13 +166,14 @@
                   font-size: 12px;
                   background-color: #28a745;
                   border-radius: 8px;
-                  padding: 4px;
+                  padding: 8px;
+                  color: #ffffff;
                   cursor: pointer;
                   transition: transform 0.15s ease, box-shadow 0.15s ease;
                 " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.2)';"
             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';" id="reload-all-trees">
             Reload
-            <i class="fas fa-rotate-right" title="Reload Subtrees" style="cursor:pointer;color:#007aff;"></i>
+            <i class="fas fa-rotate-right" title="Reload Subtrees" style="cursor:pointer;color:#ffffff;"></i>
           </div>
         </span>
         <div style="display: flex; align-items: center;">
@@ -348,14 +367,18 @@
 
 
 
+
   <script src="scripts/script.js"></script>
-  <script src="scripts/roslib.js"></script>
+  <script src="scripts/search.js"></script>
+  <script src="scripts/ros_code.js"></script>
+  <script src="scripts/roslib.js"></script> 
   <script src="scripts/node_editor.js"></script>
   <script src="scripts/subtrees.js"></script>
   <script src="scripts/do_di_subtrees.js"></script>
   <script src="scripts/context_menu.js"></script>
   <script src="scripts/tree_legend.js"></script>
   <script src="scripts/main_tree.js"></script>
+  <script src="scripts/nested_tree.js"></script>
   <script src="scripts/show_toast.js"></script>
 </body>
 

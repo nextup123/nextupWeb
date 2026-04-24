@@ -25,6 +25,94 @@ const xmlModal = document.getElementById('xmlModal');
 const sequenceCount = document.getElementById('sequenceCount');
 const editorSlider = document.querySelector('.editor-slider');
 
+//---------------------------------------------------ROS CODE------------------------------------------------------
+const allDiIndicators = [];
+
+// setInterval(() => {
+//     console.log(allDiIndicators);
+// }, 1000);
+
+window.addEventListener("message", (event) => {
+    const msg = event.data;
+
+    if (!msg || !msg.type) return;
+
+    switch (msg.type) {
+
+        case "DO_STATUS":
+            const { driver, do1, do2, do3, do4 } = msg.payload;
+
+            [1, 2, 3, 4].forEach((id) => {
+                const state =
+                    id === 1 ? do1 :
+                        id === 2 ? do2 :
+                            id === 3 ? do3 :
+                                do4;
+
+                const indicator = document.getElementById(`do_indicator_${driver}_${id}`);
+                const toggle = document.getElementById(`do_toggle_${driver}_${id}`);
+
+                if (indicator) {
+                    indicator.classList.toggle("on", state);
+                }
+                if (toggle) {
+                    toggle.checked = state;
+                }
+            });
+            break;
+
+
+        // In the DI_STATUS message handler in script.js
+        case "DI_STATUS":
+            const payload = msg.payload;
+            console.log(payload);
+            payload.forEach((driverData, drvIndex) => {
+                driverData.forEach((value, diIndex) => {
+                    const id = `di_indicator_${drvIndex + 1}_${diIndex}`;
+                    const indicator = document.getElementById(id);
+                    if (indicator) {
+                        indicator.classList.toggle("on", value === true);
+                    }
+                });
+            });
+            break;
+    }
+});
+
+// ========== ROS INITIALIZATION ==========
+
+function playBootAnimation(callback) {
+    if (!allDiIndicators.length) {
+        callback && callback();
+        return;
+    }
+    const totalDuration = 1000;
+    const stepTime = totalDuration / allDiIndicators.length;
+    allDiIndicators.forEach((ind, i) => {
+        setTimeout(() => {
+            ind.classList.add('on');
+            setTimeout(() => {
+                ind.classList.remove('on');
+            }, stepTime * 0.8);
+        }, i * stepTime);
+    });
+    setTimeout(() => {
+        callback && callback();
+    }, totalDuration + 100);
+}
+
+
+function toggleDO(driver, doId) {
+    const toggle = document.getElementById(`do_toggle_${driver}_${doId}`);
+    const state = toggle.checked;
+
+    window.parent.postMessage({
+        type: "TOGGLE_DO",
+        payload: { driver, doId, state }
+    }, "*");
+}
+// ----------------------------------------------------------------------------------------------------------------
+
 let currentEditor = 0;
 
 function showStatus(message, type = "success", timeout = 3000) {
@@ -103,7 +191,7 @@ function toggleDIFallback() {
     if (diFallbackEnabled.checked) {
         console.log('di fallback enabled');
     }
-    else{
+    else {
         console.log('di fallback disabled');
     }
 }
@@ -124,7 +212,6 @@ function updateDoIdOptions(driverId) {
         doIdSelect.appendChild(option);
     });
 
-    // Restore previous value if valid, else default to '1'
     const previous = doIdSelect.value;
     doIdSelect.value =
         editingControlName &&
@@ -132,9 +219,9 @@ function updateDoIdOptions(driverId) {
             ? previous
             : '1';
 
-    // Enforce control type rule after updating DO
     enforceControlTypeForDO();
 }
+
 function enforceControlTypeForDO() {
     const doIdSelect = document.getElementById('doId');
     const controlTypeSelect = document.getElementById('controlType');
@@ -145,17 +232,14 @@ function enforceControlTypeForDO() {
     const switchOption = controlTypeSelect.querySelector('option[value="switch"]');
 
     if (isPiP) {
-        // Disable push, force switch
         if (pushOption) pushOption.disabled = true;
         controlTypeSelect.value = 'switch';
     } else {
-        // Enable both
         if (pushOption) pushOption.disabled = false;
     }
 }
-document.getElementById('doId')
-    .addEventListener('change', enforceControlTypeForDO);
 
+document.getElementById('doId').addEventListener('change', enforceControlTypeForDO);
 
 function swipeEditor(direction) {
     if (direction === 'left' && currentEditor > 0) {
@@ -164,6 +248,10 @@ function swipeEditor(direction) {
         currentEditor++;
     }
     editorSlider.style.transform = `translateX(-${currentEditor * 50}%)`;
+
+    // ✅ Keep tab highlight in sync
+    document.getElementById('doEditor').classList.toggle('active', currentEditor === 0);
+    document.getElementById('diEditor').classList.toggle('active', currentEditor === 1);
 }
 
 async function loadSequences() {
@@ -275,7 +363,7 @@ async function addDOControl() {
 
     const body = {
         type: 'DO',
-        name: `${doName.value}[DO]`,   // 👈 append [DO]
+        name: `${doName.value}[DO]`,
         driverId: doDriverId.value,
         doId: doId.value,
         controlType: controlType.value,
@@ -288,9 +376,6 @@ async function addDOControl() {
         loadSequences();
     });
 }
-
-
-
 
 async function updateDOControl() {
     if (!editingControlName || !doName.value || !/^[A-Za-z0-9]+(\[(DO|DI)\])?$/.test(doName.value)) {
@@ -317,7 +402,6 @@ async function updateDOControl() {
     });
 }
 
-
 async function addDIControl() {
     if (!diName.value || !/^[A-Za-z0-9]+$/.test(diName.value)) {
         showStatus('DI Name must be alphanumeric without spaces', 'error', 3000);
@@ -342,7 +426,6 @@ async function addDIControl() {
     });
 }
 
-
 async function updateDIControl() {
     if (!editingControlName || !diName.value || !/^[A-Za-z0-9]+(\[(DO|DI)\])?$/.test(diName.value)) {
         showStatus('DI Name must be alphanumeric without spaces', 'error', 3000);
@@ -361,7 +444,6 @@ async function updateDIControl() {
         waitTime: waitTimeEnabled.checked ? waitTime.value : null,
         responseMsg: diResponseMsg.value,
         with_fallback: diFallbackEnabled.checked
-
     };
     await callAPI('updateControl', body, () => {
         clearDIForm();
@@ -379,7 +461,7 @@ function editControl(name, type) {
             .then(data => {
                 doName.value = data.name;
                 doDriverId.value = data.driverId;
-                updateDoIdOptions(data.driverId); // Update DO ID options based on driver
+                updateDoIdOptions(data.driverId);
                 doId.value = data.doId;
                 controlType.value = data.controlType;
                 pushWait.value = data.pushWait;
@@ -454,7 +536,7 @@ async function callAPI(endpoint, body, callback) {
 function clearDOForm() {
     doName.value = '';
     doDriverId.value = '1';
-    updateDoIdOptions('1'); // Reset DO ID options for driver 1
+    updateDoIdOptions('1');
     controlType.value = 'switch';
     pushWait.value = '250';
     doResponseMsg.value = '';
@@ -481,11 +563,120 @@ async function reloadSequences() {
     await loadSequences();
 }
 
+// ========== ACTION.JS FUNCTIONS ==========
+const undoBtn = document.getElementById('undoBtn');
+const sortDiFirstBtn = document.getElementById('sortDiFirst');
+const sortDoFirstBtn = document.getElementById('sortDoFirst');
+
+async function makeRequest(endpoint, options = {}) {
+    try {
+        const response = await fetch(`${API_BASE}/${endpoint}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            },
+            ...options
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message || `HTTP error! status: ${response.status}`);
+        }
+        return data;
+    } catch (error) {
+        showStatus(`Error: ${error.message}`, 'error', 3000);
+        throw error;
+    }
+}
+
+async function checkUndo() {
+    try {
+        undoBtn.disabled = true;
+        const data = await makeRequest('canUndo');
+        undoBtn.disabled = !data.canUndo;
+    } catch (error) {
+        undoBtn.disabled = true;
+        console.error('Failed to check undo:', error);
+    }
+}
+
+async function performUndo() {
+    try {
+        undoBtn.disabled = true;
+        const data = await makeRequest('undo', { method: 'POST' });
+        showStatus('Undo successful', 'success', 1000);
+        setTimeout(reloadSequences, 500);
+        setTimeout(checkUndo, 300);
+    } catch (error) {
+        console.error('Failed to undo:', error);
+        checkUndo();
+    }
+}
+
+async function sortSequences(sortOrder) {
+    try {
+        const data = await makeRequest(`reorderSequences?sortOrder=${sortOrder}`, { method: 'POST' });
+        showStatus(`Sorted ${sortOrder === 'diFirst' ? 'DI' : 'DO'} first successfully`, 'success', 1000);
+        setTimeout(reloadSequences, 200);
+        setTimeout(checkUndo, 300);
+    } catch (error) {
+        console.error(`Failed to sort ${sortOrder}:`, error);
+        showStatus(`Failed to sort ${sortOrder === 'diFirst' ? 'DI' : 'DO'} first`, 'error', 3000);
+    }
+}
+
+// ========== INITIALIZATION ==========
 async function init() {
     await loadSequences();
     togglePushWait();
     toggleWaitTime();
-    updateDoIdOptions(doDriverId.value); // Initialize DO ID options
-    doDriverId.addEventListener('change', () => updateDoIdOptions(doDriverId.value)); // Update on driver change
+    updateDoIdOptions(doDriverId.value);
+    buildDIIndicatorTable();
+    doDriverId.addEventListener('change', () => updateDoIdOptions(doDriverId.value));
+
+    checkUndo();
+
+    if (sortDiFirstBtn) {
+        sortDiFirstBtn.addEventListener('click', () => sortSequences('diFirst'));
+    }
+    if (sortDoFirstBtn) {
+        sortDoFirstBtn.addEventListener('click', () => sortSequences('doFirst'));
+    }
+    if (undoBtn) {
+        undoBtn.addEventListener('click', performUndo);
+    }
+
+    playBootAnimation(() => {
+        // subscribeToDITopic();
+        // subscribeToDOTopics();
+    });
 }
+
+function buildDIIndicatorTable() {
+    console.log("Table is trggered")
+    const tbody = document.getElementById('di_indicator_table_body');
+    tbody.innerHTML = '';
+
+    for (let diIndex = 0; diIndex < 8; diIndex++) {
+        const tr = document.createElement('tr');
+
+        const tdLabel = document.createElement('td');
+        tdLabel.innerHTML = `<b>DI${diIndex + 1}</b>`;
+        tr.appendChild(tdLabel);
+
+        for (let drvIndex = 1; drvIndex <= 6; drvIndex++) {
+            const td = document.createElement('td');
+            const span = document.createElement('span');
+            span.className = 'di-indicator-light';
+            span.id = `di_indicator_${drvIndex}_${diIndex}`;
+            td.appendChild(span);
+            tr.appendChild(td);
+
+            // ✅ Reference the span directly — no querySelector on detached nodes
+            allDiIndicators.push(span);
+        }
+
+        tbody.appendChild(tr);
+    }
+}
+
 init();

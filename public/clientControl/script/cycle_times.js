@@ -24,28 +24,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // ROS setup
-  function connectROS() {
-    ros = new ROSLIB.Ros({
-      url: 'ws://localhost:9090'
-    });
+  window.addEventListener("message", (event) => {
+    const msg = event.data;
 
-    ros.on('connection', () => console.log('🟢 Connected to ROS bridge for cycle times'));
-    ros.on('error', err => console.error('🔴 ROS error:', err));
-    ros.on('close', () => console.warn('🟠 ROS connection closed (cycle_times)'));
+    if (!msg || msg.type !== "CYCLE_COUNT") return;
 
-    cycleTopic = new ROSLIB.Topic({
-      ros,
-      name: '/cycle_count',
-      messageType: 'std_msgs/msg/Int32'
-    });
-
-    cycleTopic.subscribe(() => handleCycleTime());
-  }
-
+    handleCycleTime(msg.timestamp);
+  });
   // Core timing logic
-  function handleCycleTime() {
-    const now = Date.now();
-
+function handleCycleTime(now) {
     if (lastTimestamp !== null) {
       const deltaSec = (now - lastTimestamp) / 1000;
 
@@ -71,5 +58,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     lastTimestamp = now;
   }
 
-  connectROS();
 });

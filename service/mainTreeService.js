@@ -2,8 +2,10 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import { fileURLToPath } from 'url';
-import { parseXmlString } from '../user_config/customXmlParser.js';
-import { TEMPLATE_PATH } from '../config/path.js';
+import { jsonToXml, parseXmlString } from '../user_config/customXmlParser.js';
+import { NODES_JSON_PATH, TEMPLATE_PATH } from '../config/path.js';
+
+export {NODES_JSON_PATH} from "../config/path.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,9 +14,12 @@ export async function readAndParseXML(filePath = TEMPLATE_PATH, forceXml2jsParse
   try {
     const baseName = path.basename(filePath, '.xml');
     const UID_CACHE_PATH = path.join(__dirname, '../user_config', `${baseName}_with_uids.json`);
-    console.log("Line 14 mainTreeService",UID_CACHE_PATH);
+    console.log("Variable type:",typeof forceXml2jsParse);
+    console.log("Line 16 mainTreeService",UID_CACHE_PATH,"forceXml2jsParse:",forceXml2jsParse);
     if (!forceXml2jsParse) {
       try {
+        console.log("Line 19 mainTreeService",UID_CACHE_PATH);
+        
         const cached = await fs.readFile(UID_CACHE_PATH, 'utf-8');
         return JSON.parse(cached);
       } catch {

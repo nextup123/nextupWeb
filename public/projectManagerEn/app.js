@@ -19,13 +19,13 @@
 // DOM REFS
 // =========================
 const projectDetailsEl = document.getElementById("projectDetails");
-const projectListEl    = document.getElementById("projectList");
-const projectCount     = document.getElementById("projectCount");
-const sseStatusDot     = document.querySelector(".status-dot");
-const searchInput      = document.getElementById("searchInput");
-const searchClear      = document.getElementById("searchClear");
+const projectListEl = document.getElementById("projectList");
+const projectCount = document.getElementById("projectCount");
+const sseStatusDot = document.querySelector(".status-dot");
+const searchInput = document.getElementById("searchInput");
+const searchClear = document.getElementById("searchClear");
 const defaultNewProject = document.querySelector(".default-project-btn");
-const blankProjectBtn   = document.querySelector(".blank-project-btn");
+const blankProjectBtn = document.querySelector(".blank-project-btn");
 
 // View toggle
 const viewGridBtn = document.getElementById("viewGrid");
@@ -37,11 +37,11 @@ const viewListBtn = document.getElementById("viewList");
 const projectStates = {}; // { [projectName]: { state, reason } }
 
 const state = {
-  projects:      [],
+  projects: [],
   activeProject: null,
-  sortBy:        "name",
-  viewMode:      "grid",   // "grid" | "list"
-  searchQuery:   "",
+  sortBy: "name",
+  viewMode: "grid",   // "grid" | "list"
+  searchQuery: "",
 };
 
 // =========================
@@ -82,7 +82,7 @@ function startSSE() {
   });
 
   // track connection state
-  evtSource.onopen  = () => setSseDot("connected");
+  evtSource.onopen = () => setSseDot("connected");
   evtSource.onerror = () => setSseDot("error");
 }
 
@@ -90,7 +90,7 @@ function setSseDot(status) {
   if (!sseStatusDot) return;
   sseStatusDot.className = "status-dot";
   if (status === "connected") sseStatusDot.classList.add("connected");
-  if (status === "error")     sseStatusDot.classList.add("error");
+  if (status === "error") sseStatusDot.classList.add("error");
 }
 
 // =========================
@@ -160,7 +160,7 @@ async function loadActiveProject() {
       return;
     }
 
-    const activeName      = res.data.active_project;
+    const activeName = res.data.active_project;
     const activeProjectData = await api.loadActive(activeName);
 
     if (!activeProjectData.ok) throw new Error("Failed to load active project data");
@@ -179,7 +179,7 @@ async function loadActiveProject() {
 // =========================
 async function loadProjects() {
   try {
-    const res      = await api.list();
+    const res = await api.list();
     state.projects = res.projects || res || [];
     projectCount.innerText = `${state.projects.length} project${state.projects.length !== 1 ? "s" : ""}`;
   } catch (err) {
@@ -198,10 +198,10 @@ function renderProject(project) {
   }
 
   const fields = [
-    ["Name",     project.name],
-    ["Owner",    project.owner],
-    ["Type",     project.project_type],
-    ["Created",  formatDate(project.created_at)],
+    ["Name", project.name],
+    ["Owner", project.owner],
+    ["Type", project.project_type],
+    ["Created", formatDate(project.created_at)],
     ["Modified", formatDate(project.last_modified)],
     // ["Status",   project.is_dirty ? "● Unsaved" : "● Saved"],
   ];
@@ -256,10 +256,10 @@ function renderProjectList() {
     filtered = filtered.filter((p) => {
       const q = state.searchQuery;
       return (
-        (p.name  || "").toLowerCase().includes(q) ||
+        (p.name || "").toLowerCase().includes(q) ||
         (p.owner || "").toLowerCase().includes(q) ||
         (p.project_type || "").toLowerCase().includes(q) ||
-        (p.description   || "").toLowerCase().includes(q)
+        (p.description || "").toLowerCase().includes(q)
       );
     });
   }
@@ -278,10 +278,10 @@ function renderProjectList() {
   // Sort
   const sorted = [...filtered].sort((a, b) => {
     switch (state.sortBy) {
-      case "name":    return (a.name || "").localeCompare(b.name || "");
-      case "date":    return new Date(b.last_modified || 0) - new Date(a.last_modified || 0);
-      case "created": return new Date(b.created_at    || 0) - new Date(a.created_at    || 0);
-      default:        return 0;
+      case "name": return (a.name || "").localeCompare(b.name || "");
+      case "date": return new Date(b.last_modified || 0) - new Date(a.last_modified || 0);
+      case "created": return new Date(b.created_at || 0) - new Date(a.created_at || 0);
+      default: return 0;
     }
   });
 
@@ -290,9 +290,9 @@ function renderProjectList() {
     const card = document.createElement("div");
     card.className = "project-card" + (isActive ? " active" : "");
 
-    const name     = proj.name         || "Untitled";
-    const owner    = proj.owner        || "Unknown";
-    const type     = proj.project_type || "Default";
+    const name = proj.name || "Untitled";
+    const owner = proj.owner || "Unknown";
+    const type = proj.project_type || "Default";
     const modified = formatStructuredDate(proj.last_modified);
 
     let badgeHTML = "";
@@ -315,19 +315,19 @@ function renderProjectList() {
         <div class="date-section" title="Last modified">${modified}</div>
         <div class="card-actions">
           <button class="action-btn primary set-default-btn"   ${isActive ? 'disabled title="Already active"' : ''}>Load</button>
-          <button class="action-btn copy-btn">Copy</button>
-          <button class="action-btn version-btn">History</button>
           <button class="action-btn rename-btn">Rename</button>
+          <button class="action-btn copy-btn">Copy</button>
+          <button class="action-btn version-btn" style="display:none;">History</button>
           <button class="action-btn danger delete-btn"         ${isActive ? 'disabled title="Cannot delete the active project"' : ''}>Delete</button>
-        </div>
-      </div>
-    `;
+          </div>
+          </div>
+          `;
 
     // ---- Load ----
     card.querySelector(".set-default-btn").addEventListener("click", async (e) => {
       e.stopPropagation();
       const activeName = state.activeProject?.name;
-      const isDirty    = activeName && projectStates[activeName]?.state === "DIRTY";
+      const isDirty = activeName && projectStates[activeName]?.state === "DIRTY";
 
       if (isDirty) {
         const choice = await showDirtySwitchConfirm(proj.name);
@@ -345,7 +345,7 @@ function renderProjectList() {
         }
       } else {
         const ok = await showConfirm({
-          title:   "Set Active Project",
+          title: "Set Active Project",
           message: `Make "${proj.name}" the active project?`,
         });
         if (!ok) return;
@@ -377,7 +377,7 @@ function renderProjectList() {
       if (isActive) return;
 
       const ok = await showConfirm({
-        title:   "Delete Project",
+        title: "Delete Project",
         message: `Delete "${proj.name}" permanently? This cannot be undone.`,
       });
       if (!ok) return;
@@ -405,13 +405,16 @@ async function setAsDefaultProject(projectName) {
   try {
     const res = await api.load(projectName);
     if (!res.ok) throw new Error();
-
+ 
     showNotification(`"${projectName}" is now active`);
-
-    window.parent.dispatchEvent(new CustomEvent("activeProjectChanged", {
-      detail: { name: projectName },
-    }));
-
+ 
+    // ── Notify the parent shell to reload all data pages ──────────
+    // Uses postMessage so it works regardless of same/cross origin.
+    window.parent.postMessage(
+      { type: "projectLoaded", name: projectName },
+      "*"
+    );
+ 
     await loadActiveProject();
     await loadProjects();
     renderProjectList();
@@ -419,28 +422,40 @@ async function setAsDefaultProject(projectName) {
     showNotification("Failed to set active project", "error");
   }
 }
+ 
 
 // =========================
 // COPY PROJECT
 // =========================
+
 async function copyProject(sourceProject, newName, owner, description) {
   try {
-    const payload = {
-      name:          newName,
-      owner:         owner       || "Anonymous",
-      description:   description || `Copy of ${sourceProject.name}`,
-      project_type:  sourceProject.project_type || "standard",
-      created_at:    new Date().toISOString(),
-      last_modified: new Date().toISOString(),
-    };
-    const res = await api.create(payload);
-    if (!res || res.success === false) throw new Error();
+    // ── Call the REAL copy endpoint ──────────────────────────────
+    // This physically duplicates the source project's files on disk,
+    // strips .session.yaml, and writes a fresh project.yaml.
+    const res = await api.copy(sourceProject.name, {
+      name:        newName,
+      owner:       owner       || sourceProject.owner || "Anonymous",
+      description: description || `Copy of ${sourceProject.name}`,
+    });
 
-    showNotification(`"${newName}" created`);
+    if (!res.ok || res.data?.success === false) {
+      // Surface a meaningful error if the name already exists
+      const msg = res.data?.error || "Copy failed";
+      throw new Error(msg);
+    }
+
+    showNotification(`"${newName}" created as a copy of "${sourceProject.name}"`);
     await loadProjects();
     renderProjectList();
-  } catch {
-    showNotification("Copy failed", "error");
+
+  } catch (err) {
+    console.error("[copyProject]", err);
+    // Give the user a specific message for the most common failure
+    const msg = err.message?.includes("already exists")
+      ? `A project named "${newName}" already exists`
+      : "Copy failed — please try again";
+    showNotification(msg, "error");
   }
 }
 
@@ -454,18 +469,25 @@ async function openCopyProjectModal(project) {
   });
 
   if (!result || !result.name) return;
-  copyProject(project, result.name, result.owner, result.description);
+
+  // Guard: don't allow copying onto itself
+  if (result.name.trim() === project.name) {
+    showNotification("New name must be different from the source", "error");
+    return;
+  }
+
+  copyProject(project, result.name.trim(), result.owner, result.description);
 }
 
 // =========================
 // RENAME
 // =========================
 async function openRenameModal(project) {
-  const modal      = document.getElementById("renameModal");
-  const field      = document.getElementById("renameField");
-  const okBtn      = document.getElementById("renameOk");
-  const cancelBtn  = document.getElementById("renameCancel");
-  const closeBtn   = document.getElementById("renameModalClose");
+  const modal = document.getElementById("renameModal");
+  const field = document.getElementById("renameField");
+  const okBtn = document.getElementById("renameOk");
+  const cancelBtn = document.getElementById("renameCancel");
+  const closeBtn = document.getElementById("renameModalClose");
 
   field.value = project.name;
   modal.classList.add("active");
@@ -477,36 +499,40 @@ async function openRenameModal(project) {
       okBtn.removeEventListener("click", okHandler);
       cancelBtn.removeEventListener("click", cancelHandler);
       closeBtn.removeEventListener("click", cancelHandler);
+      modal.removeEventListener("click", outsideHandler);
       resolve(result);
+    }
+
+    function outsideHandler(e) {
+      if (e.target === modal) cleanup(null);
     }
 
     async function okHandler() {
       const newName = field.value.trim();
-      if (!newName || newName === project.name) { cleanup(null); return; }
 
-      // Rename = create copy then delete old (if backend lacks rename endpoint)
-      // or use a dedicated rename endpoint if available
+      if (!newName) { field.focus(); return; }
+      if (newName === project.name) { cleanup(null); return; }
+
+      okBtn.disabled = true;
+      okBtn.textContent = "Renaming…";
+
       try {
-        const payload = {
-          name:          newName,
-          owner:         project.owner,
-          description:   project.description || "",
-          project_type:  project.project_type || "standard",
-          created_at:    project.created_at,
-          last_modified: new Date().toISOString(),
-        };
-        const res = await api.create(payload);
-        if (!res || res.success === false) throw new Error();
+        const res = await api.rename(project.name, newName);
 
-        // If the renamed project was active, load new name
-        const wasActive = state.activeProject?.name === project.name;
+        if (!res.ok) {
+          const msg = res.data?.error || "Rename failed";
+          showNotification(msg, "error");
+          return;
+        }
 
-        await api.deleteProject(project.name);
+        // Keep projectStates in sync
         if (projectStates[project.name]) {
           projectStates[newName] = { ...projectStates[project.name], project: newName };
           delete projectStates[project.name];
         }
 
+        // If renamed project was active, reload under new name
+        const wasActive = state.activeProject?.name === project.name;
         if (wasActive) await setAsDefaultProject(newName);
 
         showNotification(`Renamed to "${newName}"`);
@@ -514,10 +540,13 @@ async function openRenameModal(project) {
         await loadActiveProject();
         renderProjectList();
         cleanup(newName);
+
       } catch (err) {
-        console.error(err);
+        console.error("[openRenameModal]", err);
         showNotification("Rename failed", "error");
-        cleanup(null);
+      } finally {
+        okBtn.disabled = false;
+        okBtn.textContent = "Rename";
       }
     }
 
@@ -526,6 +555,7 @@ async function openRenameModal(project) {
     okBtn.addEventListener("click", okHandler);
     cancelBtn.addEventListener("click", cancelHandler);
     closeBtn.addEventListener("click", cancelHandler);
+    modal.addEventListener("click", outsideHandler);
   });
 }
 
@@ -533,13 +563,13 @@ async function openRenameModal(project) {
 // VERSION HISTORY
 // =========================
 async function openVersionModal(projectName) {
-  const modal       = document.getElementById("versionModal");
-  const listEl      = document.getElementById("versionList");
-  const labelEl     = document.getElementById("versionProjectLabel");
-  const closeBtn    = document.getElementById("versionModalClose");
+  const modal = document.getElementById("versionModal");
+  const listEl = document.getElementById("versionList");
+  const labelEl = document.getElementById("versionProjectLabel");
+  const closeBtn = document.getElementById("versionModalClose");
 
   labelEl.innerText = projectName;
-  listEl.innerHTML  = `<div class="version-loading">Loading versions…</div>`;
+  listEl.innerHTML = `<div class="version-loading">Loading versions…</div>`;
   modal.classList.add("active");
 
   // Close handler
@@ -582,7 +612,7 @@ async function openVersionModal(projectName) {
 
       item.querySelector(".version-restore-btn").addEventListener("click", async () => {
         const ok = await showConfirm({
-          title:   "Restore Version",
+          title: "Restore Version",
           message: `Restore "${projectName}" to version ${v.versionId || v.id}? Unsaved changes will be lost.`,
         });
         if (!ok) return;
@@ -641,15 +671,15 @@ function escapeHtml(str) {
 // =========================
 function showConfirm({ title, message }) {
   return new Promise((resolve) => {
-    const modal   = document.getElementById("confirmDefaultModal");
+    const modal = document.getElementById("confirmDefaultModal");
     const titleEl = document.getElementById("confirmTitle");
-    const msgEl   = document.getElementById("confirmMessage");
-    const okBtn   = document.getElementById("confirmOk");
+    const msgEl = document.getElementById("confirmMessage");
+    const okBtn = document.getElementById("confirmOk");
     const cancelBtn = document.getElementById("confirmCancel");
 
     titleEl.innerText = title;
-    msgEl.innerText   = message;
-    okBtn.innerText   = "Confirm";
+    msgEl.innerText = message;
+    okBtn.innerText = "Confirm";
     cancelBtn.innerText = "Cancel";
 
     modal.classList.add("active");
@@ -661,7 +691,7 @@ function showConfirm({ title, message }) {
       resolve(result);
     }
 
-    function okHandler()     { cleanup(true); }
+    function okHandler() { cleanup(true); }
     function cancelHandler() { cleanup(false); }
 
     okBtn.addEventListener("click", okHandler);
@@ -674,16 +704,16 @@ function showConfirm({ title, message }) {
 // =========================
 function showDirtySwitchConfirm(targetName) {
   return new Promise((resolve) => {
-    const modal     = document.getElementById("confirmDefaultModal");
-    const titleEl   = document.getElementById("confirmTitle");
-    const msgEl     = document.getElementById("confirmMessage");
-    const okBtn     = document.getElementById("confirmOk");
+    const modal = document.getElementById("confirmDefaultModal");
+    const titleEl = document.getElementById("confirmTitle");
+    const msgEl = document.getElementById("confirmMessage");
+    const okBtn = document.getElementById("confirmOk");
     const cancelBtn = document.getElementById("confirmCancel");
     const actionsEl = document.getElementById("confirmActions");
 
     titleEl.innerText = "Unsaved Changes";
-    msgEl.innerText   = `You have unsaved changes. What would you like to do before switching to "${targetName}"?`;
-    okBtn.innerText   = "Save & Load";
+    msgEl.innerText = `You have unsaved changes. What would you like to do before switching to "${targetName}"?`;
+    okBtn.innerText = "Save & Load";
     cancelBtn.innerText = "Discard & Load";
 
     // Add a true Cancel button
@@ -696,7 +726,7 @@ function showDirtySwitchConfirm(targetName) {
 
     function cleanup(result) {
       modal.classList.remove("active");
-      okBtn.innerText     = "Confirm";
+      okBtn.innerText = "Confirm";
       cancelBtn.innerText = "Cancel";
       okBtn.removeEventListener("click", saveHandler);
       cancelBtn.removeEventListener("click", discardHandler);
@@ -705,9 +735,9 @@ function showDirtySwitchConfirm(targetName) {
       resolve(result);
     }
 
-    function saveHandler()    { cleanup("save"); }
+    function saveHandler() { cleanup("save"); }
     function discardHandler() { cleanup("discard"); }
-    function cancelHandler()  { cleanup(null); }
+    function cancelHandler() { cleanup(null); }
 
     okBtn.addEventListener("click", saveHandler);
     cancelBtn.addEventListener("click", discardHandler);
@@ -718,24 +748,24 @@ function showDirtySwitchConfirm(targetName) {
 // =========================
 // INPUT MODAL
 // =========================
-const inputModal      = document.getElementById("inputModal");
-const inputTitle      = document.getElementById("inputTitle");
-const inputField      = document.getElementById("inputField");
-const inputOk         = document.getElementById("inputOk");
-const inputCancel     = document.getElementById("inputCancel");
+const inputModal = document.getElementById("inputModal");
+const inputTitle = document.getElementById("inputTitle");
+const inputField = document.getElementById("inputField");
+const inputOk = document.getElementById("inputOk");
+const inputCancel = document.getElementById("inputCancel");
 const inputOwnerField = document.getElementById("inputOwnerField");
-const inputDescField  = document.getElementById("inputDescField");
-const inputDescGroup  = document.getElementById("inputDescGroup");
+const inputDescField = document.getElementById("inputDescField");
+const inputDescGroup = document.getElementById("inputDescGroup");
 const inputModalClose = document.getElementById("inputModalClose");
 
 function showInput({ title = "Enter value", defaultValue = "", placeholder = "", defaultOwner = "", showDesc = false }) {
   return new Promise((resolve) => {
-    inputTitle.innerText       = title;
-    inputField.value           = defaultValue;
-    inputField.placeholder     = placeholder || "Enter name…";
-    inputOwnerField.value      = defaultOwner;
+    inputTitle.innerText = title;
+    inputField.value = defaultValue;
+    inputField.placeholder = placeholder || "Enter name…";
+    inputOwnerField.value = defaultOwner;
     inputDescGroup.style.display = showDesc ? "flex" : "none";
-    inputDescField.value       = "";
+    inputDescField.value = "";
 
     inputModal.classList.add("active");
     setTimeout(() => { inputField.focus(); inputField.select(); }, 50);
@@ -753,7 +783,7 @@ function showInput({ title = "Enter value", defaultValue = "", placeholder = "",
       if (!name) { inputField.focus(); return; }
       cleanup({
         name,
-        owner:       inputOwnerField.value.trim(),
+        owner: inputOwnerField.value.trim(),
         description: inputDescField.value.trim(),
       });
     }
@@ -770,19 +800,19 @@ function showInput({ title = "Enter value", defaultValue = "", placeholder = "",
 // CREATE PROJECT MODAL
 // =========================
 (function () {
-  const modal      = document.getElementById("createProjectModal");
-  const openBtn    = document.querySelector(".create-project-btn");
-  const form       = document.getElementById("createProjectForm");
-  const cancelBtn  = document.getElementById("closeModal");
+  const modal = document.getElementById("createProjectModal");
+  const openBtn = document.querySelector(".create-project-btn");
+  const form = document.getElementById("createProjectForm");
+  const cancelBtn = document.getElementById("closeModal");
   const cancelBtn2 = document.getElementById("closeModalCancel");
-  const nameInput  = document.getElementById("projectName");
+  const nameInput = document.getElementById("projectName");
   const ownerInput = document.getElementById("projectOwner");
-  const descInput  = document.getElementById("projectDescription");
-  const typeInput  = document.getElementById("projectType");
+  const descInput = document.getElementById("projectDescription");
+  const typeInput = document.getElementById("projectType");
 
   if (!modal) return;
 
-  const open  = () => modal.classList.add("active");
+  const open = () => modal.classList.add("active");
   const close = () => { modal.classList.remove("active"); form.reset(); };
 
   openBtn?.addEventListener("click", open);
@@ -799,10 +829,10 @@ function showInput({ title = "Enter value", defaultValue = "", placeholder = "",
     try {
       const payload = {
         name,
-        owner:         ownerInput.value.trim() || "Anonymous",
-        description:   descInput.value.trim(),
-        project_type:  typeInput.value,
-        created_at:    new Date().toISOString(),
+        owner: ownerInput.value.trim() || "Anonymous",
+        description: descInput.value.trim(),
+        project_type: typeInput.value,
+        created_at: new Date().toISOString(),
         last_modified: new Date().toISOString(),
       };
 
@@ -832,7 +862,7 @@ document.querySelector(".save-project-btn")?.addEventListener("click", async (e)
   }
 
   const ok = await showConfirm({
-    title:   "Save Project",
+    title: "Save Project",
     message: `Save changes to "${state.activeProject.name}"?`,
   });
   if (!ok) return;
@@ -857,22 +887,22 @@ document.querySelector(".save-project-btn")?.addEventListener("click", async (e)
 // =========================
 document.querySelector(".save-as-btn")?.addEventListener("click", async () => {
   const result = await showInput({
-    title:        "Save As New Project",
+    title: "Save As New Project",
     defaultValue: state.activeProject?.name ? `${state.activeProject.name}_copy` : "",
-    placeholder:  "Enter project name…",
+    placeholder: "Enter project name…",
     defaultOwner: state.activeProject?.owner || "Nextup",
-    showDesc:     true,
+    showDesc: true,
   });
 
   if (!result || !result.name) return;
 
   try {
     const payload = {
-      name:          result.name,
-      owner:         result.owner        || state.activeProject?.owner || "Nextup",
-      description:   result.description  || state.activeProject?.description || "",
-      project_type:  state.activeProject?.project_type || "standard",
-      created_at:    new Date().toISOString(),
+      name: result.name,
+      owner: result.owner || state.activeProject?.owner || "Nextup",
+      description: result.description || state.activeProject?.description || "",
+      project_type: state.activeProject?.project_type || "standard",
+      created_at: new Date().toISOString(),
       last_modified: new Date().toISOString(),
     };
 
@@ -893,7 +923,7 @@ document.querySelector(".save-as-btn")?.addEventListener("click", async () => {
 // =========================
 defaultNewProject?.addEventListener("click", async () => {
   const ok = await showConfirm({
-    title:   "Create Default Project",
+    title: "Create Default Project",
     message: "Create a new project with default settings and set it as active?",
   });
   if (!ok) return;
@@ -905,10 +935,10 @@ async function createDefaultProject() {
     const name = `Default ${Date.now().toString().slice(-4)}`;
     const payload = {
       name,
-      owner:         "Nextup",
-      description:   "Default template project",
-      project_type:  "standard",
-      created_at:    new Date().toISOString(),
+      owner: "Nextup",
+      description: "Default template project",
+      project_type: "standard",
+      created_at: new Date().toISOString(),
       last_modified: new Date().toISOString(),
     };
 
@@ -931,7 +961,7 @@ async function createDefaultProject() {
 // =========================
 blankProjectBtn?.addEventListener("click", async () => {
   const ok = await showConfirm({
-    title:   "Create Blank Project",
+    title: "Create Blank Project",
     message: "Create an empty project with no defaults?",
   });
   if (!ok) return;
@@ -943,10 +973,10 @@ async function createBlankProject() {
     const name = generateBlankName();
     const payload = {
       name,
-      owner:         "Nextup",
-      description:   "Blank project",
-      project_type:  "blank",
-      created_at:    new Date().toISOString(),
+      owner: "Nextup",
+      description: "Blank project",
+      project_type: "blank",
+      created_at: new Date().toISOString(),
       last_modified: new Date().toISOString(),
     };
 
@@ -971,3 +1001,26 @@ function generateBlankName() {
   while (state.projects.some((p) => p.name === name));
   return name;
 }
+
+let isSaving = false;
+setInterval(async () => {
+  const activeName = state.activeProject?.name;
+  const isDirty = activeName && projectStates[activeName]?.state === "DIRTY";
+  if (!isDirty || !state.activeProject || isSaving) return; 
+  isSaving = true;
+  try {
+    console.log("RIGGERD=========================");
+    await api.save();
+    if (state.activeProject?.name) {
+      projectStates[state.activeProject.name] = { project: state.activeProject.name, state: "Active", reason: "auto_save", };
+    } // optional: keep silent or very subtle
+    showNotification("Auto Saved Project", "success");
+    console.log("Auto-saved");
+  } catch (err) {
+    console.error(err);
+    showNotification("Auto Save failed", "error");
+  } finally {
+    isSaving = false;
+
+  }
+}, 5000);

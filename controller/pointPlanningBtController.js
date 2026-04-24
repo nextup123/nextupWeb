@@ -1,7 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
-import { fileExists, formatPointData, loadYAML, saveYAML, swapWithBackup, validatePoint } from "../service/pointPlanningBtService.js";
+import { fileExists, formatPointData, loadYAML, saveYAML, swapWithBackup, validatePoint, getCurrentDateTime } from "../service/pointPlanningBtService.js";
 import { BACKUP_DIR, pointPlanningFilePath } from "../config/path.js";
+import { publishToUICommand, getLatestRobotStatus, setMotionType, publishEditedPoint } from "../ros/rosPointPlanningService.js";
 
 const YAML_BACKUP_FILE = pointPlanningFilePath.POINTS_BACKUP_YAML_FILE;
 
@@ -44,6 +45,9 @@ export const getPointBackupFileNamesController = async (req, res) => {
 export const addPointController = async (req, res) => {
     try {
         const point = { ...req.body, sequence: Number(req.body.sequence) };
+        console.log("======================");
+        console.log(point);
+        console.log("======================");
         const validationError = validatePoint(point);
         if (validationError) {
             return res.status(400).json({ message: validationError });
@@ -197,3 +201,189 @@ export const canUndoController =  async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 }
+
+// ================= NEW CONTROLLERS =================
+
+export const moveToPointController = async (req, res) => {
+    try {
+        const { pointName } = req.body;
+        
+        if (!pointName) {
+            return res.status(400).json({ message: 'Point name is required' });
+        }
+        
+        // Get the point data to verify it exists
+        const data = await loadYAML();
+        let targetPoint = pointName;
+        
+        // Handle the get_last_pose@pointName format
+        if (pointName.includes('@')) {
+            targetPoint = pointName.split('@')[1];
+        }
+        
+        const point = data.points?.find(p => p.name === targetPoint);
+        
+        if (!point) {
+            return res.status(404).json({ message: `Point ${targetPoint} not found` });
+        }
+        
+        // Publish to ROS via service
+        const success = await publishToUICommand(pointName);
+        
+        if (success) {
+            res.json({ success: true, message: `Moving to ${pointName}` });
+        } else {
+            res.status(500).json({ message: 'Failed to publish to ROS' });
+        }
+    } catch (err) {
+        console.error('Error in /moveToPoint:', err);
+        res.status(500).json({ message: err.message });
+    }
+};
+
+export const setMotionTypeController = async (req, res) => {
+    try {
+        const { motionType } = req.body;
+        
+        if (!motionType || !['cartesian', 'joint'].includes(motionType)) {
+            return res.status(400).json({ message: 'motionType must be "cartesian" or "joint"' });
+        }
+        
+        setMotionType(motionType);
+        res.json({ success: true, message: `Motion type set to ${motionType}` });
+    } catch (err) {
+        console.error('Error in /setMotionType:', err);
+        res.status(500).json({ message: err.message });
+    }
+};
+
+export const getRobotStatusController = async (req, res) => {
+    try {
+        const status = getLatestRobotStatus();
+        res.json(status);
+    } catch (err) {
+        console.error('Error in /robotStatus:', err);
+        res.status(500).json({ message: err.message });
+    }
+};
+
+export const editedPointNotificationController = async (req, res) => {
+    try {
+        const { pointName } = req.body;
+        
+        if (!pointName) {
+            return res.status(400).json({ message: 'Point name is required' });
+        }
+        
+        publishEditedPoint(pointName);
+        res.json({ success: true, message: 'Point edit recorded' });
+    } catch (err) {
+        console.error('Error in /editedPoint:', err);
+        res.status(500).json({ message: err.message });
+    }
+};
+
+export const savePointFileController = async (req, res) => {
+    try {
+        const { fileName } = req.body;
+        
+        if (!fileName || !/^[a-zA-Z0-9_]+$/.test(fileName)) {
+            return res.status(400).json({ message: 'File name must contain only letters, numbers, and underscores' });
+        }
+        
+        const data = await loadYAML();
+        const backupFilePath = path.join(BACKUP_DIR, `${fileName}.yaml`);
+        
+        // Save current points to backup file
+        await fs.writeFile(backupFilePath, JSON.stringify(data, null, 2));
+        
+        // Update points_file_name in main YAML
+        data.points_file_name = fileName;
+        await saveYAML(data);
+        
+        res.json({ message: `File saved as ${fileName}.yaml` });
+    } catch (err) {
+        console.error('Error in /savePointFile:', err);
+        res.status(500).json({ message: err.message });
+    }
+};
+
+export const loadBackupFileController = async (req, res) => {
+    try {
+        const { fileName } = req.body;
+        
+        if (!fileName) {
+            return res.status(400).json({ message: 'File name is required' });
+        }
+        
+        const backupFilePath = path.join(BACKUP_DIR, `${fileName}.yaml`);
+        
+        // Check if file exists
+        try {
+            await fs.access(backupFilePath);
+        } catch {
+            return res.status(404).json({ message: `Backup file ${fileName}.yaml not found` });
+        }
+        
+        // Read the backup file
+        const backupData = await fs.readFile(backupFilePath, 'utf8');
+        const data = JSON.parse(backupData);
+        
+        // Save to main YAML
+        await saveYAML(data);
+        
+        res.json({ message: `Loaded ${fileName}.yaml successfully` });
+    } catch (err) {
+        console.error('Error in /loadBackupFile:', err);
+        res.status(500).json({ message: err.message });
+    }
+};
+
+export const createNewFileController = async (req, res) => {
+    try {
+        const { fileName } = req.body;
+        
+        if (!fileName || !/^[a-zA-Z0-9_]+$/.test(fileName)) {
+            return res.status(400).json({ message: 'File name must contain only letters, numbers, and underscores' });
+        }
+        
+        // Create empty points structure
+        const newData = {
+            points_file_name: fileName,
+            points: []
+        };
+        
+        await saveYAML(newData);
+        res.json({ message: `New file ${fileName} created successfully` });
+    } catch (err) {
+        console.error('Error in /createNewFile:', err);
+        res.status(500).json({ message: err.message });
+    }
+};
+
+export const deleteBackupFileController = async (req, res) => {
+    try {
+        const { fileName } = req.body;
+        
+        if (!fileName) {
+            return res.status(400).json({ message: 'File name is required' });
+        }
+        
+        const backupFilePath = path.join(BACKUP_DIR, `${fileName}.yaml`);
+        
+        // Check if file exists
+        try {
+            await fs.access(backupFilePath);
+        } catch {
+            return res.status(404).json({ message: `Backup file ${fileName}.yaml not found` });
+        }
+        
+        // Delete the file
+        await fs.unlink(backupFilePath);
+        
+        res.json({ message: `Deleted ${fileName}.yaml successfully` });
+    } catch (err) {
+        console.error('Error in /deleteBackupFile:', err);
+        res.status(500).json({ message: err.message });
+    }
+};

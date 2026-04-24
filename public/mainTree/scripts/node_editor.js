@@ -137,6 +137,35 @@ async function deleteWrapperOnly() {
     }
 }
 
+async function copyNode() {
+    if (!selectedNode || !currentSubtreeId) {
+        showToast('Select a node to copy!', 'warn');
+        return;
+    }
+    if (selectedNode.data.type === 'BehaviorTree') {
+        showToast('Cannot copy the root BehaviorTree node!', 'warn');
+        return;
+    }
+ 
+    try {
+        const res = await fetch(`${API_BASE}/copyNode`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                subtreeId: currentSubtreeId,
+                nodePath: selectedNode.data.path.slice(1), // UID path, exclude subtree root
+            }),
+        });
+ 
+        if (!res.ok) throw new Error(await res.text());
+        showToast('Node copied!', 'success');
+        loadSubtree(currentSubtreeId);
+    } catch (err) {
+        console.error('Error copying node:', err);
+        showToast(`Failed to copy: ${err.message}`, 'failure');
+    }
+}
+
 async function addWrapper() {
     if (!selectedNode || !currentSubtreeId) {
         showToast('Select a wrapper node!', 'warn');

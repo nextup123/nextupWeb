@@ -10,7 +10,7 @@
 :root {
   --ink:        #0d1117;
   --ink-2:      #1e293b;
-  --ink-3:      #334155;
+  --ink-3:      #3e5472;
   --muted:      #64748b;
   --subtle:     #94a3b8;
   --border:     #e2e8f0;
@@ -561,14 +561,14 @@ body {
 .card-actions {
   display: flex;
   gap: 0.3rem;
-  margin-top: 0.2rem;
+  margin-top: 1rem;
   flex-wrap: wrap;
 }
 
 .action-btn {
-  font-size: 0.72rem;
-  font-weight: 500;
-  padding: 0.38rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.42rem 0.70rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--bg-2);
@@ -577,6 +577,7 @@ body {
   transition: all 0.15s;
   font-family: var(--font);
   line-height: 1;
+  width: 48%;
 }
 
 .action-btn:hover { background: var(--border); border-color: var(--border-2); }

@@ -1,7 +1,7 @@
 {
   "@attributes": {
     "BTCPP_format": "4",
-    "_uid": "uid_09ffe96965a8_mn76gvi1"
+    "_uid": "uid_f726971e96be_mnsqcyde"
   },
   "@children": [
     {
@@ -9,7 +9,7 @@
       "content": {
         "@attributes": {
           "path": "do_di_tree.xml",
-          "_uid": "uid_208748ff0866_mn76gvi1"
+          "_uid": "uid_f5ab4555b5c8_mnsqcydf"
         }
       }
     },
@@ -18,7 +18,7 @@
       "content": {
         "@attributes": {
           "path": "run_path.xml",
-          "_uid": "uid_ed1cd64546ee_mn76gvi1"
+          "_uid": "uid_ccaca3ba28ef_mnsqcydf"
         }
       }
     },
@@ -27,58 +27,58 @@
       "content": {
         "@attributes": {
           "ID": "main_tree",
-          "_uid": "uid_de4289e03ec0_mn76gvi1"
+          "_uid": "uid_9c7181b342c3_mnsqcydf"
         },
         "@children": [
           {
             "tagName": "Sequence",
             "content": {
               "@attributes": {
-                "ID": "sequence_1773934623247_nfg43ln",
-                "name": "Sequence_2173",
-                "_uid": "uid_ebdbedff2a3c_mn76gvi1"
+                "ID": "jhckjdf",
+                "name": "main_tree_sequennce(dont_delete_it)",
+                "_uid": "uid_87de2fc27fd8_mnsqcydf"
               },
               "@children": [
                 {
                   "tagName": "Sequence",
                   "content": {
                     "@attributes": {
-                      "ID": "root_sequence_8904",
-                      "_uid": "uid_4c2e889a586e_mn76gvi1"
+                      "ID": "root_sequence_9053",
+                      "_uid": "uid_77b7aaef2f7b_mnsqcydf"
                     },
                     "@children": [
                       {
                         "tagName": "Sequence",
                         "content": {
                           "@attributes": {
-                            "ID": "seq_home_point2_6024",
-                            "_uid": "uid_7211f086f090_mn76gvi1"
+                            "ID": "seq_home_p2_5134",
+                            "_uid": "uid_c93a1628c219_mnsqcydf"
                           },
                           "@children": [
                             {
                               "tagName": "Fallback",
                               "content": {
                                 "@attributes": {
-                                  "ID": "fallback_4955",
-                                  "_uid": "uid_8687c188b456_mn76gvi1"
+                                  "ID": "fallback_7147",
+                                  "_uid": "uid_9ab99f4f99bf_mnsqcydf"
                                 },
                                 "@children": [
                                   {
                                     "tagName": "Sequence",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "seq_success_home_point2_3821",
-                                        "_uid": "uid_92fc41bcf3b7_mn76gvi1"
+                                        "ID": "seq_success_home_p2_3714",
+                                        "_uid": "uid_12f758ae292b_mnsqcydf"
                                       },
                                       "@children": [
                                         {
                                           "tagName": "RunPath",
                                           "content": {
                                             "@attributes": {
-                                              "path_name": "home_point2",
-                                              "ID": "home_point2_2145",
+                                              "path_name": "home_p2",
+                                              "ID": "home_p2_3992",
                                               "speed_scale": "0.75",
-                                              "_uid": "uid_54e9ec2f49cd_mn76gvi1"
+                                              "_uid": "uid_561e7397d720_mnsqcydf"
                                             }
                                           }
                                         },
@@ -86,9 +86,9 @@
                                           "tagName": "MsgLoggerNode",
                                           "content": {
                                             "@attributes": {
-                                              "ID": "msg_success_home_point2_1336",
-                                              "msg_log": "home_point2 success",
-                                              "_uid": "uid_f8160bdb4ecb_mn76gvi1"
+                                              "ID": "msg_success_home_p2_1307",
+                                              "msg_log": "home_p2 success",
+                                              "_uid": "uid_030d429bfb21_mnsqcydf"
                                             }
                                           }
                                         }
@@ -99,17 +99,17 @@
                                     "tagName": "Sequence",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "seq_failure_home_point2_5398",
-                                        "_uid": "uid_3024cee25b11_mn76gvi1"
+                                        "ID": "seq_failure_home_p2_4188",
+                                        "_uid": "uid_a1932db228cb_mnsqcydf"
                                       },
                                       "@children": [
                                         {
                                           "tagName": "MsgLoggerNode",
                                           "content": {
                                             "@attributes": {
-                                              "ID": "msg_fail_home_point2_1123",
-                                              "msg_log": "home_point2 failed",
-                                              "_uid": "uid_463c55c09d9b_mn76gvi1"
+                                              "ID": "msg_fail_home_p2_4476",
+                                              "msg_log": "home_p2 failed",
+                                              "_uid": "uid_1c705aab1001_mnsqcydf"
                                             }
                                           }
                                         },
@@ -117,11 +117,11 @@
                                           "tagName": "PopupMsg",
                                           "content": {
                                             "@attributes": {
-                                              "ID": "popup_home_point2_1032",
-                                              "msg": "home_point2 path failed",
+                                              "ID": "popup_home_p2_4865",
+                                              "msg": "home_p2 path failed",
                                               "type": "failure",
                                               "timeout": "0",
-                                              "_uid": "uid_c70121cc7d9b_mn76gvi1"
+                                              "_uid": "uid_1bbda72c9e22_mnsqcydf"
                                             }
                                           }
                                         },
@@ -129,7 +129,7 @@
                                           "tagName": "AlwaysFailure",
                                           "content": {
                                             "@attributes": {
-                                              "_uid": "uid_fbb8a5134fae_mn76gvi1"
+                                              "_uid": "uid_678383b3f8b7_mnsqcydf"
                                             }
                                           }
                                         }
@@ -146,34 +146,34 @@
                         "tagName": "Sequence",
                         "content": {
                           "@attributes": {
-                            "ID": "seq_point2_home_4454",
-                            "_uid": "uid_ba06276eef6e_mn76gvi1"
+                            "ID": "seq_p2_home_8973",
+                            "_uid": "uid_be48b150ddee_mnsqcydf"
                           },
                           "@children": [
                             {
                               "tagName": "Fallback",
                               "content": {
                                 "@attributes": {
-                                  "ID": "fallback_3629",
-                                  "_uid": "uid_4d10484e49b6_mn76gvi1"
+                                  "ID": "fallback_9401",
+                                  "_uid": "uid_52ed1026db4c_mnsqcydf"
                                 },
                                 "@children": [
                                   {
                                     "tagName": "Sequence",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "seq_success_point2_home_7381",
-                                        "_uid": "uid_97c66767492f_mn76gvi1"
+                                        "ID": "seq_success_p2_home_4421",
+                                        "_uid": "uid_0529cf94e4b7_mnsqcydf"
                                       },
                                       "@children": [
                                         {
                                           "tagName": "RunPath",
                                           "content": {
                                             "@attributes": {
-                                              "path_name": "point2_home",
-                                              "ID": "point2_home_6042",
+                                              "path_name": "p2_home",
+                                              "ID": "p2_home_5287",
                                               "speed_scale": "0.75",
-                                              "_uid": "uid_e7962b7bddd7_mn76gvi1"
+                                              "_uid": "uid_98a56fad05f3_mnsqcydf"
                                             }
                                           }
                                         },
@@ -181,9 +181,9 @@
                                           "tagName": "MsgLoggerNode",
                                           "content": {
                                             "@attributes": {
-                                              "ID": "msg_success_point2_home_2014",
-                                              "msg_log": "point2_home success",
-                                              "_uid": "uid_a7e2400ebab3_mn76gvi1"
+                                              "ID": "msg_success_p2_home_1557",
+                                              "msg_log": "p2_home success",
+                                              "_uid": "uid_207750bcc806_mnsqcydf"
                                             }
                                           }
                                         }
@@ -194,17 +194,17 @@
                                     "tagName": "Sequence",
                                     "content": {
                                       "@attributes": {
-                                        "ID": "seq_failure_point2_home_1457",
-                                        "_uid": "uid_1b3ad113ab4a_mn76gvi1"
+                                        "ID": "seq_failure_p2_home_9469",
+                                        "_uid": "uid_45a8bad63c35_mnsqcydf"
                                       },
                                       "@children": [
                                         {
                                           "tagName": "MsgLoggerNode",
                                           "content": {
                                             "@attributes": {
-                                              "ID": "msg_fail_point2_home_7725",
-                                              "msg_log": "point2_home failed",
-                                              "_uid": "uid_d000705b7dfa_mn76gvi1"
+                                              "ID": "msg_fail_p2_home_4836",
+                                              "msg_log": "p2_home failed",
+                                              "_uid": "uid_acbbe51f4362_mnsqcydf"
                                             }
                                           }
                                         },
@@ -212,11 +212,11 @@
                                           "tagName": "PopupMsg",
                                           "content": {
                                             "@attributes": {
-                                              "ID": "popup_point2_home_9538",
-                                              "msg": "point2_home path failed",
+                                              "ID": "popup_p2_home_1667",
+                                              "msg": "p2_home path failed",
                                               "type": "failure",
                                               "timeout": "0",
-                                              "_uid": "uid_3a3b8a805ea2_mn76gvi1"
+                                              "_uid": "uid_94e352551cd1_mnsqcydf"
                                             }
                                           }
                                         },
@@ -224,7 +224,7 @@
                                           "tagName": "AlwaysFailure",
                                           "content": {
                                             "@attributes": {
-                                              "_uid": "uid_87810da569cc_mn76gvi1"
+                                              "_uid": "uid_271399b67223_mnsqcydf"
                                             }
                                           }
                                         }

@@ -15,6 +15,8 @@ import { saveProject } from "../utils/pm_utils/projectSaver.js";
 import { listProjectVersions } from "../utils/pm_utils/projectVersions.js";
 import { restoreProjectVersion } from "../utils/pm_utils/projectVersionRestorer.js";
 import { getSessionDetails } from "../utils/pm_utils/runTimeInitializer.js";
+import renameProject from "../utils/pm_utils/projectRenamer.js";
+import copyProject from "../utils/pm_utils/projectCopier.js";
 // Create project
 // Create project
 router.post("/create", async (req, res) => {
@@ -127,6 +129,55 @@ router.delete("/delete/:name", async (req, res) => {
     res.json(result);
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+});
+
+
+
+// Rename project
+router.post("/rename", async (req, res) => {
+  const { currentName, newName } = req.body;
+
+  if (!currentName || !newName) {
+    return res.status(400).json({ error: "currentName and newName are required" });
+  }
+
+  try {
+    const result = await renameProject(currentName, newName);
+    return res.status(200).json(result);
+  } catch (err) {
+    if (err.code === "PROJECT_EXISTS") {
+      return res.status(409).json({ error: err.message });
+    }
+    if (err.message?.includes("does not exist")) {
+      return res.status(404).json({ error: err.message });
+    }
+    console.error("[POST /rename]", err);
+    return res.status(500).json({ error: "Internal server error during rename" });
+  }
+});
+
+
+// Copy project
+router.post("/copy", async (req, res) => {
+  const { sourceName, name, owner, description } = req.body;
+
+  if (!sourceName || !name) {
+    return res.status(400).json({ error: "sourceName and name are required" });
+  }
+
+  try {
+    const result = await copyProject(sourceName, { name, owner, description });
+    return res.status(201).json(result);
+  } catch (err) {
+    if (err.code === "PROJECT_EXISTS") {
+      return res.status(409).json({ error: err.message });
+    }
+    if (err.message?.includes("does not exist")) {
+      return res.status(404).json({ error: err.message });
+    }
+    console.error("[POST /copy]", err);
+    return res.status(500).json({ error: "Internal server error during copy" });
   }
 });
 

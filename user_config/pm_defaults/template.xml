@@ -1,1 +1,12 @@
-<hi></hi>
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4">
+  <include path="do_di.xml"/>
+  <include path="run_path.xml"/>
+  <BehaviorTree ID="main_tree">
+    <Sequence ID="jhckjdf" name="main_tree_sequennce(dont_delete_it)">
+      <Sequence ID="sequence_1774421708274_5afntda" name="Sequence_12258">
+      </Sequence>
+    </Sequence>
+  </BehaviorTree>
+
+</root>

@@ -5,9 +5,12 @@ import {
   doListController,
   getDiLayoutController,
   getDoLayoutController,
+  getLogsController,
   postDiLayoutController,
   postDoLayoutController,
-} from "../controller/rosController.js";
+  setFrameController,
+  startMotionPlanningController,
+} from "./rosController.js";
 
 const router = express.Router();
 
@@ -31,6 +34,11 @@ router.get("/di-layout", getDiLayoutController);
 
 router.post("/di-layout", postDiLayoutController);
 
+router.get("/startPlanning", startMotionPlanningController);
+
+router.get("/logs", getLogsController);
+
+router.post('/set_frame', setFrameController);
 
 //ROS ROUTES RELATED TO POINT PLANNING//
 
@@ -39,6 +47,10 @@ router.post("/di-layout", postDiLayoutController);
 
 
 ////////////////////////////////////////
+
+
+
+//ROS ROUTES RELATED TO MAINWEB
 
 
 

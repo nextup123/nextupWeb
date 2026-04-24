@@ -1,9 +1,18 @@
-const API_BASE = "http://localhost:3011";
+const API_BASE = "http://localhost:3000/main-tree";
 
+
+
+
+
+// --------------------------------------------------------------------
 let selectedNode = null;
 let selectedNodeUid = null;   
 let dragStartTime = null;
 let customNodeModalOpen = false;
+
+let lastSearchQuery = '';
+let searchMatches = [];        // array of node UIDs that match
+let currentMatchIndex = -1;
 
 function debounce(func, wait) {
   let timeout;
@@ -12,6 +21,8 @@ function debounce(func, wait) {
     timeout = setTimeout(() => func.apply(this, args), wait);
   };
 }
+
+
 
 /* -------------------------------------------------
    Custom Node Modal
@@ -131,6 +142,7 @@ const TYPE_COLOR = {
   DoControl: '#34c759',
   DIControl: '#34c759',
   RunPath: '#a3654cff',
+  PilzPointsAction: '#f5a8c8',
   Condition: '#ff9500',
   __wrapper__: '#9c27b0',
   __leaf__: '#4caf50'
@@ -432,7 +444,7 @@ function showHoverTooltip(d) {
     .html(`<b>${d.data.name}</b><br>${info}`);
 }
 
-function hideHoverTooltip() {
+function hideHoverTooltip() { 
   tooltip.style('display', 'none');
 }
 
@@ -448,14 +460,15 @@ window.onload = () => {
 
   loadNodeTypes();
 
+  // ── Keyboard shortcuts ──────────────────────────────────────
+  document.addEventListener('keydown', (e) => {
+    // Ctrl+D — duplicate (copy) selected node
+    if (e.ctrlKey && e.key === 'd') {
+      // Only fire when not typing inside an input/textarea
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+      e.preventDefault();
+      copyNode();
+    }
+  });
+
 };
-
-
-
-
-
-
-
-
-
-
