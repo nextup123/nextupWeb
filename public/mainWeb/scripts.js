@@ -82,7 +82,7 @@ function initWS() {
     console.log('WebSocket connected to ROS backend');
     isConnected = true;
     reconnectAttempts = 0;
-    updateROSConnectionStatus(true);
+    // updateROSConnectionStatus(true);
     ws.send(JSON.stringify({ type: "PING" }));
   };
 
@@ -98,7 +98,7 @@ function initWS() {
   ws.onclose = () => {
     console.log('WebSocket disconnected');
     isConnected = false;
-    updateROSConnectionStatus(false);
+    // updateROSConnectionStatus(false);
     if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
       reconnectAttempts++;
       setTimeout(initWS, RECONNECT_DELAY);
@@ -108,7 +108,7 @@ function initWS() {
   ws.onerror = (err) => {
     console.error('WebSocket error:', err);
     isConnected = false;
-    updateROSConnectionStatus(false);
+    // updateROSConnectionStatus(false);
   };
 }
 
@@ -154,13 +154,22 @@ function handleROSMessage(msg) {
       updateButtonStates(msg.payload);
       break;
 
+    case "CARTESIAN_VALUES":
+    case "JOINT_VALUES":
+    case "MOTION_STATUS":
+    case "PROCESS_STATUS":
+    case "LOG_MESSAGE_INCOMING":
+    case "MOTION_PLANNING_SUCCESS":
+    case "CONTROL_ACTIVE":
+    
+      break;
 
     case "PONG":
       console.log("ROS connection alive");
       break;
 
     default:
-      console.log("Unknown message type:", msg.type);
+      console.log("Unknown message type in mainWeb.js:", msg.type);
   }
 
   // Forward to iframes
@@ -358,7 +367,6 @@ document.getElementById("page6").src =
   `http://localhost:${port}/error-handling`;
 document.getElementById("page7").src = `http://localhost:${port}/mainTree`;
 document.getElementById("page8").src = `http://localhost:${port}/clientControl`;
-document.getElementById("page9").src = `rosLogs/index.html`;
 
 function switchPage(pageId) {
   document

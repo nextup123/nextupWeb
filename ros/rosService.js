@@ -309,7 +309,7 @@ class ROSService {
       "std_msgs/msg/Bool",
       "/control_start_bt_active",
       (msg) => {
-        wsServer.broadcast({ type: "MOTION_ACTIVE", payload: msg.data });
+        wsServer.broadcast({ type: "CONTROL_ACTIVE", payload: msg.data });
       }
     );
 

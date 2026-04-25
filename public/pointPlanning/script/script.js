@@ -71,7 +71,9 @@ function handleWebSocketMessage(msg) {
     case "MOTION_ACTIVE":
     case "DO_STATUS":
     case "CYCLE_TIME":
-
+    case "LOG_MESSAGE_INCOMING":
+    case "MOTION_PLANNING_SUCCESS":
+    case "CONTROL_ACTIVE":
       // Update motion active state
       // const isActive = msg.payload;
       // console.log("Motion active in pointPlanning:", isActive);
@@ -131,6 +133,8 @@ function handleWebSocketMessage(msg) {
       break;
     case "MOTION_STATUS":
       // mainWeb handles homing display; pointPlanning can ignore or use raw positions
+      break;
+    case "PROCESS_STATUS":
       break;
     default:
       console.log("Unknown message type in pointPlanning.js:", msg.type);
@@ -301,23 +305,6 @@ function setupDropdownItems() {
     });
   });
 }
-
-// Toggle dropdown visibility
-function toggleDropdown() {
-  backupFilesDropdown.style.display =
-    backupFilesDropdown.style.display === "block" ? "none" : "block";
-}
-
-// Handle dropdown search
-
-document.addEventListener("click", (e) => {
-  if (
-    !backupFilesInput.contains(e.target) &&
-    !backupFilesDropdown.contains(e.target)
-  ) {
-    backupFilesDropdown.style.display = "none";
-  }
-});
 
 // Keyboard navigation for dropdown
 

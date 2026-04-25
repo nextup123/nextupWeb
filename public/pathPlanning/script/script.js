@@ -109,7 +109,7 @@ function initWS() {
     console.log("WebSocket connected to ROS backend");
     isConnected = true;
     reconnectAttempts = 0;
-    updateROSConnectionStatus(true);
+    // updateROSConnectionStatus(true);
 
     // Send ping to verify connection
     ws.send(JSON.stringify({ type: "PING" }));
@@ -127,7 +127,7 @@ function initWS() {
   ws.onclose = () => {
     console.log("WebSocket disconnected");
     isConnected = false;
-    updateROSConnectionStatus(false);
+    // updateROSConnectionStatus(false);
 
     // Attempt to reconnect
     if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
@@ -139,7 +139,7 @@ function initWS() {
   ws.onerror = (err) => {
     console.error("WebSocket error:", err);
     isConnected = false;
-    updateROSConnectionStatus(false);
+    // updateROSConnectionStatus(false);
   };
 }
 
@@ -181,6 +181,8 @@ function handleROSMessage(msg) {
     case "DO_STATUS":
     case "CYCLE_TIME":
     case "PROCESS_STATUS":
+    case "LOG_MESSAGE_INCOMING":
+    case "CONTROL_ACTIVE":
       break;
     case "PONG":
       console.log("ROS connection alive");
@@ -314,6 +316,7 @@ function updateMotionStatus(status) {
 }
 
 function updateButtonStatus(isActive) {
+  console.log("Triggered")
   if (isActive) {
     // statusDot.className = 'status-dot status-active';
     statusText.textContent = "Active";

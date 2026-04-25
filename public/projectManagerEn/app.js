@@ -423,6 +423,7 @@ async function setAsDefaultProject(projectName) {
   }
 }
  
+ 
 
 // =========================
 // COPY PROJECT
@@ -950,6 +951,7 @@ async function createDefaultProject() {
     await loadProjects();
     await loadActiveProject();
     renderProjectList();
+    await setAsDefaultProject(name);
   } catch (err) {
     console.error(err);
     showNotification("Default project creation failed", "error");

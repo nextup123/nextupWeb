@@ -138,7 +138,6 @@ function publishSpeed(value) {
         type: "UI_COMMANDS",
         payload: { command: "set_speed", value: parseFloat(value) },
     });
-    console.log(`📤 speed → ${value.toFixed(2)}`);
 }
 
 function publishCNC(selection) {
@@ -146,7 +145,6 @@ function publishCNC(selection) {
         type: "UI_COMMANDS",
         payload: { command: "select_cnc", value: selection },
     });
-    console.log(`📤 cnc → "${selection}"`);
 }
 
 async function loadSettings() {
@@ -157,7 +155,7 @@ async function loadSettings() {
         applySettings();
         publishSpeed(settings.speed);
         publishCNC(settings.cnc);
-        console.log("Loaded settings:", data);
+        // console.log("Loaded settings:", data);
     } catch (err) {
         console.error("Failed to load settings:", err);
     }
@@ -447,7 +445,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("message", (event) => {
         const msg = event.data;
         if (!msg) return;
-        if (msg.type === "MOTION_ACTIVE") setStartButtonsEnabled(msg.payload);
+        if (msg.type === "CONTROL_ACTIVE") setStartButtonsEnabled(msg.payload);
     });
 
     function publishSpeedBeforeStart() {

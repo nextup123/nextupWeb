@@ -283,31 +283,21 @@ async function loadNodeTypes() {
     if (!res.ok) throw new Error('Failed to load node types');
     nodeDefinitions = await res.json();
     
-    // Log all node types with their details
-    console.log("=== ALL NODE TYPES ===");
     
     // Log default nodes
-    console.log("\n--- DEFAULT NODES ---");
     for (const category in nodeDefinitions.default) {
-      console.log(`Category: ${category}`);
       for (const nodeName in nodeDefinitions.default[category]) {
         const nodeDef = nodeDefinitions.default[category][nodeName];
-        console.log(`  - ${nodeName} (${nodeDef.type})`);
         if (nodeDef.attributes) {
-          console.log(`    Attributes: ${Object.keys(nodeDef.attributes).join(', ')}`);
         }
       }
     }
     
     // Log custom nodes  
-    console.log("\n--- CUSTOM NODES ---");
     for (const category in nodeDefinitions.custom) {
-      console.log(`Category: ${category}`);
       for (const nodeName in nodeDefinitions.custom[category]) {
         const nodeDef = nodeDefinitions.custom[category][nodeName];
-        console.log(`  - ${nodeName} (${nodeDef.type})`);
         if (nodeDef.attributes) {
-          console.log(`    Attributes: ${Object.keys(nodeDef.attributes).join(', ')}`);
         }
       }
     }
@@ -323,10 +313,7 @@ async function loadNodeTypes() {
       customCount += Object.keys(nodeDefinitions.custom[category]).length;
     }
     
-    console.log(`\n=== SUMMARY ===`);
-    console.log(`Default nodes: ${defaultCount}`);
-    console.log(`Custom nodes: ${customCount}`);
-    console.log(`Total nodes: ${defaultCount + customCount}`);
+  
 
     // Rest of your existing code for populating the UI...
     const catSelect = document.getElementById('node-category');

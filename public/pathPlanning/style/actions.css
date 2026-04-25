@@ -139,10 +139,3 @@ input:checked+.slider:before {
     cursor: not-allowed;
 }
 
-.origin-point-file-name {
-    /* margin-left: 4px; */
-    font-size: 13px;
-    color: #213a8b;
-    font-weight: bold;
-    align-items: center;
-}
