@@ -283,11 +283,34 @@
             </div>
         </div>
     </div>
-
+    <!-- Confirm Delete Modal -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content" style="max-width: 420px;">
+        <div class="modal-header" style="gap: 12px; align-items: flex-start;">
+            <div class="confirm-modal-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div style="flex: 1;">
+                <h3 class="modal-title" id="confirmModalTitle">Delete?</h3>
+                <p id="confirmModalMessage" class="confirm-modal-message"></p>
+            </div>
+            <button class="modal-close" onclick="closeConfirmModal()">&times;</button>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeConfirmModal()">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button class="btn btn-danger" id="confirmModalOkBtn">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+        </div>
+    </div>
+</div>
 
     <!-- Status Modal -->
     <div id="statusModal" class="modal"></div>
     <script src="script/script.js"></script>
+    <script src="script/js-yaml-min.js"></script>
 </body>
 
 </html>

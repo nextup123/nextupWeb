@@ -80,8 +80,6 @@ router.get("/logs-structure", (req, res) => {
             return { year, months };
         });
 
-        // Log the structure for debugging
-        console.log("Log Structure:", JSON.stringify(structure, null, 2));
 
         res.json(structure);
     } catch (error) {

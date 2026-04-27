@@ -45,9 +45,7 @@ export const getPointBackupFileNamesController = async (req, res) => {
 export const addPointController = async (req, res) => {
     try {
         const point = { ...req.body, sequence: Number(req.body.sequence) };
-        console.log("======================");
         console.log(point);
-        console.log("======================");
         const validationError = validatePoint(point);
         if (validationError) {
             return res.status(400).json({ message: validationError });

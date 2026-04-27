@@ -18,6 +18,41 @@ function initLogFile() {
   }
 }
 
+
+// ========================================================
+// how to define a qos and use it
+
+//// ✅ CORRECT
+// const qos = {
+//   reliability: rclnodejs.QoS.RELIABILITY_POLICY_RELIABLE,
+//   history: rclnodejs.QoS.HISTORY_POLICY_KEEP_LAST,
+//   depth: 10,
+// };
+//  for a publisher  
+//   this.node.createPublisher(
+//   "std_msgs/msg/String",
+//   "/example_topic",
+//   qos
+// );
+
+// for a subscriber
+// this.node.createSubscription(
+//   "sensor_msgs/msg/JointState",
+//   "/joint_states",
+//   qos,
+//   (msg) => {
+//     console.log(msg);
+//   }
+// );
+
+// ========================================================
+
+const qos = {
+  reliability: rclnodejs.QoS.RELIABILITY_POLICY_RELIABLE,
+  history: rclnodejs.QoS.HISTORY_POLICY_KEEP_LAST,
+  depth: 10,
+};
+
 class ROSService {
   constructor() {
     this.node = null;
@@ -71,7 +106,7 @@ class ROSService {
       "/ui_commands"
     );
 
-    this.framePublisher = this.node.createPublisher('std_msgs/msg/String', '/frame_mode');
+    this.framePublisher = this.node.createPublisher('std_msgs/msg/String', '/frame_mode',qos);
 
     this.editedPointPublisher = this.node.createPublisher(
       "std_msgs/msg/String",

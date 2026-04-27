@@ -56,7 +56,6 @@ export const addCustomNodeController = async (req, res) => {
 export const getDoDiSubtreesController = async (req, res) => {
   try {
     const force = req.query.force_xml2js_parse === 'true';
-    console.log("==============================Line 61 mainTreeController.js:",force);
     const result = await readAndParseXML(DO_DI_TEMPLATE_PATH, force);
     const allChildren = Array.isArray(result['@children']) ? result['@children'] : [];
 

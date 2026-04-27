@@ -1,6 +1,6 @@
 {
   "mode": "high_testing",
-  "speed": 0.57,
+  "speed": 0.5,
   "cnc": "Both",
   "total_operations": 8,
   "last_session_operations": 110

@@ -15,10 +15,8 @@ export async function readAndParseXML(filePath = TEMPLATE_PATH, forceXml2jsParse
     const baseName = path.basename(filePath, '.xml');
     const UID_CACHE_PATH = path.join(__dirname, '../user_config', `${baseName}_with_uids.json`);
     console.log("Variable type:",typeof forceXml2jsParse);
-    console.log("Line 16 mainTreeService",UID_CACHE_PATH,"forceXml2jsParse:",forceXml2jsParse);
     if (!forceXml2jsParse) {
       try {
-        console.log("Line 19 mainTreeService",UID_CACHE_PATH);
         
         const cached = await fs.readFile(UID_CACHE_PATH, 'utf-8');
         return JSON.parse(cached);

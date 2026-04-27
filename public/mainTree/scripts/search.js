@@ -241,13 +241,6 @@ function updateSearchCounter() {
 }
 
 
-// window.addEventListener("message", (event) => {
-//   if (event.data.type === "FAILED_NODE") {
-//     const nodeName = event.data.value;
-//     console.log("====================================Received============================:", nodeName);
-//   }
-// });
-
 function highlightFailedNodes(failedNode, traceNodes) {
   if (!failedNode && traceNodes.length === 0) return;
 
@@ -371,10 +364,6 @@ function highlightFailedNodes(failedNode, traceNodes) {
       }
     }
   }
-  // setTimeout(() => {
-  //   // console.log("Triggered = = = = = = = = = = = = = = = = = = = = = = =");
-  //   clearHighlights();
-  // }, 3000);
 }
 let failedNodeName = null;
 let failedTraceNodes = [];

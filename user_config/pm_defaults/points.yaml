@@ -4,6 +4,7 @@ points:
     date_time: 25mar_1157
     sequence: 1
     nature: home
+    is_tf: false
     joints_values:
       joint1: -0.00008901200000000001
       joint2: -0.000057596

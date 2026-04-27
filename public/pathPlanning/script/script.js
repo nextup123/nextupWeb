@@ -163,7 +163,6 @@ function handleROSMessage(msg) {
       break;
 
     case "MOTION_STATUS":
-      // console.log("========================",msg.payload);
       updateMotionStatus(msg.payload);
       break;
 
@@ -183,6 +182,7 @@ function handleROSMessage(msg) {
     case "PROCESS_STATUS":
     case "LOG_MESSAGE_INCOMING":
     case "CONTROL_ACTIVE":
+    case "SERVO_RESPONSE":
       break;
     case "PONG":
       console.log("ROS connection alive");
@@ -316,7 +316,6 @@ function updateMotionStatus(status) {
 }
 
 function updateButtonStatus(isActive) {
-  console.log("Triggered")
   if (isActive) {
     // statusDot.className = 'status-dot status-active';
     statusText.textContent = "Active";
@@ -813,23 +812,71 @@ function editPath(name, start, goal, space, intermediate) {
   showStatus(`Editing ${name}`, "success", 2000);
 }
 
-async function deletePath(pathName) {
-  if (confirm(`Delete ${pathName}?`)) {
-    await callAPI("deletePath", { pathName }, loadSequences);
-  }
+// async function deletePath(pathName) {
+//   if (confirm(`Delete ${pathName}?`)) {
+//     await callAPI("deletePath", { pathName }, loadSequences);
+//   }
+// }
+
+// async function deleteLast() {
+//   if (confirm("Delete the last sequence?")) {
+//     await callAPI("deleteLast", {}, loadSequences);
+//   }
+// }
+
+// async function deleteAll() {
+//   if (confirm("Delete all sequences?")) {
+//     await callAPI("deleteAll", {}, loadSequences);
+//   }
+// }
+
+// ============================================
+// Confirm Modal
+// ============================================
+const confirmModal = document.getElementById("confirmModal");
+
+function showConfirmModal(title, message, onConfirm) {
+    document.getElementById("confirmModalTitle").textContent = title;
+    document.getElementById("confirmModalMessage").textContent = message;
+    const okBtn = document.getElementById("confirmModalOkBtn");
+    okBtn.onclick = () => {
+        closeConfirmModal();
+        onConfirm();
+    };
+    confirmModal.style.display = "flex";
+}
+
+function closeConfirmModal() {
+    confirmModal.style.display = "none";
+}
+
+// ============================================
+// Path CRUD Operations  (updated)
+// ============================================
+async function deletePath(name) {
+    showConfirmModal(
+        "Delete path?",
+        `This will permanently remove "${name}".`,
+        async () => await callAPI("deletePath", { pathName: name }, loadSequences)
+    );
 }
 
 async function deleteLast() {
-  if (confirm("Delete the last sequence?")) {
-    await callAPI("deleteLast", {}, loadSequences);
-  }
+    showConfirmModal(
+        "Delete last path?",
+        "This will remove the last sequence in the list.",
+        async () => await callAPI("deleteLast", {}, loadSequences)
+    );
 }
 
 async function deleteAll() {
-  if (confirm("Delete all sequences?")) {
-    await callAPI("deleteAll", {}, loadSequences);
-  }
+    showConfirmModal(
+        "Delete all paths?",
+        "This will permanently remove every sequence. This action cannot be undone.",
+        async () => await callAPI("deleteAll", {}, loadSequences)
+    );
 }
+
 
 // ============================================
 // API Call Function

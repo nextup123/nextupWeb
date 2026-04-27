@@ -52,7 +52,6 @@ function renderTree(data, containerId = 'tree-view') {
         const container = document.getElementById(containerId);
         const width = container.offsetWidth || 800;
         const height = Math.max(container.offsetHeight - 50, 100);
-        console.log(`Rendering tree in ${containerId}: width=${width}, height=${height}`);
 
         const svg = d3.select(`#${containerId}`)
             .append('svg')

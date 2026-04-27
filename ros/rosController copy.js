@@ -129,7 +129,6 @@ export const postDiLayoutController = (req, res) => {
 
 
 export const startMotionPlanningController = async (req, res) => {
-  console.log("Line 130 ros controller.js");
   try {
     const ros = getROSNode();
 

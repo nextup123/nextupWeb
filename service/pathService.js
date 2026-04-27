@@ -260,7 +260,6 @@ export function logDuplicatePoints(duplicates) {
         `    Coordinate: x:${point.coordinate.x}, y:${point.coordinate.y}, z:${point.coordinate.z}`,
       );
     });
-    console.log("");
     groupCount++;
   });
 }

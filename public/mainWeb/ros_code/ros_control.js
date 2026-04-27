@@ -41,7 +41,6 @@ ws.onmessage = (event) => {
             break;
 
         case "JOINT_STATES":
-            console.log("===========",msg.payload);
             latestJointStateMsg = msg.payload;
             break;
 

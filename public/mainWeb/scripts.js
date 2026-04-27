@@ -195,6 +195,8 @@ window.addEventListener("message", (event) => {
     case "MONITORING_START":   // ← add
     case "MONITORING_STOP":    // ← add
     case "CHANGE_MODE": 
+    case "projectLoaded":
+    case "SERVO_RESPONSE":
       ws.send(JSON.stringify(msg));
       break;
     default:

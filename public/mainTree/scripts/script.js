@@ -150,7 +150,6 @@ const TYPE_COLOR = {
 
 // ✅ Unified helper: determines if a node type is a wrapper
 function checkIsWrapper(type) {
-  console.log(`checkIsWrapper("${type}") called`);
   
   const wrapperTypes = ['BehaviorTree', 'Sequence', 'Fallback', 'Selector', 'Parallel', 'WhileDoElse'];
 
@@ -165,7 +164,6 @@ function checkIsWrapper(type) {
     for (const cat in nodeDefinitions.custom) {
       if (nodeDefinitions.custom[cat][type]) {
         const def = nodeDefinitions.custom[cat][type];
-        console.log(`  Found ${type} in custom.${cat}:`, def);
         if (def.type === 'wrapper') {
           console.log(`  ${type} is wrapper (custom)`);
           return true;

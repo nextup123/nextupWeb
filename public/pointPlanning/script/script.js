@@ -88,7 +88,6 @@ function handleWebSocketMessage(msg) {
       // }
       break;
     case "ACTIVE_NODES":
-      console.log("Active nodes:", msg.payload);
       break;
 
     case "JOINT_VALUES":
@@ -124,7 +123,7 @@ function handleWebSocketMessage(msg) {
     case "JOINT_STATES":
       // console.log(msg.payload);
       const jointOrder = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6'];
-      
+
       latestJointStateValues = jointOrder.map(jointName => {
         const index = msg.payload.name.indexOf(jointName);
         return index !== -1 ? Number(msg.payload.position[index] || 0) : 0;
@@ -140,7 +139,7 @@ function handleWebSocketMessage(msg) {
       console.log("Unknown message type in pointPlanning.js:", msg.type);
   }
 }
- 
+
 function updateJointStatusDisplay(jointStatus) {
   // Update UI based on joint status
   jointStatus.forEach((status, index) => {
@@ -407,7 +406,6 @@ function stopJog(joint) {
   jogInterval = null;
 
   sendMotionCommand(`0${activeJog}`);
-  console.log(`Stopped ${activeJog}`);
 
   activeJog = null;
 }
@@ -476,7 +474,6 @@ async function moveToPoint(point_name) {
     });
     const data = await res.json();
     if (res.ok) {
-      console.log("Moving to point:", point_name);
       showStatus(`Moving to ${point_name}`, "info", 2000);
     } else {
       showStatus(`Failed to move to point: ${data.message}`, "error", 2000);
@@ -660,6 +657,7 @@ function getPointFromForm() {
     date_time: getCurrentDateTime(),
     sequence: Number(sequence.value),
     nature: nature.value.trim(),
+    is_tf: document.getElementById("is_tf").checked,   // ← ADD THIS
     joints_values: {
       joint1: Number(latestJointStateValues[0] || 0),
       joint2: Number(latestJointStateValues[1] || 0),
@@ -716,7 +714,6 @@ function validatePoint(point) {
 // Add a new point
 async function addPoint() {
   const point = getPointFromForm();
-  console.log("======================", point);
 
   if (!validatePoint(point)) return;
   await callAPI("addPoint", point, () => {
@@ -751,6 +748,8 @@ function editPoint(name) {
   dateTime.value = point.date_time;
   sequence.value = point.sequence;
   nature.value = point.nature;
+  document.getElementById("is_tf").checked = point.is_tf ?? false;  // ← ADD THIS
+
   lastSequence = point.sequence;
 
   const updateButton = document.getElementById("updateBtn");
@@ -975,6 +974,7 @@ function clearForm() {
   dateTime.value = "Auto-generated";
   sequence.value = lastSequence;
   nature.value = "";
+  document.getElementById("is_tf").checked = false;   // ← ADD THIS
   editingPointName = null;
   oldPointName = null;
   showStatus("Form cleared", "success", 1500);
@@ -1049,31 +1049,30 @@ async function updatePoint() {
 // No ROSLIB imports or rosbridge connection
 
 async function setFrame(frameName) {
-    try {
-        const response = await fetch('/ros/set_frame', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ frame: frameName })
-        });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        
-        // UI active button highlight
-        document.getElementById("btnEnd").classList.remove("active");
-        document.getElementById("btnBase").classList.remove("active");
-        document.getElementById("btnExt").classList.remove("active");
+  try {
+    const response = await fetch('/ros/set_frame', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ frame: frameName })
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-        if (frameName === "end") document.getElementById("btnEnd").classList.add("active");
-        if (frameName === "base_link") document.getElementById("btnBase").classList.add("active");
-        if (frameName === "external_link") document.getElementById("btnExt").classList.add("active");
+    // UI active button highlight
+    document.getElementById("btnEnd").classList.remove("active");
+    document.getElementById("btnBase").classList.remove("active");
+    document.getElementById("btnExt").classList.remove("active");
 
-        // console.log("Sent frame_mode via REST:", frameName);
-    } catch (err) {
-        console.error("Failed to set frame:", err);
-    }
+    if (frameName === "end") document.getElementById("btnEnd").classList.add("active");
+    if (frameName === "base_link") document.getElementById("btnBase").classList.add("active");
+    if (frameName === "external_link") document.getElementById("btnExt").classList.add("active");
+
+  } catch (err) {
+    console.error("Failed to set frame:", err);
+  }
 }
 
 setTimeout(() => {
-    setFrame('end');
+  setFrame('end');
 }, 1000);
 
 // Initialize

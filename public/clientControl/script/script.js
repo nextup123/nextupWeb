@@ -155,7 +155,6 @@ async function loadSettings() {
         applySettings();
         publishSpeed(settings.speed);
         publishCNC(settings.cnc);
-        // console.log("Loaded settings:", data);
     } catch (err) {
         console.error("Failed to load settings:", err);
     }

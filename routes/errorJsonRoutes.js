@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     const errorJsonPath = path.join(__dirname, "../user_config/errors/errors.json");
-    console.log(errorJsonPath);
     
     res.sendFile(errorJsonPath);
 });

@@ -1011,13 +1011,11 @@ setInterval(async () => {
   if (!isDirty || !state.activeProject || isSaving) return; 
   isSaving = true;
   try {
-    console.log("RIGGERD=========================");
     await api.save();
     if (state.activeProject?.name) {
       projectStates[state.activeProject.name] = { project: state.activeProject.name, state: "Active", reason: "auto_save", };
     } // optional: keep silent or very subtle
     showNotification("Auto Saved Project", "success");
-    console.log("Auto-saved");
   } catch (err) {
     console.error(err);
     showNotification("Auto Save failed", "error");
