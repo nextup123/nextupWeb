@@ -142,7 +142,7 @@ h1 {
 }
 
 .section-title.active {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: rgba(252, 173, 173, 0.822);
 }
 
 
@@ -197,7 +197,7 @@ h1 {
 
 /* Active tab */
 .section-title.active {
-  background: #ffffff;
+  background: #d4f1d3;
   color: #111;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transform: translateY(-1px);
@@ -216,7 +216,7 @@ h1 {
   left: 50%;
   width: 0%;
   height: 2px;
-  background: #4a90e2;
+  background: #000000;
   transition: all 0.25s ease;
   transform: translateX(-50%);
   border-radius: 2px;

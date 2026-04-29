@@ -11,8 +11,6 @@ import  {
   reorderPointsController,
   canUndoController,
   undoController,
-  moveToPointController,
-  setMotionTypeController,
   getRobotStatusController,
   editedPointNotificationController,
   savePointFileController,
@@ -54,8 +52,6 @@ router.post("/undo", undoController);
 router.get("/canUndo", canUndoController);
 
 // NEW ENDPOINTS FOR ROS COMMUNICATION
-router.post("/moveToPoint", moveToPointController);
-router.post("/setMotionType", setMotionTypeController);
 router.get("/robotStatus", getRobotStatusController);
 router.post("/editedPoint", editedPointNotificationController);
 router.post("/savePointFile", savePointFileController);

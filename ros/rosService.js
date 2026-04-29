@@ -75,6 +75,8 @@ class ROSService {
 
     // New publishers
     this.changeModePublisher = null;
+    this.jointMotionPublisher = null;
+    this.cartesianMotionPublisher = null;
     this.controlStartPublisher = null;
     this.controlResetPublisher = null;
     this.processControlPublisher = null;
@@ -106,7 +108,7 @@ class ROSService {
       "/ui_commands"
     );
 
-    this.framePublisher = this.node.createPublisher('std_msgs/msg/String', '/frame_mode',qos);
+    this.framePublisher = this.node.createPublisher('std_msgs/msg/String', '/frame_mode', qos);
 
     this.editedPointPublisher = this.node.createPublisher(
       "std_msgs/msg/String",
@@ -151,6 +153,14 @@ class ROSService {
     this.changeModePublisher = this.node.createPublisher(
       "std_msgs/msg/String",
       "/change_mode"
+    );
+    this.cartesianMotionPublisher = this.node.createPublisher(
+      "std_msgs/msg/Bool",
+      "/cartesian_motion"
+    );
+    this.jointMotionPublisher = this.node.createPublisher(
+      "std_msgs/msg/Bool",
+      "/joint_motion"
     );
 
     this.controlStartPublisher = this.node.createPublisher(
@@ -423,19 +433,38 @@ class ROSService {
   }
 
   publishChangeMode(mode) {
-  if (!this.changeModePublisher) {
-    console.warn("Change mode publisher not ready");
-    return;
+    if (!this.changeModePublisher) {
+      console.warn("Change mode publisher not ready");
+      return;
+    }
+
+
+
+    const StringMsg = rclnodejs.require("std_msgs/msg/String");
+    const msg = new StringMsg();
+    msg.data = mode;
+
+    this.changeModePublisher.publish(msg);
+    console.log(`Published /change_mode: "${mode}"`);
   }
+  publishMotionType(type) {
+    if (type === "joint") {
+      if (!this.jointMotionPublisher) {
+        console.warn("Joint Motion Publisher Not Ready");
+        return;
+      }
 
-  const StringMsg = rclnodejs.require("std_msgs/msg/String");
-  const msg = new StringMsg();
-  msg.data = mode;
+      this.jointMotionPublisher.publish(true);
+    }
+    else {
+      if (!this.cartesianMotionPublisher) {
+        console.warn("Cartesian Motion Publisher Not Ready");
+        return;
+      }
+      this.cartesianMotionPublisher.publish(true);
 
-  this.changeModePublisher.publish(msg);
-  console.log(`Published /change_mode: "${mode}"`);
-}
-
+    }
+  }
   // ── MOTION ───────────────────────────────────────────────────
 
   publishMotionCommand(command) {

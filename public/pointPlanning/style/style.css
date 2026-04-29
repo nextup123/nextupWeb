@@ -813,3 +813,29 @@ textarea {
 }
 
 
+.point-item.is-tf {
+    border-color: rgba(18, 148, 105, 0.45);
+    background: rgba(18, 148, 105, 0.06);
+}
+
+.badge-tf {
+    background: rgba(18, 148, 105, 0.12);
+    color: #0a6b4a;
+    border: 1px solid rgba(18, 148, 105, 0.3);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 3px 7px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tf-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--success);
+    display: inline-block;
+}

@@ -150,7 +150,7 @@ export function validatePoint(point, isUpdate = false) {
         });
     }
 
-    if (point.name && !/^[a-zA-Z0-9-]+$/.test(point.name)) {
+    if (point.name && !/^[a-zA-Z0-9-_]+$/.test(point.name)) {
         errors.push('Name can only contain letters, numbers, and dashes');
     }
 

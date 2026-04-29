@@ -24,7 +24,7 @@ const updateBtn = document.getElementById("updateBtn");
 const pointList = document.getElementById("pointList");
 const sequenceCount = document.getElementById("sequenceCount");
 const undoBtn = document.getElementById("undoBtn");
-const pointFileName = document.getElementById("point-file-name");
+// const pointFileName = document.getElementById("point-file-name");
 const originPointFileName = document.getElementById("origin-point-file-name");
 const pointModal = document.getElementById("pointModal");
 const nameChangeModal = document.getElementById("nameChangeModal");
@@ -281,6 +281,7 @@ async function loadPoints() {
     const res = await fetch(`${API_BASE}/getPoints`);
     if (!res.ok) throw new Error(`Server returned ${res.status}`);
     points = await res.json();
+    console.log(points);
     updatePointList();
     showStatus(`Reloaded ${points.length} points`, "success", 1500);
   } catch (err) {
@@ -324,7 +325,7 @@ function updatePointList() {
 
   points.forEach((point, index) => {
     const div = document.createElement("div");
-    div.className = "point-item";
+    div.className = `point-item${point.is_tf ? " is-tf" : ""}`;  // ← change this line
     div.draggable = true;
     div.dataset.name = point.name;
     div.innerHTML = `
@@ -333,11 +334,12 @@ function updatePointList() {
                 <span class="point-index">${index + 1}</span>
             </div>
             <div class="point-content">
-                <div class="point-details">
-                    <span class="badge badge-primary point-name" onclick="showPointDetails('${point.name}')">${point.name}</span>
-                    <span class="badge badge-secondary">Seq: ${point.sequence}</span>
-                </div>
-            </div>
+        <div class="point-details">
+            <span class="badge badge-primary point-name" onclick="showPointDetails('${point.name}')">${point.name}</span>
+            <span class="badge badge-secondary">Seq: ${point.sequence}</span>
+            ${point.is_tf ? `<span class="badge-tf"><span class="tf-dot"></span>TF</span>` : ""}
+        </div>
+    </div>
             <div class="point-actions">
                 <button class="btn-icon btn-move"
                     onclick="openMotionTypeModal('${point.name}')">
@@ -467,7 +469,7 @@ window.addEventListener("contextmenu", (e) => {
 // Move to point
 async function moveToPoint(point_name) {
   try {
-    const res = await fetch(`${API_BASE}/moveToPoint`, {
+    const res = await fetch(`/ros/moveToPoint`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ pointName: point_name }),
@@ -631,13 +633,12 @@ async function selectMotionType(type) {
 
   try {
     // Send motion type selection via REST
-    await fetch(`${API_BASE}/setMotionType`, {
+    await fetch(`/ros/setMotionType`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ motionType: type }),
     });
 
-    console.log(`${type} motion selected`);
     closeMotionTypeModal();
 
     // Delay then move
@@ -653,7 +654,7 @@ async function selectMotionType(type) {
 // Get point data from form
 function getPointFromForm() {
   return {
-    name: pointName.value.trim(),
+    name: document.getElementById("is_tf").checked?`${pointName.value.trim()}-tf`:pointName.value.trim(),
     date_time: getCurrentDateTime(),
     sequence: Number(sequence.value),
     nature: nature.value.trim(),
@@ -679,7 +680,8 @@ function getPointFromForm() {
 
 // Validate point data
 function validatePoint(point) {
-  if (!point.name || !/^[a-zA-Z0-9-]+$/.test(point.name)) {
+  console.log("============:",point.name);
+  if (!point.name || !/^[a-zA-Z0-9-_]+$/.test(point.name)) {
     showStatus(
       "Point name must contain only letters, numbers, and dashes",
       "error",
@@ -839,7 +841,7 @@ async function loadFile() {
     if (res.ok) {
       setTimeout(() => {
         reloadPoints();
-        updatePointFileName();
+        // updatePointFileName();
         setTimeout(() => {
           disableDeletePoints(true);
         }, 500);
@@ -871,7 +873,7 @@ async function createNewFile() {
     if (res.ok) {
       setTimeout(() => {
         reloadPoints();
-        updatePointFileName();
+        // updatePointFileName();
         setTimeout(() => {
           disableDeletePoints(false);
         }, 500);
@@ -908,7 +910,7 @@ async function deleteFile() {
     if (res.ok) {
       setTimeout(() => {
         reloadPoints();
-        updatePointFileName();
+        // updatePointFileName();
         setTimeout(() => {
           disableDeletePoints(true);
         }, 500);
@@ -981,22 +983,22 @@ function clearForm() {
 }
 
 // Update point file name
-async function updatePointFileName() {
-  try {
-    const res = await fetch(`${API_BASE}/getPointFileName`);
-    if (!res.ok) throw new Error(`Server returned ${res.status}`);
-    const data = await res.json();
-    const fileName = data.points_file_name || "No file name";
-    pointFileName.textContent = fileName;
-    originPointFileName.textContent = fileName;
+// async function updatePointFileName() {
+//   try {
+//     const res = await fetch(`${API_BASE}/getPointFileName`);
+//     if (!res.ok) throw new Error(`Server returned ${res.status}`);
+//     const data = await res.json();
+//     const fileName = data.points_file_name || "No file name";
+//     pointFileName.textContent = fileName;
+//     originPointFileName.textContent = fileName;
 
-    if (fileName === "No file name" || fileName === "null") {
-      showStatus("Create or load a file to start", "info", 3000);
-    }
-  } catch (err) {
-    showStatus(`Failed to update file name: ${err.message}`, "error", 2000);
-  }
-}
+//     if (fileName === "No file name" || fileName === "null") {
+//       showStatus("Create or load a file to start", "info", 3000);
+//     }
+//   } catch (err) {
+//     showStatus(`Failed to update file name: ${err.message}`, "error", 2000);
+//   }
+// }
 
 // Reload points
 async function reloadPoints() {
@@ -1036,7 +1038,7 @@ async function updatePoint() {
       console.log(`Published ${point.name}`);
       setTimeout(() => {
         reloadPoints();
-        updatePointFileName();
+        // updatePointFileName();
         showStatus(`${point.name} published`, "info", 2000);
       }, 500);
     } catch (err) {
@@ -1079,7 +1081,7 @@ setTimeout(() => {
 async function init() {
   sequence.value = lastSequence;
   await loadPoints();
-  await updatePointFileName();
+  // await updatePointFileName();
   await checkUndo();
 }
 

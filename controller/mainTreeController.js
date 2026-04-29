@@ -3,9 +3,9 @@ import { ioFilePath } from "../config/path.js";
 import { ensureUids, generateUniqueId, readAndParseXML, readNodeDefs, writeNodeDefs, writeXML } from "../service/mainTreeService.js";
 import { jsonToXml, parseXmlString, stripInternalUids } from "../user_config/customXmlParser.js";
 const XML_MAP = {
-  mainTree: 'template_tree.xml',
+  mainTree: 'template.xml',
   runPathTree: 'run_path.xml',
-  doDiTree: 'do_di_tree.xml'
+  doDiTree: 'do_di.xml'
 };
 
 import { fileURLToPath } from 'url';
@@ -924,16 +924,18 @@ export const moveNodeAfterController =  async (req, res) => {
 
 export const getTreeXMLController =  async (req, res) => {
   try {
+    console.log("=================================1")
     const { treeType } = req.body;
-
+    
     if (!XML_MAP[treeType]) {
       return res.status(400).json({ message: 'Invalid tree type' });
     }
-
+    console.log("=================================2")
+    
     const filePath = path.join(XML_BASE_DIR, XML_MAP[treeType]);
-    cons
     const xmlText = await fs.readFile(filePath, 'utf8');
-
+    console.log("=================================3")
+    console.log(xmlText);
     const rootContent = parseXmlString(xmlText);
     stripInternalUids(rootContent);
 

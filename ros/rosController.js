@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import { extractNodes, getParsedXml } from "./rosHelper.js";
 import { getROSNode } from "./rosService.js";
 import { LOGS_JSON_FILE } from "../config/path.js";
+import { loadYAML } from "../service/pointPlanningBtService.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -188,3 +189,56 @@ export async function setFrameController(req, res) {
   console.log(`Published frame_mode: ${frame}`);
   res.json({ success: true, frame });
 }
+
+
+export const moveToPointController = async (req, res) => {
+  try {
+    const { pointName } = req.body;
+    if (!pointName) {
+      return res.status(400).json({ message: 'Point name is required' });
+    }
+    const ros = getROSNode();
+
+
+    // Get the point data to verify it exists
+    const data = await loadYAML();
+    let targetPoint = pointName;
+
+    // Handle the get_last_pose@pointName format
+    if (pointName.includes('@')) {
+      targetPoint = pointName.split('@')[1];
+    }
+
+    const point = data.points?.find(p => p.name === targetPoint);
+
+    if (!point) {
+      return res.status(404).json({ message: `Point ${targetPoint} not found` });
+    }
+
+    // Publish to ROS via service
+    const success = ros.publishUiCommand(pointName);
+
+
+    res.json({ success: true, message: `Moving to ${pointName}` });
+
+  } catch (err) {
+    console.error('Error in /moveToPoint:', err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export const setMotionTypeController = async (req, res) => {
+  try {
+    const { motionType } = req.body;
+    const ros = getROSNode();
+
+    if (!motionType || !['cartesian', 'joint'].includes(motionType)) {
+      return res.status(400).json({ message: 'motionType must be "cartesian" or "joint"' });
+    }
+    ros.publishMotionType(motionType);
+    res.json({ success: true, message: `Motion type set to ${motionType}` });
+  } catch (err) {
+    console.error('Error in /setMotionType:', err);
+    res.status(500).json({ message: err.message });
+  }
+};

@@ -202,58 +202,7 @@ export const canUndoController =  async (req, res) => {
 
 // ================= NEW CONTROLLERS =================
 
-export const moveToPointController = async (req, res) => {
-    try {
-        const { pointName } = req.body;
-        
-        if (!pointName) {
-            return res.status(400).json({ message: 'Point name is required' });
-        }
-        
-        // Get the point data to verify it exists
-        const data = await loadYAML();
-        let targetPoint = pointName;
-        
-        // Handle the get_last_pose@pointName format
-        if (pointName.includes('@')) {
-            targetPoint = pointName.split('@')[1];
-        }
-        
-        const point = data.points?.find(p => p.name === targetPoint);
-        
-        if (!point) {
-            return res.status(404).json({ message: `Point ${targetPoint} not found` });
-        }
-        
-        // Publish to ROS via service
-        const success = await publishToUICommand(pointName);
-        
-        if (success) {
-            res.json({ success: true, message: `Moving to ${pointName}` });
-        } else {
-            res.status(500).json({ message: 'Failed to publish to ROS' });
-        }
-    } catch (err) {
-        console.error('Error in /moveToPoint:', err);
-        res.status(500).json({ message: err.message });
-    }
-};
 
-export const setMotionTypeController = async (req, res) => {
-    try {
-        const { motionType } = req.body;
-        
-        if (!motionType || !['cartesian', 'joint'].includes(motionType)) {
-            return res.status(400).json({ message: 'motionType must be "cartesian" or "joint"' });
-        }
-        
-        setMotionType(motionType);
-        res.json({ success: true, message: `Motion type set to ${motionType}` });
-    } catch (err) {
-        console.error('Error in /setMotionType:', err);
-        res.status(500).json({ message: err.message });
-    }
-};
 
 export const getRobotStatusController = async (req, res) => {
     try {

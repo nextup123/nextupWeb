@@ -928,12 +928,12 @@ async function reloadXML() {
 
 function reloadPaths() {
   loadSequences();
-  setTimeout(updateOriginPointFileName, 400);
+  // setTimeout(updateOriginPointFileName, 400);
 }
 
 function reloadPoints() {
   loadPoints();
-  setTimeout(updatePointFileName, 400);
+  // setTimeout(updatePointFileName, 400);
 }
 
 // ============================================
@@ -1048,51 +1048,51 @@ async function checkPathStatus() {
 
 // ============================================
 // File Name Updates
-// ============================================
-async function updateOriginPointFileName() {
-  try {
-    const res = await fetch(`${API_BASE}/getOriginPointFileName`);
-    if (!res.ok)
-      throw new Error(`Server returned ${res.status}: ${await res.text()}`);
-    const data = await res.json();
-    const originElement = document.getElementById("origin-point-file-name");
-    if (originElement) {
-      originElement.textContent =
-        data.originPointFileName || "No origin file name";
-    } else {
-      console.error("Origin point file name element not found");
-    }
-  } catch (err) {
-    showStatus(
-      `Failed to update origin point file name: ${err.message}`,
-      "error",
-      2000,
-    );
-    console.error("Error in updateOriginPointFileName:", err);
-  }
-}
+// // ============================================
+// async function updateOriginPointFileName() {
+//   try {
+//     const res = await fetch(`${API_BASE}/getOriginPointFileName`);
+//     if (!res.ok)
+//       throw new Error(`Server returned ${res.status}: ${await res.text()}`);
+//     const data = await res.json();
+//     const originElement = document.getElementById("origin-point-file-name");
+//     if (originElement) {
+//       originElement.textContent =
+//         data.originPointFileName || "No origin file name";
+//     } else {
+//       console.error("Origin point file name element not found");
+//     }
+//   } catch (err) {
+//     showStatus(
+//       `Failed to update origin point file name: ${err.message}`,
+//       "error",
+//       2000,
+//     );
+//     console.error("Error in updateOriginPointFileName:", err);
+//   }
+// }
 
-async function updatePointFileName() {
-  try {
-    const res = await fetch(`${API_BASE}/getPointFileName`);
-    if (!res.ok)
-      throw new Error(`Server returned ${res.status}: ${await res.text()}`);
-    const data = await res.json();
-    const pointElement = document.getElementById("point-file-name");
-    if (pointElement) {
-      pointElement.textContent = data.pointFileName || "No point file name";
-    } else {
-      console.error("Point file name element not found");
-    }
-  } catch (err) {
-    showStatus(
-      `Failed to update point file name: ${err.message}`,
-      "error",
-      2000,
-    );
-    console.error("Error in updatePointFileName:", err);
-  }
-}
+// async function updatePointFileName() {
+//   try {
+//     const res = await fetch(`${API_BASE}/getPointFileName`);
+//     if (!res.ok)
+//       throw new Error(`Server returned ${res.status}: ${await res.text()}`);
+//     const data = await res.json();
+//     const pointElement = document.getElementById("point-file-name");
+//     if (pointElement) {
+//       pointElement.textContent = data.pointFileName || "No point file name";
+//     } else {
+//       console.error("Point file name element not found");
+//     }
+//   } catch (err) {
+//     showStatus(
+//       `Failed to update point file name: ${err.message}`,
+//       "error",
+//       2000,
+//     );
+//     console.error("Error in updatePointFileName:", err);
+//   }
+// }
 
 // ============================================
 // Paths YAML Modal Functions
@@ -1234,8 +1234,8 @@ async function init() {
   initWS();
 
   setTimeout(() => {
-    updatePointFileName();
-    setTimeout(updateOriginPointFileName, 400);
+    // updatePointFileName();
+    // setTimeout(updateOriginPointFileName, 400);
     setTimeout(checkPathStatus, 800);
   }, 500);
 }
@@ -1245,8 +1245,8 @@ window.removeIntermediatePoint = removeIntermediatePoint;
 window.editPath = editPath;
 window.deletePath = deletePath;
 window.checkPathStatus = checkPathStatus;
-window.updateOriginPointFileName = updateOriginPointFileName;
-window.updatePointFileName = updatePointFileName;
+// window.updateOriginPointFileName = updateOriginPointFileName;
+// window.updatePointFileName = updatePointFileName;
 window.autoGenOpenPopup = autoGenOpenPopup;
 window.autoGenClosePopup = autoGenClosePopup;
 window.autoGenPublishDefault = autoGenPublishDefault;

@@ -6,9 +6,11 @@ import {
   getDiLayoutController,
   getDoLayoutController,
   getLogsController,
+  moveToPointController,
   postDiLayoutController,
   postDoLayoutController,
   setFrameController,
+  setMotionTypeController,
   startMotionPlanningController,
 } from "./rosController.js";
 
@@ -43,6 +45,9 @@ router.post('/set_frame', setFrameController);
 //ROS ROUTES RELATED TO POINT PLANNING//
 
 
+router.post("/moveToPoint", moveToPointController);
+
+router.post("/setMotionType", setMotionTypeController);
 
 
 
