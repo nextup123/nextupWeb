@@ -281,7 +281,6 @@ async function loadPoints() {
     const res = await fetch(`${API_BASE}/getPoints`);
     if (!res.ok) throw new Error(`Server returned ${res.status}`);
     points = await res.json();
-    console.log(points);
     updatePointList();
     showStatus(`Reloaded ${points.length} points`, "success", 1500);
   } catch (err) {
